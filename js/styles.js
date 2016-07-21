@@ -11,7 +11,7 @@ export default StyleSheet.create({
         right: 0,
         backgroundColor: '#404A46',
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
     },
     button: {
@@ -30,8 +30,8 @@ export default StyleSheet.create({
         bottom: 0,
     },
     modal: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
         height: 200
     },
     reports: {

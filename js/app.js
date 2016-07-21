@@ -8,7 +8,10 @@ import {
     View
 } from 'react-native';
 
+import { Container, Button } from 'native-base';
+
 import styles from './styles';
+import { PokemonService } from './services';
 
 import MapView from 'react-native-maps';
 
@@ -29,18 +32,9 @@ export class Pikapika extends Component {
         super(props);
 
         this.state = {
-            initialRegion: {
-                latitude: LATITUDE,
-                longitude: LONGITUDE,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-            },
-            initialPosition: null,
             lastPosition: null,
-            markers: [],
-            route: [],
-            polygons: [],
-            loading: false
+            loading: false,
+            pokemonList: []
         };
     }
 
@@ -51,28 +45,17 @@ export class Pikapika extends Component {
                 initialPosition.latitudeDelta = LATITUDE_DELTA;
                 initialPosition.longitudeDelta = LONGITUDE_DELTA;
 
-                this.setState({initialPosition});
+                //this.setState({initialPosition});
+                this.position = position;
             },
-            (error) => { alert(error.message) },
+            (error) => {
+                alert(error.message);
+            },
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
 
         this.watchID = navigator.geolocation.watchPosition((position) => {
-            var lastPosition = position;
-            var markers = this.state.markers;
-            var route = this.state.route;
-
-            position.coords.latlng = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            };
-            markers.push(position.coords);
-
-            //route.push(position.coords);
-
-            this.setState({lastPosition});
-            this.setState({markers});
-            //this.setState({route});
+            this.position = position;
         });
     }
 
@@ -80,14 +63,38 @@ export class Pikapika extends Component {
         navigator.geolocation.clearWatch(this.watchID);
     }
 
+    getPokemons() {
+        PokemonService.find().then((pokemonList) => {
+            console.log(pokemonList);
+            this.setState({pokemonList});
+        });
+    }
+
     render() {
         return (
             <View style={styles.page}>
             <MapView.Animated
-            initialRegion={this.state.initialRegion}
+            showsUserLocation={true}
+            followsUserLocation={true}
             style={styles.map}
             >
+            {this.state.pokemonList.map(pokemon => (
+            <MapView.Marker.Animated
+            key={pokemon.timestamp+pokemon.id+pokemon.timeleft}
+            title={pokemon.name}
+            description={`Timeleft: ${pokemon.timeleft} seconds`}
+            coordinate={{
+                latitude: pokemon.lat,
+                longitude: pokemon.lng
+            }}
+            />
+            ))}
             </MapView.Animated>
+            <Button block onPress={ ()=>{
+                this.getPokemons();
+            }}>
+                Find
+            </Button>
             </View>
         );
     }
