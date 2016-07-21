@@ -83,7 +83,7 @@ export class Pikapika extends Component {
             <MapView.Marker.Animated
             key={pokemon.timestamp+pokemon.id+pokemon.timeleft}
             title={pokemon.name}
-            description={`Timeleft: ${pokemon.timeleft} seconds ${pokemon.id}`}
+            description={`Timeleft: ${pokemon.timeleft} seconds`}
             image={pokemonImages[pokemon.id]}
             coordinate={{
                 latitude: pokemon.lat,
