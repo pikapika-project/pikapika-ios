@@ -1,8 +1,6 @@
 package com.nativestarterkit;
 
 import com.facebook.react.ReactActivity;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.microsoft.codepush.react.CodePush;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
@@ -36,9 +34,7 @@ public class MainActivity extends ReactActivity {
     @Override
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-            new MainReactPackage(),
-            new VectorIconsPackage(),
-            new CodePush(null, this, BuildConfig.DEBUG)
+            new MainReactPackage()
         );
     }
 }
