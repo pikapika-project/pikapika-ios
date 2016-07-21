@@ -12,6 +12,7 @@ import { Container, Button } from 'native-base';
 
 import styles from './styles';
 import { PokemonService } from './services';
+import { pokemonImages } from './images';
 
 import MapView from 'react-native-maps';
 
@@ -82,7 +83,8 @@ export class Pikapika extends Component {
             <MapView.Marker.Animated
             key={pokemon.timestamp+pokemon.id+pokemon.timeleft}
             title={pokemon.name}
-            description={`Timeleft: ${pokemon.timeleft} seconds`}
+            description={`Timeleft: ${pokemon.timeleft} seconds ${pokemon.id}`}
+            image={pokemonImages[pokemon.id]}
             coordinate={{
                 latitude: pokemon.lat,
                 longitude: pokemon.lng
