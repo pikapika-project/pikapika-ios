@@ -29,10 +29,10 @@ export default StyleSheet.create({
         right: 0,
         bottom: 0,
     },
-    login: {
+    logIn: {
         justifyContent: 'space-around',
         alignItems: 'center',
-        height: 400,
+        height: 300,
     },
     radioContainer: {
         flex: 1,
@@ -42,6 +42,13 @@ export default StyleSheet.create({
     },
     radioText: {
         marginLeft: 10
+    },
+    logInTitle: {
+        fontSize: 20
+    },
+    logInButton: {
+        marginBottom: -25,
+        borderRadius: 0
     },
     logout: {
         position: 'absolute',

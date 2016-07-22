@@ -135,6 +135,13 @@
 			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
 			remoteInfo = RNSound;
 		};
+		E4F3C9551D42BE0E00A103F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7B5D9D0A1B6AD0EA00CF3A83;
+			remoteInfo = ReactNativeLocalization;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -170,6 +177,7 @@
 		E41EB58C1D41685A00D39AAB /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
 		E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +318,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */,
 				E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */,
 				E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */,
 				E402EABE1D414A9900E67FB4 /* AirMaps.xcodeproj */,
@@ -393,6 +402,14 @@
 			isa = PBXGroup;
 			children = (
 				E41EB6CF1D419BB900D39AAB /* libRNSound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4F3C9521D42BE0E00A103F6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4F3C9561D42BE0E00A103F6 /* libReactNativeLocalization.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -515,6 +532,10 @@
 					ProjectRef = E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */;
 				},
 				{
+					ProductGroup = E4F3C9521D42BE0E00A103F6 /* Products */;
+					ProjectRef = E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */;
+				},
+				{
 					ProductGroup = E41EB6CB1D419BB900D39AAB /* Products */;
 					ProjectRef = E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */;
 				},
@@ -617,6 +638,13 @@
 			fileType = archive.ar;
 			path = libRNSound.a;
 			remoteRef = E41EB6CE1D419BB900D39AAB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E4F3C9561D42BE0E00A103F6 /* libReactNativeLocalization.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeLocalization.a;
+			remoteRef = E4F3C9551D42BE0E00A103F6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

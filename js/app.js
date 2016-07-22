@@ -6,6 +6,7 @@ import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
 
 import styles from './styles';
+import strings from './localization';
 import { PokemonService, TrainerService } from './services';
 import { pokemonImages } from './images';
 
@@ -32,7 +33,6 @@ export class Pikapika extends Component {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
-                console.log(position);
             },
             (error) => {
                 alert(error.message);
@@ -50,7 +50,7 @@ export class Pikapika extends Component {
                 this.setState({user});
             }
             else{
-                this.refs.login.open();
+                this.refs.logIn.open();
             }
         })
         .done();
@@ -61,27 +61,29 @@ export class Pikapika extends Component {
         navigator.geolocation.clearWatch(this.watchID);
     }
 
-    login(){
+    logIn(){
         if(this.state.username && this.state.password && this.position){
-            TrainerService.login(
+            TrainerService.logIn(
                 this.state.username,
                 this.state.password,
                 this.position,
                 this.state.provider
             )
-            .then( (data) => {
+            .then((user) => {
                 if(user){
                     this.setState({user});
-                    this.refs.login.close();
-                    AsyncStorage.setItem('user', JSON.stringify(data));
+
+                    this.refs.logIn.close();
+                    AsyncStorage.setItem('user', JSON.stringify(user));
                 }
             });
         }
     }
 
     getPokemons() {
-        console.log(this.state.user);
-        PokemonService.find(this.state.user.accessToken).then((pokemonList) => {
+        PokemonService
+        .find(this.position.coords, this.state.user.accessToken)
+        .then((pokemonList) => {
             if(pokemonList){
                 console.log(pokemonList);
                 this.setState({pokemonList});
@@ -94,8 +96,8 @@ export class Pikapika extends Component {
         .then(() => {
             let user = null;
 
-            this.setSetate({user});
-            this.refs.login.open();
+            this.setState({user});
+            this.refs.logIn.open();
         })
         .done();
     }
@@ -126,17 +128,17 @@ export class Pikapika extends Component {
             <Icon name="ios-search"/>
             </Button>
 
-            <Modal style={styles.login} ref={"login"} swipeToClose={false} backdropPressToClose={false} position={'center'}>
-            <Text>
-            SignUp
+            <Modal style={styles.logIn} ref={"logIn"} swipeToClose={false} backdropPressToClose={false} position={'center'}>
+            <Text style={styles.logInTitle}>
+            {strings.logIn}
             </Text>
             <InputGroup>
             <Icon name="ios-person" />
-            <Input placeholder="EMAIL" onChangeText={(username) => this.setState({username})} />
+            <Input placeholder={strings.email} onChangeText={(username) => this.setState({username})} />
             </InputGroup>
             <InputGroup>
             <Icon name="ios-unlock" />
-            <Input placeholder="PASSWORD" secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+            <Input placeholder={strings.password} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
             </InputGroup>
 
             <View>
@@ -168,7 +170,7 @@ export class Pikapika extends Component {
             </View>
             </View>
 
-            <Button block warning onPress={() => { this.login() }}> Go! </Button>
+            <Button style={styles.logInButton} block warning onPress={() => { this.logIn() }}> Go! </Button>
             </Modal>
 
             {this.state.user && (<Button danger style={styles.logout} onPress={() => this.logOut() }>
