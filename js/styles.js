@@ -42,5 +42,17 @@ export default StyleSheet.create({
     },
     radioText: {
         marginLeft: 10
+    },
+    logout: {
+        position: 'absolute',
+        top: 20,
+        right: 7,
+        width: 35,
+        height: 35,
+        opacity: 0.5,
+        borderRadius: 50
+    },
+    logoutIcon:{
+        backgroundColor: 'rgba(0,0,0,0)'
     }
 });

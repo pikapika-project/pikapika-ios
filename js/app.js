@@ -23,7 +23,8 @@ export class Pikapika extends Component {
             pokemonList: [],
             username: null,
             password: null,
-            provider: 'google'
+            provider: 'google',
+            user: null
         };
     }
 
@@ -44,9 +45,9 @@ export class Pikapika extends Component {
         });
 
         AsyncStorage.getItem('user')
-        .then((value) => {
-            if(value){
-                this.user = JSON.parse(value);
+        .then((user) => {
+            if(user){
+                this.setState({user});
             }
             else{
                 this.refs.login.open();
@@ -69,8 +70,8 @@ export class Pikapika extends Component {
                 this.state.provider
             )
             .then( (data) => {
-                if(data){
-                    this.user = data;
+                if(user){
+                    this.setState({user});
                     this.refs.login.close();
                     AsyncStorage.setItem('user', JSON.stringify(data));
                 }
@@ -79,13 +80,24 @@ export class Pikapika extends Component {
     }
 
     getPokemons() {
-        console.log(this.user);
-        PokemonService.find(this.user.accessToken).then((pokemonList) => {
+        console.log(this.state.user);
+        PokemonService.find(this.state.user.accessToken).then((pokemonList) => {
             if(pokemonList){
                 console.log(pokemonList);
                 this.setState({pokemonList});
             }
         });
+    }
+
+    logOut(){
+        AsyncStorage.removeItem('user')
+        .then(() => {
+            let user = null;
+
+            this.setSetate({user});
+            this.refs.login.open();
+        })
+        .done();
     }
 
     render() {
@@ -158,6 +170,12 @@ export class Pikapika extends Component {
 
             <Button block warning onPress={() => { this.login() }}> Go! </Button>
             </Modal>
+
+            {this.state.user && (<Button danger style={styles.logout} onPress={() => this.logOut() }>
+                <Icon name="ios-close" style={styles.logoutIcon} />
+            </Button>)}
+
+
             </View>
         );
     }
