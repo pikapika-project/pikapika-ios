@@ -32,6 +32,8 @@
 		E41EB5921D41685A00D39AAB /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E41EB58A1D41685A00D39AAB /* MaterialIcons.ttf */; };
 		E41EB5931D41685A00D39AAB /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E41EB58B1D41685A00D39AAB /* Octicons.ttf */; };
 		E41EB5941D41685A00D39AAB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E41EB58C1D41685A00D39AAB /* Zocial.ttf */; };
+		E41EB6D01D419BD400D39AAB /* libReactNativeLocalization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41EB59A1D416B5D00D39AAB /* libReactNativeLocalization.a */; };
+		E41EB6D11D419BD400D39AAB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41EB6CF1D419BB900D39AAB /* libRNSound.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +128,13 @@
 			remoteGlobalIDString = 7B5D9D0A1B6AD0EA00CF3A83;
 			remoteInfo = ReactNativeLocalization;
 		};
+		E41EB6CE1D419BB900D39AAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
+			remoteInfo = RNSound;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +169,7 @@
 		E41EB58B1D41685A00D39AAB /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		E41EB58C1D41685A00D39AAB /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
+		E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +185,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E41EB6D01D419BD400D39AAB /* libReactNativeLocalization.a in Frameworks */,
+				E41EB6D11D419BD400D39AAB /* libRNSound.a in Frameworks */,
 				E402EACE1D414AA500E67FB4 /* libAirMaps.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -298,6 +310,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */,
 				E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */,
 				E402EABE1D414A9900E67FB4 /* AirMaps.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -372,6 +385,14 @@
 			isa = PBXGroup;
 			children = (
 				E41EB59A1D416B5D00D39AAB /* libReactNativeLocalization.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E41EB6CB1D419BB900D39AAB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E41EB6CF1D419BB900D39AAB /* libRNSound.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -493,6 +514,10 @@
 					ProductGroup = E41EB5961D416B5C00D39AAB /* Products */;
 					ProjectRef = E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */;
 				},
+				{
+					ProductGroup = E41EB6CB1D419BB900D39AAB /* Products */;
+					ProjectRef = E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -585,6 +610,13 @@
 			fileType = archive.ar;
 			path = libReactNativeLocalization.a;
 			remoteRef = E41EB5991D416B5D00D39AAB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E41EB6CF1D419BB900D39AAB /* libRNSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSound.a;
+			remoteRef = E41EB6CE1D419BB900D39AAB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
