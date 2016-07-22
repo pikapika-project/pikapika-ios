@@ -1,4 +1,4 @@
-const host = 'http://10.0.1.13:3000';
+const host = 'http://10.0.1.13:3000/trainers';
 
 export let PokemonService = {
     find: function(position){
