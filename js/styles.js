@@ -29,13 +29,9 @@ export default StyleSheet.create({
         right: 0,
         bottom: 0,
     },
-    modal: {
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        height: 200
-    },
-    reports: {
-        justifyContent: 'center',
+    login: {
+        justifyContent: 'space-around',
         alignItems: 'center',
-    },
+        height: 300,
+    }
 });

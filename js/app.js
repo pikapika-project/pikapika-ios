@@ -1,30 +1,14 @@
 import React, { Component } from 'react';
-
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    Dimensions,
-    View
-} from 'react-native';
-
-import { Container, Button } from 'native-base';
+import { AppRegistry, StyleSheet, Text, Dimensions, View } from 'react-native';
+import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
+import MapView from 'react-native-maps';
+import Modal from 'react-native-modalbox';
 
 import styles from './styles';
-import { PokemonService } from './services';
+import { PokemonService, AuthService } from './services';
 import { pokemonImages } from './images';
 
-import MapView from 'react-native-maps';
-
-
 let { width, height } = Dimensions.get('window');
-
-const ASPECT_RATIO = width / height;
-const LATITUDE = 1948.524658203125;
-const LONGITUDE = -101.230692739541;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const SPACE = 0.01;
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
@@ -35,19 +19,17 @@ export class Pikapika extends Component {
         this.state = {
             lastPosition: null,
             loading: false,
-            pokemonList: []
+            pokemonList: [],
+            username: null,
+            password: null
         };
     }
 
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                var initialPosition = position;
-                initialPosition.latitudeDelta = LATITUDE_DELTA;
-                initialPosition.longitudeDelta = LONGITUDE_DELTA;
-
-                //this.setState({initialPosition});
                 this.position = position;
+                console.log(position);
             },
             (error) => {
                 alert(error.message);
@@ -58,10 +40,28 @@ export class Pikapika extends Component {
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
         });
+
+        this.refs.login.open();
     }
 
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
+    }
+
+    login(){
+        if(this.state.username && this.state.password && this.position){
+            AuthService.login(
+                this.state.username,
+                this.state.password,
+                this.position
+            )
+            .then( (data) => {
+                console.log(data);
+            });
+        }
+        AuthService.status().then(function(data){
+            console.log(data);
+        });
     }
 
     getPokemons() {
@@ -80,23 +80,37 @@ export class Pikapika extends Component {
             style={styles.map}
             >
             {this.state.pokemonList.map(pokemon => (
-            <MapView.Marker.Animated
-            key={pokemon.timestamp+pokemon.id+pokemon.timeleft}
-            title={pokemon.name}
-            description={`Timeleft: ${pokemon.timeleft} seconds`}
-            image={pokemonImages[pokemon.id]}
-            coordinate={{
-                latitude: pokemon.lat,
-                longitude: pokemon.lng
-            }}
-            />
+                <MapView.Marker.Animated
+                key={pokemon.timestamp+pokemon.id+pokemon.timeleft}
+                title={pokemon.name}
+                description={`Timeleft: ${pokemon.timeleft} seconds`}
+                image={pokemonImages[pokemon.id]}
+                coordinate={{
+                    latitude: pokemon.lat,
+                    longitude: pokemon.lng
+                }}
+                />
             ))}
             </MapView.Animated>
-            <Button block onPress={ ()=>{
-                this.getPokemons();
-            }}>
-                Find
+
+            <Button block onPress={ ()=>{ this.getPokemons() }}>
+            <Icon name="ios-search"/>
             </Button>
+
+            <Modal style={styles.login} ref={"login"} swipeToClose={false} backdropPressToClose={false} position={'center'}>
+            <Text>
+                SignUp
+            </Text>
+            <InputGroup>
+                <Icon name="ios-person" />
+                <Input placeholder="EMAIL" onChangeText={(username) => this.setState({username})} />
+            </InputGroup>
+            <InputGroup>
+                <Icon name="ios-unlock" />
+                <Input placeholder="PASSWORD" secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+            </InputGroup>
+            <Button block warning onPress={() => { this.login() }}> Go! </Button>
+            </Modal>
             </View>
         );
     }
