@@ -32,6 +32,15 @@ export default StyleSheet.create({
     login: {
         justifyContent: 'space-around',
         alignItems: 'center',
-        height: 300,
+        height: 400,
+    },
+    radioContainer: {
+        flex: 1,
+        flexDirection:'row',
+        alignItems:'center',
+        marginTop: 10
+    },
+    radioText: {
+        marginLeft: 10
     }
 });

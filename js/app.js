@@ -3,6 +3,7 @@ import { AppRegistry, StyleSheet, Text, Dimensions, View } from 'react-native';
 import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
+import RadioButton from 'react-native-radio-button';
 
 import styles from './styles';
 import { PokemonService, AuthService } from './services';
@@ -21,7 +22,8 @@ export class Pikapika extends Component {
             loading: false,
             pokemonList: [],
             username: null,
-            password: null
+            password: null,
+            accountType: 'google'
         };
     }
 
@@ -99,16 +101,46 @@ export class Pikapika extends Component {
 
             <Modal style={styles.login} ref={"login"} swipeToClose={false} backdropPressToClose={false} position={'center'}>
             <Text>
-                SignUp
+            SignUp
             </Text>
             <InputGroup>
-                <Icon name="ios-person" />
-                <Input placeholder="EMAIL" onChangeText={(username) => this.setState({username})} />
+            <Icon name="ios-person" />
+            <Input placeholder="EMAIL" onChangeText={(username) => this.setState({username})} />
             </InputGroup>
             <InputGroup>
-                <Icon name="ios-unlock" />
-                <Input placeholder="PASSWORD" secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+            <Icon name="ios-unlock" />
+            <Input placeholder="PASSWORD" secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
             </InputGroup>
+
+            <View>
+            <View style={styles.radioContainer}>
+            <RadioButton
+            animation={'bounceIn'}
+            isSelected={this.state.accountType === 'google'}
+            onPress={() => {
+                let accountType = 'google';
+                this.setState({accountType});
+            }}
+            />
+            <Text style={styles.radioText}>
+            Google
+            </Text>
+            </View>
+            <View style={styles.radioContainer}>
+            <RadioButton
+            animation={'bounceIn'}
+            isSelected={this.state.accountType === 'ptc'}
+            onPress={() => {
+                let accountType = 'ptc';
+                this.setState({accountType});
+            }}
+            />
+            <Text style={styles.radioText}>
+            Pokemon Trainer
+            </Text>
+            </View>
+            </View>
+
             <Button block warning onPress={() => { this.login() }}> Go! </Button>
             </Modal>
             </View>
