@@ -1,14 +1,21 @@
 const host = 'http://10.0.1.13:3000';
 
 export let PokemonService = {
-    find: function(position){
-        return fetch('https://dl.dropboxusercontent.com/u/820149/pokemon_data.json')
-        .then((response) => response.json())
+    find: function(accessToken){
+        return fetch(`${host}/pokemons/heartbeat?access_token=${accessToken}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((response) => response.text())
+        .then((response) => response.data)
         .catch((error) => console.log(error));
     }
 };
 
-export let AuthService = {
+export let TrainerService = {
     status: function() {
         return fetch(`${host}`)
         .then((response) => response.json())
@@ -38,6 +45,7 @@ export let AuthService = {
             })
         })
         .then((response) => response.json())
+        .then((response) => response.data)
         .catch((error) => console.log(error));
     }
 };

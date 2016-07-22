@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, Dimensions, View } from 'react-native';
+import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage } from 'react-native';
 import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
 
 import styles from './styles';
-import { PokemonService, AuthService } from './services';
+import { PokemonService, TrainerService } from './services';
 import { pokemonImages } from './images';
 
 let { width, height } = Dimensions.get('window');
@@ -43,7 +43,17 @@ export class Pikapika extends Component {
             this.position = position;
         });
 
-        this.refs.login.open();
+        AsyncStorage.getItem('user')
+        .then((value) => {
+            if(value){
+                this.user = JSON.parse(value);
+            }
+            else{
+                this.refs.login.open();
+            }
+        })
+        .done();
+
     }
 
     componentWillUnmount() {
@@ -52,26 +62,29 @@ export class Pikapika extends Component {
 
     login(){
         if(this.state.username && this.state.password && this.position){
-            AuthService.login(
+            TrainerService.login(
                 this.state.username,
                 this.state.password,
                 this.position,
                 this.state.provider
             )
-            .then( (response) => {
-                if(response){
-                    let pokemonList = response.data;
-                    this.setState({ pokemonList });
+            .then( (data) => {
+                if(data){
+                    this.user = data;
                     this.refs.login.close();
+                    AsyncStorage.setItem('user', JSON.stringify(data));
                 }
             });
         }
     }
 
     getPokemons() {
-        PokemonService.find().then((pokemonList) => {
-            console.log(pokemonList);
-            this.setState({pokemonList});
+        console.log(this.user);
+        PokemonService.find(this.user.accessToken).then((pokemonList) => {
+            if(pokemonList){
+                console.log(pokemonList);
+                this.setState({pokemonList});
+            }
         });
     }
 
