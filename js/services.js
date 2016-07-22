@@ -2,6 +2,7 @@ const host = 'http://10.0.1.13:3000';
 
 export let PokemonService = {
     find: function(coords, accessToken){
+        console.log(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`);
         return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
             method: 'GET',
             headers: {

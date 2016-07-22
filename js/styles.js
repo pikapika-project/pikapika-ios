@@ -53,13 +53,17 @@ export default StyleSheet.create({
     logout: {
         position: 'absolute',
         top: 20,
-        right: 7,
+        left: 7,
         width: 35,
         height: 35,
         opacity: 0.5,
         borderRadius: 50
     },
-    logoutIcon:{
+    logoutIcon: {
         backgroundColor: 'rgba(0,0,0,0)'
+    },
+    squareButton: {
+        borderRadius: 0
     }
+
 });

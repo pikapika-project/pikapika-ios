@@ -47,6 +47,7 @@ export class Pikapika extends Component {
         AsyncStorage.getItem('user')
         .then((user) => {
             if(user){
+                user = JSON.parse(user);
                 this.setState({user});
             }
             else{
@@ -81,8 +82,10 @@ export class Pikapika extends Component {
     }
 
     getPokemons() {
+        console.log(typeof this.state.user);
+        console.log(this.state.user['access_token']);
         PokemonService
-        .find(this.position.coords, this.state.user.accessToken)
+        .find(this.position.coords, this.state.user['access_token'])
         .then((pokemonList) => {
             if(pokemonList){
                 console.log(pokemonList);
@@ -112,21 +115,25 @@ export class Pikapika extends Component {
             >
             {this.state.pokemonList.map(pokemon => (
                 <MapView.Marker.Animated
-                key={pokemon.timestamp+pokemon.id+pokemon.timeleft}
-                title={pokemon.name}
-                description={`Timeleft: ${pokemon.timeleft} seconds`}
-                image={pokemonImages[pokemon.id]}
+                key={pokemon.SpawnPointId}
+                title={pokemon.pokemon.PokemonName}
+                description={`Timeleft: ${pokemon.TimeTillHiddenMs} seconds`}
+                image={pokemonImages[pokemon.pokemon.PokemonId]}
                 coordinate={{
-                    latitude: pokemon.lat,
-                    longitude: pokemon.lng
+                    latitude: pokemon.Latitude,
+                    longitude: pokemon.Longitude
                 }}
                 />
             ))}
             </MapView.Animated>
 
-            <Button block onPress={ ()=>{ this.getPokemons() }}>
-            <Icon name="ios-search"/>
-            </Button>
+            {
+                this.state.user && (
+                    <Button style={styles.squareButton} block onPress={ ()=>{ this.getPokemons() }}>
+                    <Icon name="ios-search"/>
+                    </Button>
+                )
+            }
 
             <Modal style={styles.logIn} ref={"logIn"} swipeToClose={false} backdropPressToClose={false} position={'center'}>
             <Text style={styles.logInTitle}>
@@ -173,11 +180,13 @@ export class Pikapika extends Component {
             <Button style={styles.logInButton} block warning onPress={() => { this.logIn() }}> Go! </Button>
             </Modal>
 
-            {this.state.user && (<Button danger style={styles.logout} onPress={() => this.logOut() }>
-                <Icon name="ios-close" style={styles.logoutIcon} />
-            </Button>)}
-
-
+            {
+                this.state.user && (
+                    <Button danger style={styles.logout} onPress={() => this.logOut() }>
+                    <Icon name="ios-close" style={styles.logoutIcon} />
+                    </Button>
+                )
+            }
             </View>
         );
     }
