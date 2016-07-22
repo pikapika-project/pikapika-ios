@@ -1,4 +1,4 @@
-const host = 'http://10.0.1.13:3000/trainers';
+const host = 'http://10.0.1.13:3000';
 
 export let PokemonService = {
     find: function(position){
@@ -20,7 +20,7 @@ export let AuthService = {
         delete location.coords.heading;
         delete location.coords.altitudeAccuracy;
 
-        return fetch(`${host}/login`, {
+        return fetch(`${host}/trainers/login`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
