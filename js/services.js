@@ -11,8 +11,7 @@ export let PokemonService = {
             }
         })
         .then((response) => response.json())
-        .then((response) => response.data)
-        .catch((error) => console.log(error));
+        .then((response) => response.data);
     }
 };
 
@@ -46,7 +45,6 @@ export let TrainerService = {
             })
         })
         .then((response) => response.json())
-        .then((response) => response.data)
-        .catch((error) => console.log(error));
+        .then((response) => response.data);
     }
 };

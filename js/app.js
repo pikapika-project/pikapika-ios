@@ -71,12 +71,18 @@ export class Pikapika extends Component {
                 this.state.provider
             )
             .then((user) => {
-                if(user){
+                if(user) {
                     this.setState({user});
 
                     this.refs.logIn.close();
                     AsyncStorage.setItem('user', JSON.stringify(user));
                 }
+                else {
+                    alert('Error');
+                }
+            })
+            .catch((error) => {
+                alert(error);
             });
         }
     }
@@ -87,10 +93,14 @@ export class Pikapika extends Component {
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
         .then((pokemonList) => {
+            alert('is in');
             if(pokemonList){
                 console.log(pokemonList);
                 this.setState({pokemonList});
             }
+        })
+        .catch((error) => {
+            alert(error);
         });
     }
 
