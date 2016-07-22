@@ -1,4 +1,4 @@
-const host = 'http://10.0.1.14:3000';
+const host = 'http://10.0.1.13:3000';
 
 export let PokemonService = {
     find: function(position){
@@ -14,7 +14,7 @@ export let AuthService = {
         .then((response) => response.json())
         .catch((error) => console.log(error));
     },
-    login: function(username, password, location){
+    login: function(username, password, location, provider){
         delete location.coords.speed;
         delete location.coords.accuracy;
         delete location.coords.heading;
@@ -29,7 +29,7 @@ export let AuthService = {
             body: JSON.stringify({
                 username: username,
                 password: password,
-                provider: 'google',
+                provider: provider,
                 location: {
                     type: 'coords',
                     name: '0',
@@ -37,7 +37,7 @@ export let AuthService = {
                 }
             })
         })
-        .then((response) => { response.text(); })
+        .then((response) => response.json())
         .catch((error) => console.log(error));
     }
 };

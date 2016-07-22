@@ -23,7 +23,7 @@ export class Pikapika extends Component {
             pokemonList: [],
             username: null,
             password: null,
-            accountType: 'google'
+            provider: 'google'
         };
     }
 
@@ -55,15 +55,17 @@ export class Pikapika extends Component {
             AuthService.login(
                 this.state.username,
                 this.state.password,
-                this.position
+                this.position,
+                this.state.provider
             )
-            .then( (data) => {
-                console.log(data);
+            .then( (response) => {
+                if(response){
+                    let pokemonList = response.data;
+                    this.setState({ pokemonList });
+                    this.refs.login.close();
+                }
             });
         }
-        AuthService.status().then(function(data){
-            console.log(data);
-        });
     }
 
     getPokemons() {
@@ -116,10 +118,10 @@ export class Pikapika extends Component {
             <View style={styles.radioContainer}>
             <RadioButton
             animation={'bounceIn'}
-            isSelected={this.state.accountType === 'google'}
+            isSelected={this.state.provider === 'google'}
             onPress={() => {
-                let accountType = 'google';
-                this.setState({accountType});
+                let provider = 'google';
+                this.setState({provider});
             }}
             />
             <Text style={styles.radioText}>
@@ -129,10 +131,10 @@ export class Pikapika extends Component {
             <View style={styles.radioContainer}>
             <RadioButton
             animation={'bounceIn'}
-            isSelected={this.state.accountType === 'ptc'}
+            isSelected={this.state.provider === 'ptc'}
             onPress={() => {
-                let accountType = 'ptc';
-                this.setState({accountType});
+                let provider = 'ptc';
+                this.setState({provider});
             }}
             />
             <Text style={styles.radioText}>
