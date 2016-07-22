@@ -60,7 +60,7 @@
 <dict>
   <key>NSExceptionDomains</key>
   <dict>
-    <key>0.0.0.0</key>
+    <key>10.0.1.14</key>
     <dict>
       <!--Include to allow subdomains-->
       <key>NSIncludesSubdomains</key>
