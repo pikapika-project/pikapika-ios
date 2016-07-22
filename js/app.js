@@ -4,6 +4,7 @@ import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } f
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
+import TimerMixin from 'react-timer-mixin';
 
 import styles from './styles';
 import strings from './localization';
@@ -14,6 +15,7 @@ let { width, height } = Dimensions.get('window');
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
+    mixins = [TimerMixin];
 
     constructor(props){
         super(props);
@@ -35,7 +37,7 @@ export class Pikapika extends Component {
                 this.position = position;
             },
             (error) => {
-                alert(error.message);
+                //alert(error.message);
             },
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
@@ -56,6 +58,21 @@ export class Pikapika extends Component {
         })
         .done();
 
+        //this.timer();
+    }
+
+    timer() {
+        let pokemonList = this.state.pokemonList;
+
+        pokemonList.forEach(function(pokemon){
+            if(pokemon.TimeTillHiddenMs){
+                pokemon.TimeTillHiddenMs--;
+            }
+        });
+
+        this.setState({pokemonList});
+
+        TimerMixin.setTimeout(() =>  this.timer(), 1000);
     }
 
     componentWillUnmount() {
@@ -88,14 +105,11 @@ export class Pikapika extends Component {
     }
 
     getPokemons() {
-        console.log(typeof this.state.user);
-        console.log(this.state.user['access_token']);
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
         .then((pokemonList) => {
-            alert('is in');
+            console.log(pokemonList);
             if(pokemonList){
-                console.log(pokemonList);
                 this.setState({pokemonList});
             }
         })
@@ -127,7 +141,7 @@ export class Pikapika extends Component {
                 <MapView.Marker.Animated
                 key={pokemon.SpawnPointId}
                 title={pokemon.pokemon.PokemonName}
-                description={`Timeleft: ${pokemon.TimeTillHiddenMs} seconds`}
+                description={strings.formatString(strings.timeleft, pokemon.TimeTillHiddenMs)}
                 image={pokemonImages[pokemon.pokemon.PokemonId]}
                 coordinate={{
                     latitude: pokemon.Latitude,
