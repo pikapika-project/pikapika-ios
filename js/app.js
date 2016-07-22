@@ -139,6 +139,9 @@ export class Pikapika extends Component {
             <Text style={styles.logInTitle}>
             {strings.logIn}
             </Text>
+            <Text style={styles.logInSubTitle}>
+            {strings.logInSubTitle}
+            </Text>
             <InputGroup>
             <Icon name="ios-person" />
             <Input placeholder={strings.email} onChangeText={(username) => this.setState({username})} />

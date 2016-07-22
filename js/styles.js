@@ -46,6 +46,10 @@ export default StyleSheet.create({
     logInTitle: {
         fontSize: 20
     },
+    logInSubTitle: {
+        fontSize: 10,
+        marginTop: -5
+    },
     logInButton: {
         marginBottom: -8,
         borderRadius: 0
