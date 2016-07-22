@@ -47,7 +47,7 @@ export default StyleSheet.create({
         fontSize: 20
     },
     logInButton: {
-        marginBottom: -25,
+        marginBottom: -8,
         borderRadius: 0
     },
     logout: {
