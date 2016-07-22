@@ -44,6 +44,7 @@ export default StyleSheet.create({
         marginLeft: 10
     },
     logInTitle: {
+        marginTop: 8,
         fontSize: 20
     },
     logInSubTitle: {

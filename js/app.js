@@ -190,7 +190,7 @@ export class Pikapika extends Component {
             </View>
             </View>
 
-            <Button style={styles.logInButton} block warning onPress={() => { this.logIn() }}> Go! </Button>
+            <Button style={styles.logInButton} block success onPress={() => { this.logIn() }}> Go! </Button>
             </Modal>
 
             {
