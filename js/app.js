@@ -256,7 +256,7 @@ export class Pikapika extends Component {
                 )
             }
 
-            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#ca3636'} size={75}/>
+            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#424242'} size={75}/>
             </View>
         );
     }
