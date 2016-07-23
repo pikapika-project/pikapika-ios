@@ -7,7 +7,8 @@ export let PokemonService = {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            }
+            },
+            timeout: 20000
         })
         .then((response) => response.json())
         .then((response) => response.data);
@@ -41,7 +42,8 @@ export let TrainerService = {
                     name: '0',
                     coords: location.coords
                 }
-            })
+            }),
+            timeout: 20000
         })
         .then((response) => response.json())
         .then((response) => response.data);

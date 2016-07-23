@@ -28,7 +28,7 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>10.0.1.14</key>
+		<key>192.168.15.9</key>
 		<dict>
 			<key>NSIncludesSubdomains</key>
 			<true/>

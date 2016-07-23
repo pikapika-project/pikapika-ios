@@ -79,6 +79,8 @@ export class Pikapika extends Component {
 
                     this.refs.logIn.close();
                     AsyncStorage.setItem('user', JSON.stringify(user));
+
+                    this.getPokemons();
                 }
                 else {
                     alert('Error');
@@ -105,17 +107,18 @@ export class Pikapika extends Component {
 
     getPokemons() {
         this.loading(true);
+
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
         .then((pokemonList) => {
-            this.loading(true);
+            this.loading(false);
 
             if(pokemonList){
                 this.setState({pokemonList});
             }
         })
         .catch((error) => {
-            this.loading(true);
+            this.loading(false);
 
             alert('Error');
         });
@@ -154,14 +157,17 @@ export class Pikapika extends Component {
                     latitude: pokemon.Latitude,
                     longitude: pokemon.Longitude
                 }}
-                onPress={ () => pokemonSounds[pokemon.pokemon.PokemonId].play() }
+                onPress={ () => {
+                    pokemonSounds[pokemon.pokemon.PokemonId].setVolume(0.01);
+                    pokemonSounds[pokemon.pokemon.PokemonId].play();
+                } }
                 />
             ))}
             </MapView.Animated>
 
             {
                 this.state.user && (
-                    <Button style={styles.squareButton} block onPress={ ()=>{ this.getPokemons() }}>
+                    <Button style={styles.searchButton} block onPress={ ()=>{ this.getPokemons() }}>
                     <Icon name="ios-search"/>
                     </Button>
                 )
@@ -176,7 +182,12 @@ export class Pikapika extends Component {
             </Text>
             <InputGroup>
             <Icon name="ios-person" />
-            <Input placeholder={strings.email} onChangeText={(username) => this.setState({username})} />
+            <Input
+            keyboardType='email-address'
+            autoCapitalize='none'
+            returnKeyType='default'
+            placeholder={strings.email}
+            onChangeText={(username) => this.setState({username})} />
             </InputGroup>
             <InputGroup>
             <Icon name="ios-unlock" />
@@ -223,7 +234,7 @@ export class Pikapika extends Component {
                 )
             }
 
-            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#bd435e'} size={75}/>
+            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#FF0000'} size={75}/>
             </View>
         );
     }

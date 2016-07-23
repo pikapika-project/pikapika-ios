@@ -52,8 +52,11 @@ export default StyleSheet.create({
         marginTop: -5
     },
     logInButton: {
-        marginBottom: -8,
+        marginBottom: -5,
         borderRadius: 0
+    },
+    loginInput: {
+        fontSize: 15
     },
     logout: {
         position: 'absolute',
@@ -67,10 +70,13 @@ export default StyleSheet.create({
     logoutIcon: {
         backgroundColor: 'rgba(0,0,0,0)'
     },
-    squareButton: {
-        borderRadius: 0
+    searchButton: {
+        borderRadius: 0,
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0
     },
     spinner: {
-
     }
 });
