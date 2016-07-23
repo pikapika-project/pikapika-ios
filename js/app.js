@@ -81,7 +81,7 @@ export class Pikapika extends Component {
                 }
             })
             .catch((error) => {
-                alert(error);
+                alert('Error');
             });
         }
     }
@@ -106,7 +106,7 @@ export class Pikapika extends Component {
             }
         })
         .catch((error) => {
-            alert(error);
+            alert('Error');
         });
     }
 
