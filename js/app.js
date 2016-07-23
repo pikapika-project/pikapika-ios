@@ -84,13 +84,13 @@ export class Pikapika extends Component {
                     this.getPokemons();
                 }
                 else {
-                    this.showError(strings.loginError);
+                    this.showError(strings.error.login);
                 }
             })
             .catch((error) => {
                 this.loading(true);
 
-                this.showError(strings.serverError);
+                this.showError(strings.error.server);
             });
         }
     }
@@ -117,11 +117,14 @@ export class Pikapika extends Component {
             if(pokemonList){
                 this.setState({pokemonList});
             }
+            else{
+                this.showError(strings.error.unauth);
+            }
         })
         .catch((error) => {
             this.loading(false);
 
-            this.showError(strings.serverError);
+            this.showError(strings.error.server);
         });
     }
 
