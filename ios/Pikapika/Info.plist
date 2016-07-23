@@ -6,6 +6,10 @@
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIcons</key>
+	<dict/>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -22,18 +26,9 @@
 	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-  <key>UILaunchImages</key>
-  <array>
-    <dict>
-      <key>UILaunchImageName</key>
-      <string>Default-568</string>
-      <key>UILaunchImageSize</key>
-      <string>{320, 568}</string>
-    </dict>
-  </array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>10.0.1.13</key>
+		<key>10.0.1.14</key>
 		<dict>
 			<key>NSIncludesSubdomains</key>
 			<true/>
@@ -42,7 +37,7 @@
 			<key>NSTemporaryExceptionMinimumTLSVersion</key>
 			<string>TLSv1.1</string>
 		</dict>
-		<key>10.0.1.14</key>
+		<key>172.20.10.2</key>
 		<dict>
 			<key>NSIncludesSubdomains</key>
 			<true/>

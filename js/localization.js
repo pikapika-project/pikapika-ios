@@ -2,7 +2,7 @@ import LocalizedStrings from 'react-native-localization';
 
 export default new LocalizedStrings({
     en: {
-        logIn: 'LogIn',
+        logIn: 'Login',
         logInSubTitle: 'With your google or pokemon trainer account',
         email: 'User/Email',
         password: 'Password',

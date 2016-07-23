@@ -11,7 +11,7 @@ export default StyleSheet.create({
         right: 0,
         backgroundColor: '#404A46',
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     button: {
@@ -69,6 +69,8 @@ export default StyleSheet.create({
     },
     squareButton: {
         borderRadius: 0
-    }
+    },
+    spinner: {
 
+    }
 });

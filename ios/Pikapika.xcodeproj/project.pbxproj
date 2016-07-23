@@ -24,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		3D191D669D1245AEBBBA1538 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB53F551117E47A39AE70E6B /* libRNSpinkit.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		E40021DC1D433FEB0007E52B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E40021DB1D433FEB0007E52B /* Images-2.xcassets */; };
 		E402EACE1D414AA500E67FB4 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E402EAC31D414A9900E67FB4 /* libAirMaps.a */; };
 		E4156C3A1D43043C00F87E24 /* 1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156BA21D43043B00F87E24 /* 1.wav */; };
 		E4156C3B1D43043C00F87E24 /* 2.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156BA31D43043B00F87E24 /* 2.wav */; };
@@ -336,6 +337,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		AB61B2925CED4C8EAD316556 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
+		E40021DB1D433FEB0007E52B /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "Pikapika/Images-2.xcassets"; sourceTree = "<group>"; };
 		E402EABE1D414A9900E67FB4 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		E4156BA21D43043B00F87E24 /* 1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1.wav; sourceTree = "<group>"; };
 		E4156BA31D43043B00F87E24 /* 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 2.wav; sourceTree = "<group>"; };
@@ -622,6 +624,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				E40021DB1D433FEB0007E52B /* Images-2.xcassets */,
 			);
 			name = Pikapika;
 			sourceTree = "<group>";
@@ -1328,6 +1331,7 @@
 				E4156C591D43043C00F87E24 /* 32.wav in Resources */,
 				E4156C791D43043C00F87E24 /* 64.wav in Resources */,
 				E4156C9A1D43043C00F87E24 /* 97.wav in Resources */,
+				E40021DC1D433FEB0007E52B /* Images-2.xcassets in Resources */,
 				E4156C961D43043C00F87E24 /* 93.wav in Resources */,
 				E4156C541D43043C00F87E24 /* 27.wav in Resources */,
 				E4156C881D43043C00F87E24 /* 79.wav in Resources */,
@@ -1457,6 +1461,8 @@
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
@@ -1482,6 +1488,8 @@
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: WHICH RADIO LIMITED (6NMF5BRJX3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: WHICH RADIO LIMITED (6NMF5BRJX3)";
 				HEADER_SEARCH_PATHS = (

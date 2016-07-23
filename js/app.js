@@ -6,6 +6,7 @@ import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
 import Sound from 'react-native-sound';
 import TimerMixin from 'react-timer-mixin';
+import Spinner from 'react-native-spinkit';
 import moment from 'moment';
 
 import styles from './styles';
@@ -63,6 +64,7 @@ export class Pikapika extends Component {
 
     logIn(){
         if(this.state.username && this.state.password && this.position){
+            this.loading(true);
             TrainerService.logIn(
                 this.state.username,
                 this.state.password,
@@ -70,6 +72,8 @@ export class Pikapika extends Component {
                 this.state.provider
             )
             .then((user) => {
+                this.loading(false);
+
                 if(user) {
                     this.setState({user});
 
@@ -81,6 +85,8 @@ export class Pikapika extends Component {
                 }
             })
             .catch((error) => {
+                this.loading(true);
+
                 alert('Error');
             });
         }
@@ -98,16 +104,25 @@ export class Pikapika extends Component {
     }
 
     getPokemons() {
+        this.loading(true);
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
         .then((pokemonList) => {
+            this.loading(true);
+
             if(pokemonList){
                 this.setState({pokemonList});
             }
         })
         .catch((error) => {
+            this.loading(true);
+
             alert('Error');
         });
+    }
+
+    loading(loading){
+        this.setState({loading});
     }
 
     componentWillUnmount() {
@@ -207,6 +222,8 @@ export class Pikapika extends Component {
                     </Button>
                 )
             }
+
+            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#bd435e'} size={75}/>
             </View>
         );
     }
