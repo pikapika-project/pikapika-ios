@@ -22,6 +22,15 @@
 	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+  <key>UILaunchImages</key>
+  <array>
+    <dict>
+      <key>UILaunchImageName</key>
+      <string>Default-568</string>
+      <key>UILaunchImageSize</key>
+      <string>{320, 568}</string>
+    </dict>
+  </array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>10.0.1.13</key>
