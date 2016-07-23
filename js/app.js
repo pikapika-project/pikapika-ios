@@ -6,6 +6,7 @@ import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
 import Sound from 'react-native-sound';
 import TimerMixin from 'react-timer-mixin';
+import Toast from 'react-native-root-toast';
 import Spinner from 'react-native-spinkit';
 import moment from 'moment';
 
@@ -83,13 +84,13 @@ export class Pikapika extends Component {
                     this.getPokemons();
                 }
                 else {
-                    alert('Error');
+                    this.showError(strings.loginError);
                 }
             })
             .catch((error) => {
                 this.loading(true);
 
-                alert('Error');
+                this.showError(strings.serverError);
             });
         }
     }
@@ -120,12 +121,23 @@ export class Pikapika extends Component {
         .catch((error) => {
             this.loading(false);
 
-            alert('Error');
+            this.showError(strings.serverError);
         });
     }
 
-    loading(loading){
+    loading(loading) {
         this.setState({loading});
+    }
+
+    showError(message) {
+        let toast = Toast.show(message, {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.CENTER,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+        });
     }
 
     componentWillUnmount() {
