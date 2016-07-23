@@ -56,7 +56,10 @@ export default StyleSheet.create({
         borderRadius: 0
     },
     loginInput: {
-        fontSize: 15
+        color: 'gray'
+    },
+    loginIcons: {
+        color: 'blue'
     },
     logout: {
         position: 'absolute',

@@ -17,8 +17,8 @@ export default new LocalizedStrings({
     es: {
         logIn: 'Iniciar sesión',
         logInSubTitle: 'Con tu cuenta de google o pokemon trainer',
-        email: 'Usuario/Correo',
-        password: 'Contraseña',
+        email: 'correo/usuario',
+        password: 'contraseña',
         timeleft: 'Tiempo restante: {0}m',
         error: 'Error',
         errors:{

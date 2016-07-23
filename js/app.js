@@ -84,13 +84,13 @@ export class Pikapika extends Component {
                     this.getPokemons();
                 }
                 else {
-                    this.showError(strings.error.login);
+                    this.showError(strings.errors.login);
                 }
             })
             .catch((error) => {
                 this.loading(true);
 
-                this.showError(strings.error.server);
+                this.showError(strings.errors.server);
             });
         }
     }
@@ -118,13 +118,13 @@ export class Pikapika extends Component {
                 this.setState({pokemonList});
             }
             else{
-                this.showError(strings.error.unauth);
+                this.showError(strings.errors.unauth);
             }
         })
         .catch((error) => {
             this.loading(false);
 
-            this.showError(strings.error.server);
+            this.showError(strings.errors.server);
         });
     }
 
@@ -196,7 +196,7 @@ export class Pikapika extends Component {
             {strings.logInSubTitle}
             </Text>
             <InputGroup>
-            <Icon name="ios-person" />
+            <Icon name="ios-person-outline"/>
             <Input
             keyboardType='email-address'
             autoCapitalize='none'
@@ -205,13 +205,18 @@ export class Pikapika extends Component {
             onChangeText={(username) => this.setState({username})} />
             </InputGroup>
             <InputGroup>
-            <Icon name="ios-unlock" />
-            <Input placeholder={strings.password} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+            <Icon name="ios-unlock-outline" style={styles.loginIcon} />
+            <Input
+            placeholder={strings.password}
+            secureTextEntry={true}
+            onChangeText={(password) => this.setState({password})}/>
             </InputGroup>
 
             <View>
             <View style={styles.radioContainer}>
             <RadioButton
+            innerColor='#dd4b39'
+            outerColor='#dd4b39'
             animation={'bounceIn'}
             isSelected={this.state.provider === 'google'}
             onPress={() => {
@@ -225,6 +230,8 @@ export class Pikapika extends Component {
             </View>
             <View style={styles.radioContainer}>
             <RadioButton
+            innerColor='#424242'
+            outerColor='#424242'
             animation={'bounceIn'}
             isSelected={this.state.provider === 'ptc'}
             onPress={() => {
@@ -238,7 +245,7 @@ export class Pikapika extends Component {
             </View>
             </View>
 
-            <Button style={styles.logInButton} block success onPress={() => { this.logIn() }}> Go! </Button>
+            <Button style={styles.logInButton} block onPress={() => { this.logIn() }}> Go! </Button>
             </Modal>
 
             {
@@ -249,7 +256,7 @@ export class Pikapika extends Component {
                 )
             }
 
-            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#FF0000'} size={75}/>
+            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#ca3636'} size={75}/>
             </View>
         );
     }
