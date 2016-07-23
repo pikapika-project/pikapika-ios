@@ -1,7 +1,6 @@
-'use strict';
+import {
+  AppRegistry,
+} from 'react-native';
+import { Pikapika } from './js';
 
-import { AppRegistry, StatusBarIOS } from 'react-native'
-import setup from './js/setup'
-
-StatusBarIOS.setStyle('light-content');
-AppRegistry.registerComponent('NativeStarterKit', setup);
+AppRegistry.registerComponent('Pikapika', () => Pikapika);
