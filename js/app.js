@@ -31,7 +31,8 @@ export class Pikapika extends Component {
             username: null,
             password: null,
             provider: 'google',
-            user: null
+            user: null,
+            disableSearch: false
         };
     }
 
@@ -41,7 +42,7 @@ export class Pikapika extends Component {
                 this.position = position;
             },
             (error) => {
-                //alert(error.message);
+                this.showError(error.message);
             },
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
@@ -109,6 +110,11 @@ export class Pikapika extends Component {
     getPokemons() {
         this.loading(true);
 
+        let disableSearch = true;
+        this.setState({disableSearch});
+
+        this.searchTimer();
+
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
         .then((pokemonList) => {
@@ -126,6 +132,13 @@ export class Pikapika extends Component {
 
             this.showError(strings.errors.server);
         });
+    }
+
+    searchTimer() {
+        TimerMixin.setTimeout( () => {
+            let disableSearch = false;
+            this.setState({disableSearch});
+        }, 15000);
     }
 
     loading(loading) {
@@ -182,7 +195,11 @@ export class Pikapika extends Component {
 
             {
                 this.state.user && (
-                    <Button style={styles.searchButton} block onPress={ ()=>{ this.getPokemons() }}>
+                    <Button
+                    style={styles.searchButton}
+                    block
+                    disabled={this.state.disableSearch}
+                    onPress={ ()=>{ this.getPokemons() }}>
                     <Icon name="ios-search"/>
                     </Button>
                 )
@@ -245,7 +262,10 @@ export class Pikapika extends Component {
             </View>
             </View>
 
-            <Button style={styles.logInButton} block onPress={() => { this.logIn() }}> Go! </Button>
+            <Button
+            style={styles.logInButton}
+            block
+            onPress={() => { this.logIn() }}> Go! </Button>
             </Modal>
 
             {
