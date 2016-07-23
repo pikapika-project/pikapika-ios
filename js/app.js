@@ -5,6 +5,7 @@ import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
 import TimerMixin from 'react-timer-mixin';
+import moment from 'moment';
 
 import styles from './styles';
 import strings from './localization';
@@ -15,7 +16,6 @@ let { width, height } = Dimensions.get('window');
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
-    mixins = [TimerMixin];
 
     constructor(props){
         super(props);
@@ -57,24 +57,8 @@ export class Pikapika extends Component {
             }
         })
         .done();
-
-        //this.timer();
     }
-
-    timer() {
-        let pokemonList = this.state.pokemonList;
-
-        pokemonList.forEach(function(pokemon){
-            if(pokemon.TimeTillHiddenMs){
-                pokemon.TimeTillHiddenMs--;
-            }
-        });
-
-        this.setState({pokemonList});
-
-        TimerMixin.setTimeout(() =>  this.timer(), 1000);
-    }
-
+    
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
@@ -108,7 +92,6 @@ export class Pikapika extends Component {
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
         .then((pokemonList) => {
-            console.log(pokemonList);
             if(pokemonList){
                 this.setState({pokemonList});
             }
@@ -141,7 +124,14 @@ export class Pikapika extends Component {
                 <MapView.Marker.Animated
                 key={pokemon.SpawnPointId}
                 title={pokemon.pokemon.PokemonName}
-                description={strings.formatString(strings.timeleft, pokemon.TimeTillHiddenMs)}
+                description={
+                    strings.formatString(
+                        strings.timeleft,
+                        moment('2000-01-01 00:00:00').add(
+                            moment.duration(pokemon.TimeTillHiddenMs)
+                        ).format('mm:ss')
+                    )
+                }
                 image={pokemonImages[pokemon.pokemon.PokemonId]}
                 coordinate={{
                     latitude: pokemon.Latitude,
