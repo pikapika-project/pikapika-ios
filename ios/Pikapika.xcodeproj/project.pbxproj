@@ -948,7 +948,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = E3XRMPPTVK;
+						DevelopmentTeam = 6NMF5BRJX3;
 					};
 				};
 			};
@@ -1425,7 +1425,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.galleto.sir.Pikapika;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.galleto.sir.PikapikaGo;
 				PRODUCT_NAME = Pikapika;
 				PROVISIONING_PROFILE = "";
 			};
@@ -1434,8 +1434,8 @@
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: WHICH RADIO LIMITED (6NMF5BRJX3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: WHICH RADIO LIMITED (6NMF5BRJX3)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1448,9 +1448,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.galleto.sir.Pikapika;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.galleto.sir.PikapikaGo;
 				PRODUCT_NAME = Pikapika;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "44827107-7802-4db6-8ccc-ffd9710626c1";
 			};
 			name = Release;
 		};
