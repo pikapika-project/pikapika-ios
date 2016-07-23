@@ -61,10 +61,6 @@ export class Pikapika extends Component {
         .done();
     }
 
-    componentWillUnmount() {
-        navigator.geolocation.clearWatch(this.watchID);
-    }
-
     logIn(){
         if(this.state.username && this.state.password && this.position){
             TrainerService.logIn(
@@ -90,6 +86,17 @@ export class Pikapika extends Component {
         }
     }
 
+    logOut(){
+        AsyncStorage.removeItem('user')
+        .then(() => {
+            let user = null;
+
+            this.setState({user});
+            this.refs.logIn.open();
+        })
+        .done();
+    }
+
     getPokemons() {
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
@@ -103,15 +110,8 @@ export class Pikapika extends Component {
         });
     }
 
-    logOut(){
-        AsyncStorage.removeItem('user')
-        .then(() => {
-            let user = null;
-
-            this.setState({user});
-            this.refs.logIn.open();
-        })
-        .done();
+    componentWillUnmount() {
+        navigator.geolocation.clearWatch(this.watchID);
     }
 
     render() {
