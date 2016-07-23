@@ -4,6 +4,7 @@ import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } f
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
+import Sound from 'react-native-sound';
 import TimerMixin from 'react-timer-mixin';
 import moment from 'moment';
 
@@ -11,6 +12,7 @@ import styles from './styles';
 import strings from './localization';
 import { PokemonService, TrainerService } from './services';
 import { pokemonImages } from './images';
+import { pokemonSounds } from './sounds';
 
 let { width, height } = Dimensions.get('window');
 
@@ -58,7 +60,7 @@ export class Pikapika extends Component {
         })
         .done();
     }
-    
+
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
@@ -137,6 +139,7 @@ export class Pikapika extends Component {
                     latitude: pokemon.Latitude,
                     longitude: pokemon.Longitude
                 }}
+                onPress={ () => pokemonSounds[pokemon.pokemon.PokemonId].play() }
                 />
             ))}
             </MapView.Animated>
