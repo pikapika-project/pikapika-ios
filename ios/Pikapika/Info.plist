@@ -37,7 +37,7 @@
 			<key>NSTemporaryExceptionMinimumTLSVersion</key>
 			<string>TLSv1.1</string>
 		</dict>
-		<key>192.168.1.65</key>
+		<key>192.168.1.65.</key>
 		<dict>
 			<key>NSIncludesSubdomains</key>
 			<true/>

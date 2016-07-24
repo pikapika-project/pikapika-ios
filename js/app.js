@@ -169,8 +169,9 @@ export class Pikapika extends Component {
             style={styles.map}
             >
             {this.state.pokemonList.map(pokemon => (
-                <MapView.Marker.Animated
+                <MapView.Marker
                 key={pokemon.SpawnPointId}
+                identifier={pokemon.SpawnPointId}
                 title={pokemon.pokemon.PokemonName}
                 description={
                     strings.formatString(
