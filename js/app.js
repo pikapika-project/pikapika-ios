@@ -170,25 +170,25 @@ export class Pikapika extends Component {
             >
             {this.state.pokemonList.map(pokemon => (
                 <MapView.Marker
-                key={pokemon.SpawnPointId}
-                identifier={pokemon.SpawnPointId}
-                title={pokemon.pokemon.PokemonName}
+                key={pokemon.id}
+                identifier={pokemon.id}
+                title={pokemon.name}
                 description={
                     strings.formatString(
                         strings.timeleft,
                         moment('2000-01-01 00:00:00').add(
-                            moment.duration(pokemon.TimeTillHiddenMs)
+                            moment.duration(pokemon.timeleft)
                         ).format('mm:ss')
                     )
                 }
-                image={pokemonImages[pokemon.pokemon.PokemonId]}
+                image={pokemonImages[pokemon.number]}
                 coordinate={{
-                    latitude: pokemon.Latitude,
-                    longitude: pokemon.Longitude
+                    latitude: pokemon.latitude,
+                    longitude: pokemon.longitude
                 }}
                 onPress={ () => {
-                    pokemonSounds[pokemon.pokemon.PokemonId].setVolume(0.01);
-                    pokemonSounds[pokemon.pokemon.PokemonId].play();
+                    pokemonSounds[pokemon.number].setVolume(0.01);
+                    pokemonSounds[pokemon.number].play();
                 } }
                 />
             ))}
