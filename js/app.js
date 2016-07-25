@@ -37,9 +37,6 @@ export class Pikapika extends Component {
     }
 
     componentDidMount() {
-
-        this.showInfo(strings.messages.onInit);
-
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
@@ -53,6 +50,17 @@ export class Pikapika extends Component {
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
         });
+
+        AsyncStorage.getItem('firstTime')
+        .then((firstTime) => {
+            firstTime = Boolean(Number(firstTime));
+            if(!firstTime){
+                this.showInfo(strings.messages.onInit);
+                AsyncStorage.setItem('firstTime', '1');
+            }
+
+        })
+        .done();
 
         AsyncStorage.getItem('user')
         .then((user) => {
@@ -311,8 +319,9 @@ export class Pikapika extends Component {
             animation={'bounceIn'}
             isSelected={ this.state.provider === 'ptc'}
             onPress={() => {
-                let provider = 'ptc';
-                this.setState({provider});
+                // let provider = 'ptc';
+                // this.setState({provider});
+                this.showError(strings.messages.pokemonTrainer);
             }}
             />
             <Text style={styles.radioText}>
