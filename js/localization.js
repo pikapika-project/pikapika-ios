@@ -13,6 +13,7 @@ export default new LocalizedStrings({
         email: 'User/Email',
         password: 'Password',
         timeleft: 'Timeleft: {0}m',
+        seen: 'Seen at {0}',
         errors:{
             default: 'Error',
             login: 'Please verify your access',
@@ -32,6 +33,7 @@ export default new LocalizedStrings({
         email: 'correo/usuario',
         password: 'contraseña',
         timeleft: 'Tiempo restante: {0}m',
+        seen: 'Visto a las {0}',
         error: 'Error',
         errors:{
             default: 'Error',
