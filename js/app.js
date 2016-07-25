@@ -51,6 +51,17 @@ export class Pikapika extends Component {
             this.position = position;
         });
 
+        AsyncStorage.getItem('firstTime')
+        .then((firstTime) => {
+            firstTime = Boolean(Number(firstTime));
+            if(!firstTime){
+                this.showInfo(strings.messages.onInit);
+                AsyncStorage.setItem('firstTime', '1');
+            }
+
+        })
+        .done();
+
         AsyncStorage.getItem('user')
         .then((user) => {
             if(user){
@@ -62,37 +73,41 @@ export class Pikapika extends Component {
             }
         })
         .done();
+
+        AsyncStorage.getItem('sesion')
+        .then((sesion) => {
+            if(sesion){
+                const _sesion = JSON.parse(sesion);
+
+                const username = _sesion.username;
+                const password = _sesion.password;
+                const provider = _sesion.provider;
+
+                this.setState({username});
+                this.setState({password});
+                this.setState({provider});
+            }
+        })
+        .done();
     }
 
     logIn(){
         if(this.state.username && this.state.password && this.position){
             this.loading(true);
-            TrainerService.logIn(
-                this.state.username,
-                this.state.password,
-                this.position,
-                this.state.provider
-            )
-            .then((user) => {
-                this.loading(false);
 
-                if(user) {
-                    this.setState({user});
+            this.logInSwitch()
+            .then((response) => this.onLogIn(response))
+            .catch((error) => this.onLogInFailure(error));
+        }
+    }
 
-                    this.refs.logIn.close();
-                    AsyncStorage.setItem('user', JSON.stringify(user));
+    logInSwitch(){
+        if(this.state.provider === 'google'){
+            return TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position);
 
-                    this.getPokemons();
-                }
-                else {
-                    this.showError(strings.errors.login);
-                }
-            })
-            .catch((error) => {
-                this.loading(true);
-
-                this.showError(strings.errors.server);
-            });
+        }
+        else if (this.state.provider === 'ptc') {
+            return TrainerService.logInWithPokemonClub(this.state.username, this.state.password, this.position);
         }
     }
 
@@ -105,6 +120,39 @@ export class Pikapika extends Component {
             this.refs.logIn.open();
         })
         .done();
+    }
+
+    onLogIn(user) {
+        this.loading(false);
+
+        if(user) {
+            this.setState({user});
+
+            this.refs.logIn.close();
+
+            AsyncStorage.setItem('user', JSON.stringify(user));
+
+            AsyncStorage.setItem('sesion', JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                provider: this.state.provider
+            }));
+
+
+            this.getPokemons();
+        }
+        else {
+            this.showError(strings.errors.login);
+            this.refs.logIn.open();
+        }
+    }
+
+    onLogInFailure(error){
+        this.loading(false);
+
+        this.showError(strings.errors.server);
+
+        this.refs.logIn.open();
     }
 
     getPokemons() {
@@ -124,11 +172,15 @@ export class Pikapika extends Component {
                 this.setState({pokemonList});
             }
             else{
-                this.showError(strings.errors.unauth);
+                alert('errors');
+                //this.showError(strings.errors.unauth);
+                this.logIn();
             }
         })
         .catch((error) => {
             this.loading(false);
+
+            console.log(error);
 
             this.showError(strings.errors.server);
         });
@@ -146,6 +198,17 @@ export class Pikapika extends Component {
     }
 
     showError(message) {
+        let toast = Toast.show(message, {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.BOTTON,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+        });
+    }
+
+    showInfo(message){
         let toast = Toast.show(message, {
             duration: Toast.durations.LONG,
             position: Toast.positions.CENTER,
@@ -169,25 +232,26 @@ export class Pikapika extends Component {
             style={styles.map}
             >
             {this.state.pokemonList.map(pokemon => (
-                <MapView.Marker.Animated
-                key={pokemon.SpawnPointId}
-                title={pokemon.pokemon.PokemonName}
+                <MapView.Marker
+                key={pokemon.id}
+                identifier={pokemon.id}
+                title={pokemon.name}
                 description={
                     strings.formatString(
                         strings.timeleft,
                         moment('2000-01-01 00:00:00').add(
-                            moment.duration(pokemon.TimeTillHiddenMs)
+                            moment.duration(pokemon.timeleft)
                         ).format('mm:ss')
                     )
                 }
-                image={pokemonImages[pokemon.pokemon.PokemonId]}
+                image={pokemonImages[pokemon.number]}
                 coordinate={{
-                    latitude: pokemon.Latitude,
-                    longitude: pokemon.Longitude
+                    latitude: pokemon.position.lat,
+                    longitude: pokemon.position.lng
                 }}
                 onPress={ () => {
-                    pokemonSounds[pokemon.pokemon.PokemonId].setVolume(0.01);
-                    pokemonSounds[pokemon.pokemon.PokemonId].play();
+                    pokemonSounds[pokemon.number].setVolume(0.01);
+                    pokemonSounds[pokemon.number].play();
                 } }
                 />
             ))}
@@ -219,6 +283,8 @@ export class Pikapika extends Component {
             autoCapitalize='none'
             returnKeyType='default'
             placeholder={strings.email}
+            autoFocus={true}
+            defaultValue={this.state.username}
             onChangeText={(username) => this.setState({username})} />
             </InputGroup>
             <InputGroup>
@@ -226,6 +292,7 @@ export class Pikapika extends Component {
             <Input
             placeholder={strings.password}
             secureTextEntry={true}
+            defaultValue={this.state.password}
             onChangeText={(password) => this.setState({password})}/>
             </InputGroup>
 
@@ -250,10 +317,11 @@ export class Pikapika extends Component {
             innerColor='#424242'
             outerColor='#424242'
             animation={'bounceIn'}
-            isSelected={this.state.provider === 'ptc'}
+            isSelected={ this.state.provider === 'ptc'}
             onPress={() => {
-                let provider = 'ptc';
-                this.setState({provider});
+                // let provider = 'ptc';
+                // this.setState({provider});
+                this.showError(strings.messages.pokemonTrainer);
             }}
             />
             <Text style={styles.radioText}>

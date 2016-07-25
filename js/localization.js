@@ -2,11 +2,19 @@ import LocalizedStrings from 'react-native-localization';
 
 export default new LocalizedStrings({
     en: {
+        messages:{
+            onInit: [
+                'Please connect with your Pokemon Account. Your info its safe, we do not store anything.\n\n',
+                'If you want, you can use a test account but you would not see the Pokemon that are visible to only you.'
+            ].join(''),
+            pokemonTrainer: 'Pokemon Trainer Club its unavailable now, please wait for the next version'
+        },
         logIn: 'Login',
         logInSubTitle: 'With your google or pokemon trainer account',
         email: 'User/Email',
         password: 'Password',
         timeleft: 'Timeleft: {0}m',
+        seen: 'Seen at {0}',
         errors:{
             default: 'Error',
             login: 'Please verify your access',
@@ -15,11 +23,19 @@ export default new LocalizedStrings({
         }
     },
     es: {
+        messages:{
+            onInit: [
+                'Por favor conectate con tu cuenta de Pokemon. Tu información está segura, nosotros no la guardamos.\n\n',
+                'Si lo prefieres puedes usar una cuenta de prueba pero po podrás ver los Pokemon que solo puedes ver tú'
+            ].join(''),
+            pokemonTrainer: 'Pokemon Trainer Club no está disponible en este momento, por favor espera la próxima versión'
+        },
         logIn: 'Iniciar sesión',
         logInSubTitle: 'Con tu cuenta de google o pokemon trainer',
         email: 'correo/usuario',
         password: 'contraseña',
         timeleft: 'Tiempo restante: {0}m',
+        seen: 'Visto a las {0}',
         error: 'Error',
         errors:{
             default: 'Error',
