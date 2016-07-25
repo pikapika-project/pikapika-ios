@@ -37,9 +37,6 @@ export class Pikapika extends Component {
     }
 
     componentDidMount() {
-
-        this.showInfo(strings.messages.onInit);
-
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
@@ -52,11 +49,18 @@ export class Pikapika extends Component {
 
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
-
-            if(this.state.user){
-                this.getPokemons();
-            }
         });
+
+        AsyncStorage.getItem('firstTime')
+        .then((firstTime) => {
+            firstTime = Boolean(Number(firstTime));
+            if(!firstTime){
+                this.showInfo(strings.messages.onInit);
+                AsyncStorage.setItem('firstTime', '1');
+            }
+
+        })
+        .done();
 
         AsyncStorage.getItem('user')
         .then((user) => {
@@ -72,15 +76,17 @@ export class Pikapika extends Component {
 
         AsyncStorage.getItem('sesion')
         .then((sesion) => {
-            const _sesion = JSON.parse(sesion);
+            if(sesion){
+                const _sesion = JSON.parse(sesion);
 
-            const username = _sesion.username;
-            const password = _sesion.password;
-            const provider = _sesion.provider;
+                const username = _sesion.username;
+                const password = _sesion.password;
+                const provider = _sesion.provider;
 
-            this.setState({username});
-            this.setState({password});
-            this.setState({provider});
+                this.setState({username});
+                this.setState({password});
+                this.setState({provider});
+            }
         })
         .done();
     }
@@ -88,43 +94,20 @@ export class Pikapika extends Component {
     logIn(){
         if(this.state.username && this.state.password && this.position){
             this.loading(true);
-            TrainerService.logIn(
-                this.state.username,
-                this.state.password,
-                this.position,
-                this.state.provider
-            )
-            .then((user) => {
-                this.loading(false);
 
-                if(user) {
-                    this.setState({user});
+            this.logInSwitch()
+            .then((response) => this.onLogIn(response))
+            .catch((error) => this.onLogInFailure(error));
+        }
+    }
 
-                    this.refs.logIn.close();
+    logInSwitch(){
+        if(this.state.provider === 'google'){
+            return TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position);
 
-                    AsyncStorage.setItem('user', JSON.stringify(user));
-
-                    AsyncStorage.setItem('sesion', JSON.stringify({
-                        username: this.state.username,
-                        password: this.state.password,
-                        provider: this.state.provider
-                    }));
-
-
-                    this.getPokemons();
-                }
-                else {
-                    this.showError(strings.errors.login);
-                    this.refs.logIn.open();
-                }
-            })
-            .catch((error) => {
-                this.loading(false);
-
-                this.showError(strings.errors.server);
-
-                this.refs.logIn.open();
-            });
+        }
+        else if (this.state.provider === 'ptc') {
+            return TrainerService.logInWithPokemonClub(this.state.username, this.state.password, this.position);
         }
     }
 
@@ -137,6 +120,39 @@ export class Pikapika extends Component {
             this.refs.logIn.open();
         })
         .done();
+    }
+
+    onLogIn(user) {
+        this.loading(false);
+
+        if(user) {
+            this.setState({user});
+
+            this.refs.logIn.close();
+
+            AsyncStorage.setItem('user', JSON.stringify(user));
+
+            AsyncStorage.setItem('sesion', JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                provider: this.state.provider
+            }));
+
+
+            this.getPokemons();
+        }
+        else {
+            this.showError(strings.errors.login);
+            this.refs.logIn.open();
+        }
+    }
+
+    onLogInFailure(error){
+        this.loading(false);
+
+        this.showError(strings.errors.server);
+
+        this.refs.logIn.open();
     }
 
     getPokemons() {
@@ -156,12 +172,15 @@ export class Pikapika extends Component {
                 this.setState({pokemonList});
             }
             else{
+                alert('errors');
                 //this.showError(strings.errors.unauth);
                 this.logIn();
             }
         })
         .catch((error) => {
             this.loading(false);
+
+            console.log(error);
 
             this.showError(strings.errors.server);
         });
@@ -231,7 +250,7 @@ export class Pikapika extends Component {
                     longitude: pokemon.position.lng
                 }}
                 onPress={ () => {
-                    pokemonSounds[pokemon.number].setVolume(0.3);
+                    pokemonSounds[pokemon.number].setVolume(0.01);
                     pokemonSounds[pokemon.number].play();
                 } }
                 />
@@ -300,8 +319,9 @@ export class Pikapika extends Component {
             animation={'bounceIn'}
             isSelected={ this.state.provider === 'ptc'}
             onPress={() => {
-                let provider = 'ptc';
-                this.setState({provider});
+                // let provider = 'ptc';
+                // this.setState({provider});
+                this.showError(strings.messages.pokemonTrainer);
             }}
             />
             <Text style={styles.radioText}>
