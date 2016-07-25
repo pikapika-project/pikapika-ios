@@ -1,8 +1,10 @@
-export function manageResponse(response) {
-    if(response.ok){
-        return response.json();
-    }
-    else{
-        return Promise.reject(response);
-    }
+export function manageResponse(responseType){
+    return function(response) {
+        if(response.ok){
+            return response[responseType]();
+        }
+        else{
+            return Promise.reject(response);
+        }
+    };
 }

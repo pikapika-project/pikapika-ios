@@ -7,15 +7,15 @@ const host = 'https://api.pikapika.io';
 
 export let PokemonService = {
     find: function(coords, accessToken){
+        console.log(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`);
         return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            },
-            timeout: 20000
+            }
         })
-        .then(manageResponse)
+        .then(manageResponse('json'))
         .then((response) => response.data);
     }
 };
@@ -23,7 +23,7 @@ export let PokemonService = {
 export let TrainerService = {
     status: function() {
         return fetch(`${host}`)
-        .then(manageResponse)
+        .then(manageResponse('json'))
         .catch((error) => console.log(error));
     },
     logIn: function(username, token, expireTime, location, provider){
@@ -46,13 +46,10 @@ export let TrainerService = {
                     expireTime: expireTime
                 },
                 location: location.coords
-            }),
-            timeout: 20000
+            })
         })
-        .then((response) => {
-            return response.json();
-        })
-        .then(manageResponse)
+        .then(manageResponse('json'))
+        .then((response) => response.data)
         .catch(error => console.log(error));
     },
 

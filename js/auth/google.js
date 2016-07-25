@@ -61,7 +61,7 @@ export class GoogleAuth {
                 sdk_version: "17"
             })
         })
-        .then(manageResponse)
+        .then(manageResponse('text'))
         .then((response) => {
 
             return oauthUtil.parseKeyValues(response);
@@ -91,7 +91,7 @@ export class GoogleAuth {
                 sdk_version: '17'
             })
         })
-        .then(manageResponse)
+        .then(manageResponse('text'))
         .then((response) => {
             let data = oauthUtil.parseKeyValues(response);
             return this.oAuth(email, data.Token);
