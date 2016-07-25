@@ -2,39 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>NSAppTransportSecurity</key>
-  <dict>
-    <key>10.0.1.13</key>
-    <dict>
-      <key>NSIncludesSubdomains</key>
-      <true/>
-      <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-      <true/>
-      <key>NSTemporaryExceptionMinimumTLSVersion</key>
-      <string>TLSv1.1</string>
-    </dict>
-    <key>10.0.1.14</key>
-    <dict>
-      <key>NSIncludesSubdomains</key>
-      <true/>
-      <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-      <true/>
-      <key>NSTemporaryExceptionMinimumTLSVersion</key>
-      <string>TLSv1.1</string>
-    </dict>
-    <key>NSExceptionDomains</key>
-    <dict>
-      <key>localhost</key>
-      <dict>
-        <key>NSIncludesSubdomains</key>
-        <true/>
-        <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-        <true/>
-        <key>NSTemporaryExceptionMinimumTLSVersion</key>
-        <string>TLSv1.1</string>
-      </dict>
-    </dict>
-  </dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -59,6 +26,39 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>10.0.1.13</key>
+		<dict>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+			<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+			<true/>
+			<key>NSTemporaryExceptionMinimumTLSVersion</key>
+			<string>TLSv1.1</string>
+		</dict>
+		<key>10.0.1.14</key>
+		<dict>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+			<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+			<true/>
+			<key>NSTemporaryExceptionMinimumTLSVersion</key>
+			<string>TLSv1.1</string>
+		</dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>
@@ -67,15 +67,6 @@
 		<string>Foundation.ttf</string>
 		<string>Ionicons.ttf</string>
 		<string>MaterialIcons.ttf</string>
-	</array>
-	<key>UILaunchImages</key>
-	<array>
-		<dict>
-			<key>UILaunchImageName</key>
-			<string>Default-568</string>
-			<key>UILaunchImageSize</key>
-			<string>{320, 568}</string>
-		</dict>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
