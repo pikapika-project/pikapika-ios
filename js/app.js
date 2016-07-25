@@ -65,6 +65,20 @@ export class Pikapika extends Component {
             }
         })
         .done();
+
+        AsyncStorage.getItem('sesion')
+        .then((sesion) => {
+            const _sesion = JSON.parse(sesion);
+
+            const username = _sesion.username;
+            const password = _sesion.password;
+            const provider = _sesion.provider;
+
+            this.setState({username});
+            this.setState({password});
+            this.setState({provider});
+        })
+        .done();
     }
 
     logIn(){
@@ -83,7 +97,15 @@ export class Pikapika extends Component {
                     this.setState({user});
 
                     this.refs.logIn.close();
+
                     AsyncStorage.setItem('user', JSON.stringify(user));
+
+                    AsyncStorage.setItem('sesion', JSON.stringify({
+                        username: this.state.username,
+                        password: this.state.password,
+                        provider: this.state.provider
+                    }));
+
 
                     this.getPokemons();
                 }
@@ -234,6 +256,8 @@ export class Pikapika extends Component {
             autoCapitalize='none'
             returnKeyType='default'
             placeholder={strings.email}
+            autoFocus={true}
+            defaultValue={this.state.username}
             onChangeText={(username) => this.setState({username})} />
             </InputGroup>
             <InputGroup>
@@ -241,6 +265,7 @@ export class Pikapika extends Component {
             <Input
             placeholder={strings.password}
             secureTextEntry={true}
+            defaultValue={this.state.password}
             onChangeText={(password) => this.setState({password})}/>
             </InputGroup>
 
@@ -265,7 +290,7 @@ export class Pikapika extends Component {
             innerColor='#424242'
             outerColor='#424242'
             animation={'bounceIn'}
-            isSelected={this.state.provider === 'ptc'}
+            isSelected={ this.state.provider === 'ptc'}
             onPress={() => {
                 let provider = 'ptc';
                 this.setState({provider});
