@@ -6,7 +6,8 @@ export default new LocalizedStrings({
             onInit: [
                 'Please connect with your Pokemon Account. Your info its safe, we do not store anything.\n\n',
                 'If you want, you can use a test account but you would not see the Pokemon that are visible to only you.'
-            ].join('')
+            ].join(''),
+            pokemonTrainer: 'Pokemon Trainer Club its unavailable now, please wait for the next version'
         },
         logIn: 'Login',
         logInSubTitle: 'With your google or pokemon trainer account',
@@ -26,7 +27,8 @@ export default new LocalizedStrings({
             onInit: [
                 'Por favor conectate con tu cuenta de Pokemon. Tu información está segura, nosotros no la guardamos.\n\n',
                 'Si lo prefieres puedes usar una cuenta de prueba pero po podrás ver los Pokemon que solo puedes ver tú'
-            ].join('')
+            ].join(''),
+            pokemonTrainer: 'Pokemon Trainer Club no está disponible en este momento, por favor espera la próxima versión'
         },
         logIn: 'Iniciar sesión',
         logInSubTitle: 'Con tu cuenta de google o pokemon trainer',
