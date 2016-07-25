@@ -6,7 +6,7 @@ let login_url = 'https://sso.pokemon.com/sso/login?service=https%3A%2F%2Fsso.pok
 let login_oauth = 'https://sso.pokemon.com/sso/oauth2.0/accessToken';
 
 
-export class PokemonClubAuth{
+export class PokemonClubAuth {
 
     service(user, pass){
         return fetch(login_url, {
@@ -16,15 +16,13 @@ export class PokemonClubAuth{
             }
         })
         .then(manageResponse('json', 'PokemonClubService'))
-        //.then(response => this.logIn(user, pass, response))
+        .then(response => this.logIn(user, pass, response))
         .catch((error) => {
-            error.text().then((data) => {
-                console.log(match('CAS is Unavailable'));
-            })
+            console.log(error);
         });
     }
 
-    logIn(user, pass, data){
+    logIn(user, pass, data) {
         console.log(querystring.stringify({
             lt: data.lt,
             execution: data.execution,
@@ -46,9 +44,14 @@ export class PokemonClubAuth{
                 password: pass
             })
         })
-        .then(manageResponse('json', 'PokemonLogIn'));
+        .then(manageResponse('json', 'PokemonLogIn'))
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
-    oAuth()
+    oAuth() {
+
+    }
 }
 /* jshint ignore:end */
