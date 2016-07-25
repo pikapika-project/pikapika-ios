@@ -1,2 +1,2 @@
-export * from './google.js';
-export * from './niantic.js';
+export * from './google';
+export * from './pokemon-club';

@@ -1,9 +1,11 @@
-import { GoogleAuth } from './auth';
+import { GoogleAuth, PokemonClubAuth } from './auth';
 import { manageResponse } from './utils';
 
 let google = new GoogleAuth();
+let pokemonClub = new PokemonClubAuth();
 
-const host = 'https://api.pikapika.io';
+let host = 'https://api.pikapika.io';
+host = 'http://localhost:3000';
 
 export let PokemonService = {
     find: function(coords, accessToken){
@@ -59,5 +61,9 @@ export let TrainerService = {
             return this.logIn(mail, response.Auth, response.Expiry, location, 'google');
         })
         .catch(error => console.log(error));
+    },
+
+    logInWithPokemonClub: function(username, password, location){
+        return pokemonClub.service(username,password);
     }
 };

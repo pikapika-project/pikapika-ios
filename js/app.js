@@ -87,16 +87,19 @@ export class Pikapika extends Component {
         if(this.state.username && this.state.password && this.position){
             this.loading(true);
 
-            if(this.state.provider === 'google'){
-                TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position)
-                .then((user) => {
-                    this.onLogIn(user);
-                })
-                .catch((error) => {
-                    this.onLogInFailure(error);
-                });
+            this.logInSwitch()
+            .then((response) => this.onLogIn(response))
+            .catch((error) => this.onLogInFailure(error));
+        }
+    }
 
-            }
+    logInSwitch(){
+        if(this.state.provider === 'google'){
+            return TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position);
+
+        }
+        else if (this.state.provider === 'ptc') {
+            return TrainerService.logInWithPokemonClub(this.state.username, this.state.password, this.position);
         }
     }
 
