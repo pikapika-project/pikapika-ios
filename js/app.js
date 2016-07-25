@@ -183,8 +183,8 @@ export class Pikapika extends Component {
                 }
                 image={pokemonImages[pokemon.number]}
                 coordinate={{
-                    latitude: pokemon.latitude,
-                    longitude: pokemon.longitude
+                    latitude: pokemon.position.lat,
+                    longitude: pokemon.position.lng
                 }}
                 onPress={ () => {
                     pokemonSounds[pokemon.number].setVolume(0.01);
