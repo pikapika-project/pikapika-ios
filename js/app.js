@@ -52,6 +52,10 @@ export class Pikapika extends Component {
 
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
+
+            if(this.state.user){
+                this.getPokemons();
+            }
         });
 
         AsyncStorage.getItem('user')
@@ -227,7 +231,7 @@ export class Pikapika extends Component {
                     longitude: pokemon.position.lng
                 }}
                 onPress={ () => {
-                    pokemonSounds[pokemon.number].setVolume(0.01);
+                    pokemonSounds[pokemon.number].setVolume(0.3);
                     pokemonSounds[pokemon.number].play();
                 } }
                 />
