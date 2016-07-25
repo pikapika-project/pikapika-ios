@@ -3,6 +3,7 @@
 import querystring from 'querystring';
 import CryptoJS from 'crypto-js';
 import DeviceInfo from 'react-native-device-info';
+import { manageResponse } from './../';
 
 let AUTH_URL = 'https://android.clients.google.com/auth';
 let ANDROID_ID = '9774d56d682e549c';
@@ -60,7 +61,7 @@ export class GoogleAuth {
                 sdk_version: "17"
             })
         })
-        .then(response => response.text())
+        .then(manageResponse)
         .then((response) => {
 
             return oauthUtil.parseKeyValues(response);
@@ -90,7 +91,7 @@ export class GoogleAuth {
                 sdk_version: '17'
             })
         })
-        .then(response => response.text())
+        .then(manageResponse)
         .then((response) => {
             let data = oauthUtil.parseKeyValues(response);
             return this.oAuth(email, data.Token);

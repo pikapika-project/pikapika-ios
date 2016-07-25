@@ -1,4 +1,5 @@
 import { GoogleAuth } from './auth';
+import { manageResponse } from './utils';
 
 let google = new GoogleAuth();
 
@@ -63,12 +64,3 @@ export let TrainerService = {
         .catch(error => console.log(error));
     }
 };
-
-function manageResponse(response) {
-    if(response.ok){
-        return response.json();
-    }
-    else{
-        return Promise.reject(response);
-    }
-}
