@@ -68,15 +68,17 @@ export class Pikapika extends Component {
 
         AsyncStorage.getItem('sesion')
         .then((sesion) => {
-            const _sesion = JSON.parse(sesion);
+            if(sesion){
+                const _sesion = JSON.parse(sesion);
 
-            const username = _sesion.username;
-            const password = _sesion.password;
-            const provider = _sesion.provider;
+                const username = _sesion.username;
+                const password = _sesion.password;
+                const provider = _sesion.provider;
 
-            this.setState({username});
-            this.setState({password});
-            this.setState({provider});
+                this.setState({username});
+                this.setState({password});
+                this.setState({provider});
+            }
         })
         .done();
     }
@@ -84,43 +86,17 @@ export class Pikapika extends Component {
     logIn(){
         if(this.state.username && this.state.password && this.position){
             this.loading(true);
-            TrainerService.logIn(
-                this.state.username,
-                this.state.password,
-                this.position,
-                this.state.provider
-            )
-            .then((user) => {
-                this.loading(false);
 
-                if(user) {
-                    this.setState({user});
+            if(this.state.provider === 'google'){
+                TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position)
+                .then((user) => {
+                    this.onLogIn(user);
+                })
+                .catch((error) => {
+                    this.onLogInFailure(error);
+                });
 
-                    this.refs.logIn.close();
-
-                    AsyncStorage.setItem('user', JSON.stringify(user));
-
-                    AsyncStorage.setItem('sesion', JSON.stringify({
-                        username: this.state.username,
-                        password: this.state.password,
-                        provider: this.state.provider
-                    }));
-
-
-                    this.getPokemons();
-                }
-                else {
-                    this.showError(strings.errors.login);
-                    this.refs.logIn.open();
-                }
-            })
-            .catch((error) => {
-                this.loading(false);
-
-                this.showError(strings.errors.server);
-
-                this.refs.logIn.open();
-            });
+            }
         }
     }
 
@@ -133,6 +109,39 @@ export class Pikapika extends Component {
             this.refs.logIn.open();
         })
         .done();
+    }
+
+    onLogIn(user) {
+        this.loading(false);
+
+        if(user) {
+            this.setState({user});
+
+            this.refs.logIn.close();
+
+            AsyncStorage.setItem('user', JSON.stringify(user));
+
+            AsyncStorage.setItem('sesion', JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                provider: this.state.provider
+            }));
+
+
+            this.getPokemons();
+        }
+        else {
+            this.showError(strings.errors.login);
+            this.refs.logIn.open();
+        }
+    }
+
+    onLogInFailure(error){
+        this.loading(false);
+
+        this.showError(strings.errors.server);
+
+        this.refs.logIn.open();
     }
 
     getPokemons() {
@@ -152,12 +161,15 @@ export class Pikapika extends Component {
                 this.setState({pokemonList});
             }
             else{
+                alert('errors');
                 //this.showError(strings.errors.unauth);
                 this.logIn();
             }
         })
         .catch((error) => {
             this.loading(false);
+
+            console.log(error);
 
             this.showError(strings.errors.server);
         });
