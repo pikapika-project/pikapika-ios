@@ -26,7 +26,7 @@ export default new LocalizedStrings({
             onInit: [
                 'Por favor conectate con tu cuenta de Pokemon. Tu información está segura, nosotros no la guardamos.\n\n',
                 'Si lo prefieres puedes usar una cuenta de prueba pero po podrás ver los Pokemon que solo puedes ver tú'
-            ]
+            ].join('')
         },
         logIn: 'Iniciar sesión',
         logInSubTitle: 'Con tu cuenta de google o pokemon trainer',
