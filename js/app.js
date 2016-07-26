@@ -51,17 +51,6 @@ export class Pikapika extends Component {
             this.position = position;
         });
 
-        AsyncStorage.getItem('firstTime')
-        .then((firstTime) => {
-            firstTime = Boolean(Number(firstTime));
-            if(!firstTime){
-                this.showInfo(strings.messages.onInit);
-                AsyncStorage.setItem('firstTime', '1');
-            }
-
-        })
-        .done();
-
         AsyncStorage.getItem('user')
         .then((user) => {
             if(user){
@@ -70,6 +59,7 @@ export class Pikapika extends Component {
             }
             else{
                 this.refs.logIn.open();
+                this.showInfo(strings.messages.onInit, 60000);
             }
         })
         .done();
@@ -207,9 +197,9 @@ export class Pikapika extends Component {
         });
     }
 
-    showInfo(message){
+    showInfo(message, duration){
         let toast = Toast.show(message, {
-            duration: Toast.durations.LONG,
+            duration: duraton || Toast.durations.LONG,
             position: Toast.positions.CENTER,
             shadow: true,
             animation: true,
