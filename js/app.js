@@ -165,10 +165,14 @@ export class Pikapika extends Component {
 
         PokemonService
         .find(this.position.coords, this.state.user['access_token'])
-        .then((pokemonList) => {
+        .then((data) => {
             this.loading(false);
 
-            if(pokemonList){
+            if(data){
+                let pokemonList = [];
+                this.setState({pokemonList});
+
+                pokemonList = data;
                 this.setState({pokemonList});
             }
             else{
