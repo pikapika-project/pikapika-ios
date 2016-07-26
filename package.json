@@ -6,10 +6,14 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "crypto": "0.0.3",
+    "crypto-js": "^3.1.6",
     "moment": "^2.14.1",
     "native-base": "^0.5.0",
+    "querystring": "^0.2.0",
     "react": "15.2.1",
     "react-native": "0.30.0",
+    "react-native-device-info": "^0.9.3",
     "react-native-localization": "^0.1.15",
     "react-native-maps": "^0.7.1",
     "react-native-material-switch": "0.0.4",
