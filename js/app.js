@@ -249,7 +249,7 @@ export class Pikapika extends Component {
                     longitude: pokemon.position.lng
                 }}
                 onSelect={ () => {
-                    pokemonSounds[pokemon.number].setVolume(0.5);
+                    pokemonSounds[pokemon.number].setVolume(0.3);
                     pokemonSounds[pokemon.number].play();
                 } }
                 />
@@ -282,7 +282,7 @@ export class Pikapika extends Component {
             autoCapitalize='none'
             returnKeyType='default'
             placeholder={strings.email}
-            autoFocus={!this.state.username}
+            //autoFocus={!this.state.username}
             defaultValue={this.state.username}
             onChangeText={(username) => this.setState({username})} />
             </InputGroup>

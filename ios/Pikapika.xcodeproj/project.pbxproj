@@ -189,8 +189,7 @@
 		E41EB6D11D419BD400D39AAB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41EB6CF1D419BB900D39AAB /* libRNSound.a */; };
 		E438BF8F1D46DBAE001AEB8F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E438BF8E1D46DBAE001AEB8F /* Images.xcassets */; };
 		E438C0791D46E245001AEB8F /* pikapikalogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E438C0781D46E245001AEB8F /* pikapikalogo.jpg */; };
-		E438C08C1D46E432001AEB8F /* pikapikacomplete.png in Resources */ = {isa = PBXBuildFile; fileRef = E438C08B1D46E432001AEB8F /* pikapikacomplete.png */; };
-		E4BD638D1D47D33A0083761E /* splashscreen_1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E4BD638C1D47D33A0083761E /* splashscreen_1024.png */; };
+		E4BD63A01D47D4D80083761E /* pikapikacomplete.png in Resources */ = {isa = PBXBuildFile; fileRef = E4BD639F1D47D4D80083761E /* pikapikacomplete.png */; };
 		E4F1BA0C1D43296800C9F518 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */; };
 		E4F1BA0D1D43296800C9F518 /* Default-568.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1BA0B1D43296800C9F518 /* Default-568.png */; };
 /* End PBXBuildFile section */
@@ -513,8 +512,7 @@
 		E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		E438BF8E1D46DBAE001AEB8F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Pikapika/Images.xcassets; sourceTree = "<group>"; };
 		E438C0781D46E245001AEB8F /* pikapikalogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pikapikalogo.jpg; sourceTree = "<group>"; };
-		E438C08B1D46E432001AEB8F /* pikapikacomplete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pikapikacomplete.png; sourceTree = "<group>"; };
-		E4BD638C1D47D33A0083761E /* splashscreen_1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen_1024.png; sourceTree = "<group>"; };
+		E4BD639F1D47D4D80083761E /* pikapikacomplete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pikapikacomplete.png; sourceTree = "<group>"; };
 		E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568@2x.png"; sourceTree = "<group>"; };
 		E4F1BA0B1D43296800C9F518 /* Default-568.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568.png"; sourceTree = "<group>"; };
 		E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
@@ -695,8 +693,7 @@
 			isa = PBXGroup;
 			children = (
 				E438C0781D46E245001AEB8F /* pikapikalogo.jpg */,
-				E438C08B1D46E432001AEB8F /* pikapikacomplete.png */,
-				E4BD638C1D47D33A0083761E /* splashscreen_1024.png */,
+				E4BD639F1D47D4D80083761E /* pikapikacomplete.png */,
 				E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */,
 				E4F1BA0B1D43296800C9F518 /* Default-568.png */,
 				E41EB5841D41685A00D39AAB /* Fonts */,
@@ -1326,7 +1323,6 @@
 				E4156CAE1D43043C00F87E24 /* 117.wav in Resources */,
 				E4156CA61D43043C00F87E24 /* 109.wav in Resources */,
 				E4156C681D43043C00F87E24 /* 47.wav in Resources */,
-				E4BD638D1D47D33A0083761E /* splashscreen_1024.png in Resources */,
 				E4156C991D43043C00F87E24 /* 96.wav in Resources */,
 				E41EB5911D41685A00D39AAB /* Ionicons.ttf in Resources */,
 				E4156C981D43043C00F87E24 /* 95.wav in Resources */,
@@ -1345,6 +1341,7 @@
 				E4156C841D43043C00F87E24 /* 75.wav in Resources */,
 				E4156C601D43043C00F87E24 /* 39.wav in Resources */,
 				E4156C441D43043C00F87E24 /* 11.wav in Resources */,
+				E4BD63A01D47D4D80083761E /* pikapikacomplete.png in Resources */,
 				E4156C651D43043C00F87E24 /* 44.wav in Resources */,
 				E4156C751D43043C00F87E24 /* 60.wav in Resources */,
 				E4F1BA0D1D43296800C9F518 /* Default-568.png in Resources */,
@@ -1358,7 +1355,6 @@
 				E4156CC71D43043C00F87E24 /* 142.wav in Resources */,
 				E4156CAA1D43043C00F87E24 /* 113.wav in Resources */,
 				E4156C5D1D43043C00F87E24 /* 36.wav in Resources */,
-				E438C08C1D46E432001AEB8F /* pikapikacomplete.png in Resources */,
 				E4156CB51D43043C00F87E24 /* 124.wav in Resources */,
 				E4156CC61D43043C00F87E24 /* 141.wav in Resources */,
 				E4156CA91D43043C00F87E24 /* 112.wav in Resources */,
