@@ -188,7 +188,7 @@
 		E41EB6D01D419BD400D39AAB /* libReactNativeLocalization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41EB59A1D416B5D00D39AAB /* libReactNativeLocalization.a */; };
 		E41EB6D11D419BD400D39AAB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41EB6CF1D419BB900D39AAB /* libRNSound.a */; };
 		E438BF8F1D46DBAE001AEB8F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E438BF8E1D46DBAE001AEB8F /* Images.xcassets */; };
-		E4BD63A01D47D4D80083761E /* pikapikacomplete.png in Resources */ = {isa = PBXBuildFile; fileRef = E4BD639F1D47D4D80083761E /* pikapikacomplete.png */; };
+		E4BF5DDC1D48048800EC1A49 /* splashscreen_big_720.png in Resources */ = {isa = PBXBuildFile; fileRef = E4BF5DDB1D48048800EC1A49 /* splashscreen_big_720.png */; };
 		E4F1BA0C1D43296800C9F518 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */; };
 		E4F1BA0D1D43296800C9F518 /* Default-568.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1BA0B1D43296800C9F518 /* Default-568.png */; };
 /* End PBXBuildFile section */
@@ -510,7 +510,7 @@
 		E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
 		E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		E438BF8E1D46DBAE001AEB8F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Pikapika/Images.xcassets; sourceTree = "<group>"; };
-		E4BD639F1D47D4D80083761E /* pikapikacomplete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pikapikacomplete.png; sourceTree = "<group>"; };
+		E4BF5DDB1D48048800EC1A49 /* splashscreen_big_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen_big_720.png; sourceTree = "<group>"; };
 		E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568@2x.png"; sourceTree = "<group>"; };
 		E4F1BA0B1D43296800C9F518 /* Default-568.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568.png"; sourceTree = "<group>"; };
 		E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
@@ -690,7 +690,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				E4BD639F1D47D4D80083761E /* pikapikacomplete.png */,
+				E4BF5DDB1D48048800EC1A49 /* splashscreen_big_720.png */,
 				E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */,
 				E4F1BA0B1D43296800C9F518 /* Default-568.png */,
 				E41EB5841D41685A00D39AAB /* Fonts */,
@@ -1337,7 +1337,6 @@
 				E4156C841D43043C00F87E24 /* 75.wav in Resources */,
 				E4156C601D43043C00F87E24 /* 39.wav in Resources */,
 				E4156C441D43043C00F87E24 /* 11.wav in Resources */,
-				E4BD63A01D47D4D80083761E /* pikapikacomplete.png in Resources */,
 				E4156C651D43043C00F87E24 /* 44.wav in Resources */,
 				E4156C751D43043C00F87E24 /* 60.wav in Resources */,
 				E4F1BA0D1D43296800C9F518 /* Default-568.png in Resources */,
@@ -1371,6 +1370,7 @@
 				E4156CD11D43043C00F87E24 /* 152.wav in Resources */,
 				E4156C501D43043C00F87E24 /* 23.wav in Resources */,
 				E4156C5E1D43043C00F87E24 /* 37.wav in Resources */,
+				E4BF5DDC1D48048800EC1A49 /* splashscreen_big_720.png in Resources */,
 				E4156C8C1D43043C00F87E24 /* 83.wav in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				E4156C6B1D43043C00F87E24 /* 50.wav in Resources */,
