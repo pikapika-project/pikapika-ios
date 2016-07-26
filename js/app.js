@@ -249,7 +249,7 @@ export class Pikapika extends Component {
                     latitude: pokemon.position.lat,
                     longitude: pokemon.position.lng
                 }}
-                onPress={ () => {
+                onSelect={ () => {
                     pokemonSounds[pokemon.number].setVolume(0.01);
                     pokemonSounds[pokemon.number].play();
                 } }
