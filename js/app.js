@@ -176,17 +176,12 @@ export class Pikapika extends Component {
                 this.setState({pokemonList});
             }
             else{
-                alert('errors');
-                //this.showError(strings.errors.unauth);
                 this.logIn();
             }
         })
         .catch((error) => {
             this.loading(false);
-
-            console.log(error);
-
-            this.showError(strings.errors.server);
+            this.logIn();
         });
     }
 
@@ -287,7 +282,7 @@ export class Pikapika extends Component {
             autoCapitalize='none'
             returnKeyType='default'
             placeholder={strings.email}
-            autoFocus={true}
+            autoFocus={!this.state.username}
             defaultValue={this.state.username}
             onChangeText={(username) => this.setState({username})} />
             </InputGroup>
