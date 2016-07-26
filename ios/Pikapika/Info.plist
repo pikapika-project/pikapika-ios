@@ -51,7 +51,7 @@
 			<key>localhost</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
-				<true/>
+				<true/>Scr
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSTemporaryExceptionMinimumTLSVersion</key>
