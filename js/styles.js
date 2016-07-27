@@ -31,7 +31,7 @@ export default StyleSheet.create({
     },
     googleModal: {
         position: 'absolute',
-        top: 0,
+        top: 30,
         left: 0,
         right: 0,
         bottom: 0
@@ -39,13 +39,7 @@ export default StyleSheet.create({
     logIn: {
         justifyContent: 'space-around',
         alignItems: 'center',
-        height: 300,
-    },
-    radioContainer: {
-        flex: 1,
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop: 10
+        height: 280,
     },
     radioText: {
         marginLeft: 10
@@ -58,9 +52,22 @@ export default StyleSheet.create({
         fontSize: 10,
         marginTop: -5
     },
-    logInButton: {
+    googleLogInButton: {
+        marginTop: 10,
         marginBottom: -5,
-        borderRadius: 0
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 0,
+        backgroundColor: 'white',
+        borderColor: '#d34836',
+        borderWidth: 1
+    },
+    googleLogInButtonText: {
+        color: '#d34836'
+    },
+    ptcLogInButton: {
+        borderRadius: 0,
+        backgroundColor: '#313131'
     },
     loginInput: {
         color: 'gray'

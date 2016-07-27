@@ -65,32 +65,6 @@ export class Pikapika extends Component {
             }
         })
         .done();
-
-        AsyncStorage.getItem('sesion')
-        .then((sesion) => {
-            if(sesion){
-                const _sesion = JSON.parse(sesion);
-
-                const username = _sesion.username;
-                const password = _sesion.password;
-                const provider = _sesion.provider;
-
-                this.setState({username});
-                this.setState({password});
-                this.setState({provider});
-            }
-        })
-        .done();
-    }
-
-    logIn(type, data){
-        if(this.state.username && this.state.password && this.position){
-            this.loading(true);
-
-            this.logInSwitch()
-            .then((response) => this.onLogIn(response))
-            .catch((error) => this.onLogInFailure(error));
-        }
     }
 
     logInWithGoogle(code){
@@ -103,15 +77,6 @@ export class Pikapika extends Component {
         }
         else {
             this.showError(strings.errors.position);
-        }
-    }
-
-    logInSwitch(){
-        if(this.state.provider === 'google'){
-            return TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position);
-        }
-        else if (this.state.provider === 'ptc') {
-            return TrainerService.logInWithPokemonClub(this.state.username, this.state.password, this.position);
         }
     }
 
@@ -135,13 +100,6 @@ export class Pikapika extends Component {
             this.refs.logIn.close();
 
             AsyncStorage.setItem('user', JSON.stringify(user));
-
-            AsyncStorage.setItem('sesion', JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-                provider: this.state.provider
-            }));
-
 
             this.getPokemons();
         }
@@ -185,7 +143,6 @@ export class Pikapika extends Component {
         })
         .catch((error) => {
             this.loading(false);
-            this.logIn();
         });
     }
 
@@ -223,7 +180,7 @@ export class Pikapika extends Component {
     }
 
     watchGoogleAuth(route) {
-        if(route.url.startsWith('http://127.0.0.1')){
+        if(route.url.startsWith('http://127.0.0.1') && !getParameter('error', route.url)){
             this.refs.googleAuth.close();
 
             this.logInWithGoogle(
@@ -231,6 +188,9 @@ export class Pikapika extends Component {
             );
 
             return false;
+        }
+        else if(route.url.startsWith('http://127.0.0.1') && getParameter('error', route.url)){
+            this.refs.googleAuth.close();
         }
         return true;
     }
@@ -256,7 +216,7 @@ export class Pikapika extends Component {
                     strings.formatString(
                         strings.timeleft,
                         moment('2000-01-01 00:00:00').add(
-                            moment.duration(pokemon.timeleft)
+                            moment.duration(Math.abs(pokemon.timeleft))
                         ).format('mm:ss')
                     )
                 }
@@ -266,7 +226,7 @@ export class Pikapika extends Component {
                     longitude: pokemon.position.lng
                 }}
                 onSelect={ () => {
-                    pokemonSounds[pokemon.number].setVolume(0.3);
+                    pokemonSounds[pokemon.number].setVolume(0.7);
                     pokemonSounds[pokemon.number].play();
                 } }
                 />
@@ -295,6 +255,7 @@ export class Pikapika extends Component {
             <InputGroup>
             <Icon name="ios-person-outline"/>
             <Input
+            editable={false}
             keyboardType='email-address'
             autoCapitalize='none'
             returnKeyType='default'
@@ -305,6 +266,7 @@ export class Pikapika extends Component {
             <InputGroup>
             <Icon name="ios-unlock-outline" style={styles.loginIcon} />
             <Input
+            editable={false}
             placeholder={strings.password}
             secureTextEntry={true}
             defaultValue={this.state.password}
@@ -312,16 +274,20 @@ export class Pikapika extends Component {
             </InputGroup>
 
             <Button
-            style={styles.logInButton}
+            style={styles.ptcLogInButton}
             block
-            onPress={() => { this.showError(strings.messages.pokemonTrainer); }}> Go!
+            onPress={() => { this.showError(strings.messages.pokemonTrainer); }}> Pokemon Trainer Club
             </Button>
+
             <Button
-            style={styles.logInButton}
+            style={styles.googleLogInButton}
+            textStyle={{color: '#d34836'}}
             block
             danger
-            onPress={() => { this.refs.googleAuth.open(); }}> Gooogle
+            onPress={() => { this.refs.googleAuth.open(); }}>
+            <Icon style={{color: '#d34836'}} name="logo-google"/> Sign In
             </Button>
+
             </Modal>
 
             <Modal style={styles.googleModal} ref={"googleAuth"} swipeToClose={true} backdropPressToClose={true} position={'center'}>

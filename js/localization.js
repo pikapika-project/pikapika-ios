@@ -13,6 +13,7 @@ export default new LocalizedStrings({
         logInSubTitle: 'With your Google or Pokemon Trainer Club account',
         email: 'user/email',
         password: 'password',
+        googleSigIn: 'Sign in',
         timeleft: 'Timeleft: {0}m',
         seen: 'Seen at {0}',
         errors:{
@@ -35,6 +36,7 @@ export default new LocalizedStrings({
         logInSubTitle: 'Con tu cuenta de Google o de Pokemon Trainer Club',
         email: 'correo/usuario',
         password: 'contraseña',
+        googleSigIn: 'Iniciar sesión',
         timeleft: 'Tiempo restante: {0}m',
         seen: 'Visto a las {0}',
         error: 'Error',
