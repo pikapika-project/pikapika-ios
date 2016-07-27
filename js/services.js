@@ -16,7 +16,8 @@ export let PokemonService = {
             }
         })
         .then(manageResponse('json'))
-        .then((response) => response.data);
+        .then((response) => response.data)
+        .catch((error ) => { console.log(error); });
     }
 };
 
@@ -31,7 +32,7 @@ export let TrainerService = {
         delete location.coords.accuracy;
         delete location.coords.heading;
         delete location.coords.altitudeAccuracy;
-        
+
         return fetch(`${host}/trainers/login`, {
             method: 'POST',
             headers: {
@@ -49,7 +50,13 @@ export let TrainerService = {
             })
         })
         .then(manageResponse('json'))
-        .then((response) => response.data)
+        .then((response) => {
+            response.data.expireTime = expireTime;
+            response.data.createdAt = new Date().getTime();
+            response.data.expireAt = new Date().getTime() + expireTime;
+
+            return response.data;
+        })
         .catch(error => console.log(error));
     },
 

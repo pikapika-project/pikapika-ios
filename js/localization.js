@@ -19,7 +19,8 @@ export default new LocalizedStrings({
         errors:{
             default: 'Error',
             login: 'Please verify your access',
-            server: 'We have inconvenients with our servers, please try latter',
+            server: 'We have inconvenients with our servers, please try again latter',
+            service: 'We have inconvenients with our service, please try again latter',
             unauth: 'Try login again',
             position: 'To use PikaPika you need to allow location services'
         }
@@ -43,7 +44,8 @@ export default new LocalizedStrings({
         errors:{
             default: 'Error',
             login: 'Por favor verifica tus accesos',
-            server: 'Estamos teniendo inconvenientes con nuestros servidores, por favor intenta más tarde',
+            server: 'Estamos teniendo inconvenientes con nuestros servidores, por favor intenta de nuevo más tarde',
+            service: 'Estamos teniendo inconvenientes con nuestros servicio, por favor intenta de nuevo más tarde',
             unauth: 'Si sigues presentando estos problemas intenta iniciar tu sesión de nuevo',
             position: 'Para usar PikaPika tienes que activar los permisos de ubicación'
         }

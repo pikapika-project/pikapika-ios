@@ -55,12 +55,12 @@ export class Pikapika extends Component {
 
         AsyncStorage.getItem('user')
         .then((user) => {
-            if(user){
+            if(user && !this.expired(JSON.parse(user))){
                 user = JSON.parse(user);
                 this.setState({user});
             }
             else{
-                this.refs.logIn.open();
+                this.logOut();
                 this.showInfo(strings.messages.onInit);
             }
         })
@@ -118,32 +118,47 @@ export class Pikapika extends Component {
     }
 
     getPokemons() {
-        this.loading(true);
+        if(!this.expired()){
+            this.loading(true);
 
-        let disableSearch = true;
-        this.setState({disableSearch});
+            let disableSearch = true;
+            this.setState({disableSearch});
 
-        this.searchTimer();
+            this.searchTimer();
 
-        PokemonService
-        .find(this.position.coords, this.state.user['access_token'])
-        .then((data) => {
-            this.loading(false);
+            PokemonService
+            .find(this.position.coords, this.state.user['access_token'])
+            .then((data) => {
+                this.loading(false);
 
-            if(data){
-                let pokemonList = [];
-                this.setState({pokemonList});
+                if(data){
+                    let pokemonList = [];
+                    this.setState({pokemonList});
 
-                pokemonList = data;
-                this.setState({pokemonList});
-            }
-            else{
-                this.logIn();
-            }
-        })
-        .catch((error) => {
-            this.loading(false);
-        });
+                    pokemonList = data;
+                    this.setState({pokemonList});
+                }
+                else{
+                    this.showError(strings.error.service);
+                }
+            })
+            .catch((error) => {
+                this.loading(false);
+
+                this.showError(strings.error.service);
+            });
+        }
+        else{
+            logOut();
+        }
+    }
+
+    expired(user){
+        const _user = user || this.state.user;
+        if(_user && _user.expireAt){
+            return new Date().getTime > _user.expireAt;
+        }
+        return true;
     }
 
     searchTimer() {
