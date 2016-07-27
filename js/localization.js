@@ -10,7 +10,7 @@ export default new LocalizedStrings({
             pokemonTrainer: 'Pokemon Trainer Club its unavailable now, please wait for the next version'
         },
         logIn: 'Login',
-        logInSubTitle: 'With your google or pokemon trainer account',
+        logInSubTitle: 'With your Google or Pokemon Trainer Club account',
         email: 'user/email',
         password: 'password',
         timeleft: 'Timeleft: {0}m',
@@ -19,7 +19,8 @@ export default new LocalizedStrings({
             default: 'Error',
             login: 'Please verify your access',
             server: 'We have inconvenients with our servers, please try latter',
-            unauth: 'Try login again'
+            unauth: 'Try login again',
+            position: 'To use PikaPika you need to allow location services'
         }
     },
     es: {
@@ -31,7 +32,7 @@ export default new LocalizedStrings({
             pokemonTrainer: 'Pokemon Trainer Club no está disponible en este momento, por favor espera la próxima versión'
         },
         logIn: 'Iniciar sesión',
-        logInSubTitle: 'Con tu cuenta de google o pokemon trainer',
+        logInSubTitle: 'Con tu cuenta de Google o de Pokemon Trainer Club',
         email: 'correo/usuario',
         password: 'contraseña',
         timeleft: 'Tiempo restante: {0}m',
@@ -41,7 +42,8 @@ export default new LocalizedStrings({
             default: 'Error',
             login: 'Por favor verifica tus accesos',
             server: 'Estamos teniendo inconvenientes con nuestros servidores, por favor intenta más tarde',
-            unauth: 'Si sigues presentando estos problemas intenta iniciar tu sesión de nuevo'
+            unauth: 'Si sigues presentando estos problemas intenta iniciar tu sesión de nuevo',
+            position: 'Para usar PikaPika tienes que activar los permisos de ubicación'
         }
     }
 });

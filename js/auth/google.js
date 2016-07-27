@@ -7,6 +7,11 @@ import { manageResponse } from './../';
 
 let AUTH_URL = 'https://android.clients.google.com/auth';
 let ANDROID_ID = '9774d56d682e549c';
+let CLIENT_ID = "848232511240-73ri3t7plvk96pj4f85uj8otdat2alem.apps.googleusercontent.com";
+let OAUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/device/code";
+let OAUTH_TOKEN_ENDPOINT = "https://www.googleapis.com/oauth2/v4/token";
+let SECRET = "NCjF1TLi2CcY6t5mt0ZveuL7";
+
 let oauthService = 'audience:server:client_id:848232511240-7so421jotr2609rmqakceuu1luuq0ptb.apps.googleusercontent.com';
 let app = 'com.nianticlabs.pokemongo';
 let clientSig = '321187995bc7cdc2b5fc91b11a96e2baa8602c62';
@@ -38,7 +43,7 @@ oauthUtil.salt = function (len) {
 };
 
 export class GoogleAuth {
-    oAuth(email, masterToken){
+    oAuth(email, masterToken) {
         return fetch(AUTH_URL, {
             method: 'POST',
             headers: {
@@ -66,6 +71,24 @@ export class GoogleAuth {
 
             return oauthUtil.parseKeyValues(response);
         })
+    }
+
+    oAuth2(code) {
+        return fetch(OAUTH_TOKEN_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: querystring.stringify({
+                code: code,
+                client_id: CLIENT_ID,
+                client_secret: SECRET,
+                redirect_uri: 'http://127.0.0.1:9004',
+                grant_type: 'authorization_code'
+            })
+        })
+        .then(manageResponse('json'))
+        .then((response) => console.log(response));
     }
 
     login(email, password){

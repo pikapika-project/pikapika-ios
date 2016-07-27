@@ -53,6 +53,13 @@ export let TrainerService = {
         .catch(error => console.log(error));
     },
 
+    logInWithGoogleOAuth2: function(code, position){
+        return google.oAuth2(code)
+        .then((response) => {
+            console.log(response);
+        });
+    },
+
     logInWithGoogle: function(mail, password, location){
         return google.login(mail, password)
         .then((response) => {

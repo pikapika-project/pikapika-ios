@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS } from 'react-native';
+import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS, WebView } from 'react-native';
 import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
@@ -13,6 +13,7 @@ import moment from 'moment';
 import styles from './styles';
 import strings from './localization';
 import { PokemonService, TrainerService } from './services';
+import { getParameter } from './utils';
 import { pokemonImages } from './images';
 import { pokemonSounds } from './sounds';
 
@@ -20,6 +21,7 @@ let { width, height } = Dimensions.get('window');
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
+    googleAuthSource = 'https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&redirect_uri=http://127.0.0.1:9004&response_type=code&client_id=848232511240-73ri3t7plvk96pj4f85uj8otdat2alem.apps.googleusercontent.com';
 
     constructor(props){
         super(props);
@@ -59,7 +61,7 @@ export class Pikapika extends Component {
             }
             else{
                 this.refs.logIn.open();
-                this.showInfo(strings.messages.onInit, 60000);
+                this.showInfo(strings.messages.onInit);
             }
         })
         .done();
@@ -81,7 +83,7 @@ export class Pikapika extends Component {
         .done();
     }
 
-    logIn(){
+    logIn(type, data){
         if(this.state.username && this.state.password && this.position){
             this.loading(true);
 
@@ -91,10 +93,18 @@ export class Pikapika extends Component {
         }
     }
 
+    logInWithGoogle(code){
+        if(this.position){
+            TrainerService.logInWithGoogleOAuth2(code, this.position);
+        }
+        else {
+            this.showError(strings.errors.position);
+        }
+    }
+
     logInSwitch(){
         if(this.state.provider === 'google'){
             return TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position);
-
         }
         else if (this.state.provider === 'ptc') {
             return TrainerService.logInWithPokemonClub(this.state.username, this.state.password, this.position);
@@ -199,13 +209,26 @@ export class Pikapika extends Component {
 
     showInfo(message, duration){
         let toast = Toast.show(message, {
-            duration: duraton || Toast.durations.LONG,
+            duration: duration || Toast.durations.LONG,
             position: Toast.positions.CENTER,
             shadow: true,
             animation: true,
             hideOnPress: true,
             delay: 0,
         });
+    }
+
+    watchGoogleAuth(route) {
+        if(route.url.startsWith('http://127.0.0.1')){
+            this.refs.googleAuth.close();
+
+            this.logInWithGoogle(
+                getParameter('code', route.url)
+            );
+
+            return false;
+        }
+        return true;
     }
 
     componentWillUnmount() {
@@ -272,7 +295,6 @@ export class Pikapika extends Component {
             autoCapitalize='none'
             returnKeyType='default'
             placeholder={strings.email}
-            //autoFocus={!this.state.username}
             defaultValue={this.state.username}
             onChangeText={(username) => this.setState({username})} />
             </InputGroup>
@@ -285,44 +307,28 @@ export class Pikapika extends Component {
             onChangeText={(password) => this.setState({password})}/>
             </InputGroup>
 
-            <View>
-            <View style={styles.radioContainer}>
-            <RadioButton
-            innerColor='#dd4b39'
-            outerColor='#dd4b39'
-            animation={'bounceIn'}
-            isSelected={this.state.provider === 'google'}
-            onPress={() => {
-                let provider = 'google';
-                this.setState({provider});
-            }}
-            />
-            <Text style={styles.radioText}>
-            Google
-            </Text>
-            </View>
-            <View style={styles.radioContainer}>
-            <RadioButton
-            innerColor='#424242'
-            outerColor='#424242'
-            animation={'bounceIn'}
-            isSelected={ this.state.provider === 'ptc'}
-            onPress={() => {
-                // let provider = 'ptc';
-                // this.setState({provider});
-                this.showError(strings.messages.pokemonTrainer);
-            }}
-            />
-            <Text style={styles.radioText}>
-            Pokemon Trainer
-            </Text>
-            </View>
-            </View>
-
             <Button
             style={styles.logInButton}
             block
-            onPress={() => { this.logIn() }}> Go! </Button>
+            onPress={() => { this.showError(strings.messages.pokemonTrainer); }}> Go!
+            </Button>
+            <Button
+            style={styles.logInButton}
+            block
+            danger
+            onPress={() => { this.refs.googleAuth.open(); }}> Gooogle
+            </Button>
+            </Modal>
+
+            <Modal style={styles.googleModal} ref={"googleAuth"} swipeToClose={true} backdropPressToClose={true} position={'center'}>
+            <WebView
+            ref={'googleAuthWebView'}
+            source={{uri: this.googleAuthSource}}
+            onShouldStartLoadWithRequest={(route) => this.watchGoogleAuth(route)}
+            renderError={() => { return (<Text></Text>); }}
+            >
+
+            </WebView>
             </Modal>
 
             {
