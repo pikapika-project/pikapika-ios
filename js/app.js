@@ -95,7 +95,11 @@ export class Pikapika extends Component {
 
     logInWithGoogle(code){
         if(this.position){
-            TrainerService.logInWithGoogleOAuth2(code, this.position);
+            this.loading(true);
+
+            TrainerService.logInWithGoogleOAuth2(code, this.position)
+            .then((response) => this.onLogIn(response))
+            .catch((error) => this.onLogInFailure(error));
         }
         else {
             this.showError(strings.errors.position);

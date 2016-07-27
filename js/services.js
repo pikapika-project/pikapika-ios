@@ -31,7 +31,7 @@ export let TrainerService = {
         delete location.coords.accuracy;
         delete location.coords.heading;
         delete location.coords.altitudeAccuracy;
-
+        
         return fetch(`${host}/trainers/login`, {
             method: 'POST',
             headers: {
@@ -53,11 +53,11 @@ export let TrainerService = {
         .catch(error => console.log(error));
     },
 
-    logInWithGoogleOAuth2: function(code, position){
+    logInWithGoogleOAuth2: function(code, location){
         return google.oAuth2(code)
-        .then((response) => {
-            console.log(response);
-        });
+        .then(
+            (response) => this.logIn('google', response['id_token'], response['expires_in'], location, 'google')
+        );
     },
 
     logInWithGoogle: function(mail, password, location){

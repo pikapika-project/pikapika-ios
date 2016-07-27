@@ -88,7 +88,6 @@ export class GoogleAuth {
             })
         })
         .then(manageResponse('json'))
-        .then((response) => console.log(response));
     }
 
     login(email, password){
