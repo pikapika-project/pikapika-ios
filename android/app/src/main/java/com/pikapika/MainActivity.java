@@ -1,6 +1,7 @@
 package com.pikapika;
 
 import com.facebook.react.ReactActivity;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.react.rnspinkit.RNSpinkitPackage;
 

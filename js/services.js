@@ -8,6 +8,7 @@ let host = 'https://api.pikapika.io';
 
 export let PokemonService = {
     find: function(coords, accessToken){
+        accessToken = 'ya29.Ci8tA2Ij2P77Rh9LG8qcbGSesB959bQz02VixZVdms7x5TqHBg44sp1pay_Pvp9A5w';
         return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
             method: 'GET',
             headers: {
@@ -42,7 +43,7 @@ export let TrainerService = {
                 username: username,
                 provider: {
                     name: provider,
-                    token: token,
+                    token: 'ya29.Ci8tA2Ij2P77Rh9LG8qcbGSesB959bQz02VixZVdms7x5TqHBg44sp1pay_Pvp9A5w',
                     expireTime: expireTime
                 },
                 location: location.coords
@@ -56,6 +57,7 @@ export let TrainerService = {
     logInWithGoogle: function(mail, password, location){
         return google.login(mail, password)
         .then((response) => {
+            console.log(response);
             return this.logIn(mail, response.Auth, response.Expiry, location, 'google');
         })
         .catch(error => console.log(error));

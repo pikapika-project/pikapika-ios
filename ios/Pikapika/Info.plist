@@ -24,6 +24,31 @@
 	<string>1.0.6</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string></string>
+			<key>CFBundleURLName</key>
+			<string>com.googleusercontent.apps.739056108832-9jl10ktv0h6afvnbds44jt102s8pi075</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.739056108832-9jl10ktv0h6afvnbds44jt102s8pi075</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>xyz.galleto.sir.PikapikaGo</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.nianticlabs.pokemongo</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>

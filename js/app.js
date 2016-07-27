@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS } from 'react-native';
 import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import RadioButton from 'react-native-radio-button';
@@ -79,6 +80,11 @@ export class Pikapika extends Component {
             }
         })
         .done();
+
+        GoogleSignin.configure({
+            iosClientId: '739056108832-9jl10ktv0h6afvnbds44jt102s8pi075.apps.googleusercontent.com'
+        });
+
     }
 
     logIn(){
@@ -170,6 +176,7 @@ export class Pikapika extends Component {
             }
         })
         .catch((error) => {
+            console.log(error);
             this.loading(false);
             this.logIn();
         });
@@ -199,13 +206,25 @@ export class Pikapika extends Component {
 
     showInfo(message, duration){
         let toast = Toast.show(message, {
-            duration: duraton || Toast.durations.LONG,
+            duration: duration || Toast.durations.LONG,
             position: Toast.positions.CENTER,
             shadow: true,
             animation: true,
             hideOnPress: true,
             delay: 0,
         });
+    }
+
+    google(){
+        GoogleSignin.signIn()
+        .then((user) => {
+            console.log(user);
+            this.setState({user: user});
+        })
+        .catch((err) => {
+            console.log('WRONG SIGNIN', err);
+        })
+        .done();
     }
 
     componentWillUnmount() {
@@ -318,6 +337,10 @@ export class Pikapika extends Component {
             </Text>
             </View>
             </View>
+
+            <Button
+            block
+            onPress={() => { this.google() }}> Google </Button>
 
             <Button
             style={styles.logInButton}
