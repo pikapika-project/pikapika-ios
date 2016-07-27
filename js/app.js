@@ -32,7 +32,8 @@ export class Pikapika extends Component {
             password: null,
             provider: 'google',
             user: null,
-            disableSearch: false
+            disableSearch: false,
+            isAuthorizate: false
         };
     }
 
@@ -199,7 +200,7 @@ export class Pikapika extends Component {
 
     showInfo(message, duration){
         let toast = Toast.show(message, {
-            duration: duraton || Toast.durations.LONG,
+            duration: duration || Toast.durations.LONG,
             position: Toast.positions.CENTER,
             shadow: true,
             animation: true,
@@ -210,6 +211,20 @@ export class Pikapika extends Component {
 
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
+    }
+
+    authorize(){
+        AlertIOS.alert(
+            'Authorization',
+            'If you enter blah blah',
+            [
+                {text: 'Cancel' },
+                {text: 'Acept', onPress: () => {
+                    const isAuthorizate = true;
+                    this.setState({isAuthorizate});
+                }},
+            ],
+        );
     }
 
     render() {
@@ -319,10 +334,21 @@ export class Pikapika extends Component {
             </View>
             </View>
 
-            <Button
-            style={styles.logInButton}
-            block
-            onPress={() => { this.logIn() }}> Go! </Button>
+            {this.state.isAuthorizate ? (
+                <Button
+                style={styles.logInButton}
+                block
+                onPress={() => { this.logIn() }}> Go!
+                </Button>
+            ) : (
+                <Button
+                style={styles.logInButton}
+                block
+                danger
+                onPress={() => { this.authorize() }}> Get Authorization!
+                </Button>
+            )}
+
             </Modal>
 
             {
