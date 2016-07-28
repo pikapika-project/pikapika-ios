@@ -3,7 +3,6 @@ import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS
 import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
-import RadioButton from 'react-native-radio-button';
 import Sound from 'react-native-sound';
 import TimerMixin from 'react-timer-mixin';
 import Toast from 'react-native-root-toast';
@@ -101,6 +100,8 @@ export class Pikapika extends Component {
     }
 
     logOut() {
+        this.loading(false);
+
         AsyncStorage.removeItem('user')
         .then(() => {
             let user = null;
