@@ -55,6 +55,9 @@ export class Pikapika extends Component {
                         })
                         .catch((error)=>{
                             console.log(error);
+
+                            this.logOut();
+                            this.showInfo(strings.messages.onInit);
                         });
                     }
                     else{
@@ -65,7 +68,10 @@ export class Pikapika extends Component {
                 .done();
             },
             (error) => {
-                this.showError(error.message);
+                this.logOut();
+                this.showInfo(strings.messages.onInit);
+
+                this.showError(strings.errors.position);
             },
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
@@ -156,7 +162,24 @@ export class Pikapika extends Component {
         .catch((error) => {
             this.loading(false);
 
-            this.showError(strings.errors.service);
+            if(error && error.status === 503){
+                this.loading(true);
+
+                TrainerService.refreshTokenGoogle(this.state.user.refreshTokenGoogle, this.position)
+                .then((response)=> {
+                    this.loading(false);
+
+                    this.onLogIn(response);
+                    this.getPokemons();
+                })
+                .catch((error)=> {
+                    this.showError(strings.errors.login);
+                    this.logOut();
+                });
+            }
+            else{
+                this.showError(strings.errors.service);
+            }
         });
     }
 

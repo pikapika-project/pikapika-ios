@@ -45,7 +45,7 @@ export default new LocalizedStrings({
             default: 'Error',
             login: 'Por favor verifica tus accesos',
             server: 'Estamos teniendo inconvenientes con nuestros servidores, por favor intenta de nuevo más tarde',
-            service: 'Estamos teniendo inconvenientes con nuestros servicio, por favor intenta de nuevo más tarde',
+            service: 'Estamos teniendo inconvenientes con nuestro servicio, por favor intenta de nuevo más tarde',
             unauth: 'Si sigues presentando estos problemas intenta iniciar tu sesión de nuevo',
             position: 'Para usar PikaPika tienes que activar los permisos de ubicación'
         }
