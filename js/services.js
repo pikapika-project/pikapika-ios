@@ -64,7 +64,11 @@ export let TrainerService = {
     refreshTokenGoogle: function(token, location){
         return google.refresh(token)
         .then(
-            (response) => this.logIn('google', response['id_token'], response['expires_in'], location, 'google', response['refresh_token'])
+            (response) => this.logIn(
+                'google', response['id_token'], response['expires_in'], location, 'google', response['refresh_token'] || token
+            )
+        ).catch(
+            (error) => { console.log(error); }
         );
     },
 

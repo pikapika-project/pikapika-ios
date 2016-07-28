@@ -42,6 +42,26 @@ export class Pikapika extends Component {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
+
+                AsyncStorage.getItem('user')
+                .then((user) => {
+                    if(user){
+                        user = JSON.parse(user);
+
+                        this.verifyToken(user)
+                        .then((user) => {
+                            this.setState({user});
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        });
+                    }
+                    else{
+                        this.logOut();
+                        this.showInfo(strings.messages.onInit);
+                    }
+                })
+                .done();
             },
             (error) => {
                 this.showError(error.message);
@@ -52,29 +72,9 @@ export class Pikapika extends Component {
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
         });
-
-        AsyncStorage.getItem('user')
-        .then((user) => {
-            if(user){
-                user = JSON.parse(user);
-
-                this.verifyToken(user)
-                .then((user) => {
-                    this.setState({user});
-                })
-                .catch((error)=>{
-                    console.log(error);
-                });
-            }
-            else{
-                this.logOut();
-                this.showInfo(strings.messages.onInit);
-            }
-        })
-        .done();
     }
 
-    logInWithGoogle(code){
+    logInWithGoogle(code) {
         if(this.position){
             this.loading(true);
 

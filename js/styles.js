@@ -39,7 +39,7 @@ export default StyleSheet.create({
     logIn: {
         justifyContent: 'space-around',
         alignItems: 'center',
-        height: 280,
+        height: 300,
     },
     radioText: {
         marginLeft: 10
@@ -53,8 +53,6 @@ export default StyleSheet.create({
         marginTop: -5
     },
     googleLogInButton: {
-        marginTop: 10,
-        marginBottom: -5,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 0,
