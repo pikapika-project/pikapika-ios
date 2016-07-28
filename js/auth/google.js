@@ -90,6 +90,25 @@ export class GoogleAuth {
         .then(manageResponse('json'))
     }
 
+    refresh(token) {
+        return fetch(OAUTH_TOKEN_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: querystring.stringify({
+                refresh_token: token,
+                client_id: CLIENT_ID,
+                client_secret: SECRET,
+                redirect_uri: 'http://127.0.0.1:9004',
+                grant_type: 'refresh_token',
+                approval_prompt: 'force',
+                promp: 'consent'
+            })
+        })
+        .then(manageResponse('json'))
+    }
+
     login(email, password){
 
         return fetch(AUTH_URL, {

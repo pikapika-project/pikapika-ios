@@ -27,7 +27,7 @@ export let TrainerService = {
         .then(manageResponse('json'))
         .catch((error) => console.log(error));
     },
-    logIn: function(username, token, expireTime, location, provider){
+    logIn: function(username, token, expireTime, location, provider, refreshToken){
         delete location.coords.speed;
         delete location.coords.accuracy;
         delete location.coords.heading;
@@ -51,6 +51,7 @@ export let TrainerService = {
         })
         .then(manageResponse('json'))
         .then((response) => {
+            response.data.refreshToken = refreshToken;
             response.data.expireTime = expireTime;
             response.data.createdAt = new Date().getTime();
             response.data.expireAt = new Date().getTime() + expireTime;
@@ -60,10 +61,17 @@ export let TrainerService = {
         .catch(error => console.log(error));
     },
 
+    refreshTokenGoogle: function(token, location){
+        return google.refresh(token)
+        .then(
+            (response) => this.logIn('google', response['id_token'], response['expires_in'], location, 'google', response['refresh_token'])
+        );
+    },
+
     logInWithGoogleOAuth2: function(code, location){
         return google.oAuth2(code)
         .then(
-            (response) => this.logIn('google', response['id_token'], response['expires_in'], location, 'google')
+            (response) => this.logIn('google', response['id_token'], response['expires_in'], location, 'google', response['refresh_token'])
         );
     },
 

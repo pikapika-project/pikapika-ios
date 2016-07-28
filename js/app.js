@@ -55,9 +55,16 @@ export class Pikapika extends Component {
 
         AsyncStorage.getItem('user')
         .then((user) => {
-            if(user && !this.expired(JSON.parse(user))){
+            if(user){
                 user = JSON.parse(user);
-                this.setState({user});
+
+                this.verifyToken(user)
+                .then((user) => {
+                    this.setState({user});
+                })
+                .catch((error)=>{
+                    console.log(error);
+                });
             }
             else{
                 this.logOut();
@@ -72,15 +79,21 @@ export class Pikapika extends Component {
             this.loading(true);
 
             TrainerService.logInWithGoogleOAuth2(code, this.position)
-            .then((response) => this.onLogIn(response))
-            .catch((error) => this.onLogInFailure(error));
+            .then((response) => {
+                this.onLogIn(response);
+                this.getPokemons();
+            })
+            .catch((error) => {
+                this.onLogInFailure(error);
+                this.showError(strings.errors.login);
+            });
         }
         else {
             this.showError(strings.errors.position);
         }
     }
 
-    logOut(){
+    logOut() {
         AsyncStorage.removeItem('user')
         .then(() => {
             let user = null;
@@ -100,8 +113,6 @@ export class Pikapika extends Component {
             this.refs.logIn.close();
 
             AsyncStorage.setItem('user', JSON.stringify(user));
-
-            this.getPokemons();
         }
         else {
             this.showError(strings.errors.login);
@@ -109,16 +120,14 @@ export class Pikapika extends Component {
         }
     }
 
-    onLogInFailure(error){
+    onLogInFailure(error) {
         this.loading(false);
-
-        this.showError(strings.errors.server);
-
         this.refs.logIn.open();
     }
 
     getPokemons() {
-        if(!this.expired()){
+        this.verifyToken(this.state.user)
+        .then(()=> {
             this.loading(true);
 
             let disableSearch = true;
@@ -126,37 +135,63 @@ export class Pikapika extends Component {
 
             this.searchTimer();
 
-            PokemonService
-            .find(this.position.coords, this.state.user['access_token'])
-            .then((data) => {
-                this.loading(false);
+            return PokemonService.find(this.position.coords, this.state.user['access_token']);
 
-                if(data){
-                    let pokemonList = [];
-                    this.setState({pokemonList});
+        })
+        .then((data) => {
+            this.loading(false);
 
-                    pokemonList = data;
-                    this.setState({pokemonList});
-                }
-                else{
-                    this.showError(strings.error.service);
-                }
-            })
-            .catch((error) => {
-                this.loading(false);
+            if(data){
+                let pokemonList = [];
+                this.setState({pokemonList});
 
-                this.showError(strings.error.service);
-            });
-        }
-        else{
-            logOut();
-        }
+                pokemonList = data;
+                this.setState({pokemonList});
+            }
+            else{
+                this.showError(strings.errors.service);
+            }
+        })
+        .catch((error) => {
+            this.loading(false);
+
+            this.showError(strings.errors.service);
+        });
     }
 
-    expired(user){
-        const _user = user || this.state.user;
-        if(_user && _user.expireAt){
-            return new Date().getTime > _user.expireAt;
+    verifyToken(user) {
+        return new Promise((resolve, reject) => {
+            if(!this.expired(user)) {
+                resolve(user);
+            }
+            else {
+                if(user.refreshToken){
+                    this.loading(true);
+
+                    TrainerService.refreshTokenGoogle(user.refreshToken, this.position)
+                    .then((response) => {
+                        this.loading(false);
+
+                        this.onLogIn(response);
+
+                        resolve(response);
+                    })
+                    .catch((error) => {
+                        this.onLogInFailure();
+                        this.logOut();
+                        reject('Cannot update the token');
+                    });
+                }
+                else{
+                    this.logOut();
+                }
+            }
+        });
+    }
+
+    expired(user) {
+        if(user && user.expireAt){
+            return new Date().getTime() > user.expireAt;
         }
         return true;
     }
