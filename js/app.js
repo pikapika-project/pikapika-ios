@@ -51,6 +51,7 @@ export class Pikapika extends Component {
                         this.verifyToken(user)
                         .then((user) => {
                             this.setState({user});
+                            this.getPokemons();
                         })
                         .catch((error)=>{
                             console.log(error);
@@ -245,6 +246,13 @@ export class Pikapika extends Component {
         return true;
     }
 
+    onGoogleViewError() {
+        this.refs.googleAuth.close();
+        return (
+            <Text></Text>
+        );
+    }
+
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
@@ -345,9 +353,8 @@ export class Pikapika extends Component {
             ref={'googleAuthWebView'}
             source={{uri: this.googleAuthSource}}
             onShouldStartLoadWithRequest={(route) => this.watchGoogleAuth(route)}
-            renderError={() => { return (<Text></Text>); }}
+            renderError={(data) => this.onGoogleViewError(data)}
             >
-
             </WebView>
             </Modal>
 

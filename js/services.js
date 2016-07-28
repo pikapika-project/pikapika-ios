@@ -54,7 +54,7 @@ export let TrainerService = {
             response.data.refreshToken = refreshToken;
             response.data.expireTime = expireTime;
             response.data.createdAt = new Date().getTime();
-            response.data.expireAt = new Date().getTime() + expireTime;
+            response.data.expireAt = new Date().getTime() + (expireTime * 1000);
 
             return response.data;
         })
