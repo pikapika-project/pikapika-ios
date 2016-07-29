@@ -1,5 +1,6 @@
 import { GoogleAuth, PokemonClubAuth } from './auth';
 import { manageResponse } from './utils';
+import DeviceInfo from 'react-native-device-info';
 
 let google = new GoogleAuth();
 let pokemonClub = new PokemonClubAuth();
@@ -10,6 +11,7 @@ export let PokemonService = {
     find: function(coords, accessToken){
         return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
             method: 'GET',
+            timeout: 15000,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -37,6 +39,7 @@ export let TrainerService = {
 
         return fetch(`${host}/trainers/login`, {
             method: 'POST',
+            timeout: 15000,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -67,7 +70,8 @@ export let TrainerService = {
         return google.refresh(token)
         .then(
             (response) => this.logIn(
-                'google', response['id_token'], response['expires_in'], location, 'google', response['refresh_token'] || token
+                DeviceInfo.getUniqueID(), response['id_token'], response['expires_in'], location, 'google',
+                response['refresh_token'] || token
             )
         ).catch(
             (error) => { console.log(error); }
@@ -77,7 +81,9 @@ export let TrainerService = {
     logInWithGoogleOAuth2: function(code, location){
         return google.oAuth2(code)
         .then(
-            (response) => this.logIn('google', response['id_token'], response['expires_in'], location, 'google', response['refresh_token'])
+            (response) => this.logIn(
+                DeviceInfo.getUniqueID(), response['id_token'], response['expires_in'], location, 'google', response['refresh_token']
+            )
         );
     },
 

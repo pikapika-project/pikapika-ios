@@ -163,10 +163,12 @@ export class Pikapika extends Component {
         .catch((error) => {
             this.loading(false);
 
-            if(error && error.status === 503){
+            console.log(error);
+
+            if(error && (error.status === 408 || error.status === 504)){
                 this.loading(true);
 
-                TrainerService.refreshTokenGoogle(this.state.user.refreshTokenGoogle, this.position)
+                TrainerService.refreshTokenGoogle(this.state.user.refreshToken, this.position)
                 .then((response)=> {
                     this.loading(false);
 
@@ -174,7 +176,9 @@ export class Pikapika extends Component {
                     this.getPokemons();
                 })
                 .catch((error)=> {
-                    this.showError(strings.errors.login);
+                    this.loading(false);
+
+                    this.showError(strings.errors.service);
                     this.logOut();
                 });
             }
@@ -185,6 +189,7 @@ export class Pikapika extends Component {
     }
 
     verifyToken(user) {
+        console.log(user);
         return new Promise((resolve, reject) => {
             if(!this.expired(user)) {
                 resolve(user);
