@@ -230,7 +230,7 @@ export class Pikapika extends Component {
         TimerMixin.setTimeout( () => {
             let disableSearch = false;
             this.setState({disableSearch});
-        }, 15000);
+        }, 30000);
     }
 
     loading(loading) {

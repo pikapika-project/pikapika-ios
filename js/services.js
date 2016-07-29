@@ -6,10 +6,12 @@ let google = new GoogleAuth();
 let pokemonClub = new PokemonClubAuth();
 
 let host = 'https://api.pikapika.io';
+host = 'http://0.0.0.0:3000';
 
 export let PokemonService = {
     find: function(coords, accessToken){
-        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
+        console.log(`${host}/v2/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`);
+        return fetch(`${host}/v2/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
             method: 'GET',
             timeout: 15000,
             headers: {
@@ -20,6 +22,7 @@ export let PokemonService = {
         .then(manageResponse('json'))
         .then((response) => response.data)
         .catch((error ) => {
+            console.log(error);
             return Promise.reject(error);
         });
     }
