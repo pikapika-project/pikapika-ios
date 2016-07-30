@@ -12,7 +12,7 @@ import moment from 'moment';
 import styles from './styles';
 import strings from './localization';
 import { PokemonService, TrainerService } from './services';
-import { getParameter } from './utils';
+import { getParameter, pokeTest } from './utils';
 import { pokemonImages } from './images';
 import { pokemonSounds } from './sounds';
 
@@ -34,7 +34,8 @@ export class Pikapika extends Component {
             provider: 'google',
             user: null,
             disableSearch: false,
-            timeToSearch: '-1'
+            timeToSearch: '-1',
+            waitIcon: 'ios-time-outline'
         };
     }
 
@@ -160,7 +161,8 @@ export class Pikapika extends Component {
             .catch((error) => {
                 this.loading(false);
 
-                if(error && (error.status === 408 || error.status === 504)){
+                // if(false && error && (error.status === 408 || error.status === 504)){
+                if(false) {
                     this.loading(true);
 
                     TrainerService.refreshTokenGoogle(this.state.user.refreshToken)
@@ -173,7 +175,7 @@ export class Pikapika extends Component {
                     .catch((error)=> {
                         this.loading(false);
 
-                        this.showError(strings.errors.service);
+                        this.showError(strings.errors.login);
                         this.logOut();
                     });
                 }
@@ -186,6 +188,8 @@ export class Pikapika extends Component {
 
                 this.searchTimer();
             });
+
+            this.updateWaitIcon();
         }
         else {
             this.showError(strings.errors.position);
@@ -300,6 +304,28 @@ export class Pikapika extends Component {
         );
     }
 
+    updateWaitIcon(){
+        TimerMixin.setTimeout(() => {
+            let waitIcon = 'ios-clock-outline';
+            let poke = pokeTest[Math.floor(Math.random() * pokeTest.length)];
+
+            this.setState({waitIcon});
+
+            this.showInfo([
+                strings.whosThatPokemon,
+                '\n\n',
+                poke.question
+            ].join(''));
+
+            TimerMixin.setTimeout(() => {
+                this.showInfo(strings.formatString(
+                    strings.its, poke.answer
+                ));
+            }, 5000)
+
+        }, 13000);
+    }
+
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
@@ -312,30 +338,32 @@ export class Pikapika extends Component {
             followsUserLocation={true}
             style={styles.map}
             >
-            {this.state.pokemonList.map(pokemon => (
-                <MapView.Marker
-                key={pokemon.id}
-                identifier={pokemon.id}
-                title={pokemon.name}
-                description={
-                    strings.formatString(
-                        strings.timeleft,
-                        moment('2000-01-01 00:00:00').add(
-                            moment.duration(Math.abs(pokemon.timeleft))
-                        ).format('mm:ss')
-                    )
-                }
-                image={pokemonImages[pokemon.number]}
-                coordinate={{
-                    latitude: pokemon.position.lat,
-                    longitude: pokemon.position.lng
-                }}
-                onSelect={ () => {
-                    pokemonSounds[pokemon.number].setVolume(0.7);
-                    pokemonSounds[pokemon.number].play();
-                } }
-                />
-            ))}
+            {this.state.pokemonList.map(pokemon => {
+                return pokemon && pokemon.position ? (
+                    <MapView.Marker
+                    key={pokemon.id}
+                    identifier={pokemon.id}
+                    title={pokemon.name}
+                    description={
+                        strings.formatString(
+                            strings.timeleft,
+                            moment('2000-01-01 00:00:00').add(
+                                moment.duration(Math.abs(pokemon.timeleft))
+                            ).format('mm:ss')
+                        )
+                    }
+                    image={pokemonImages[pokemon.number]}
+                    coordinate={{
+                        latitude: pokemon.position.lat,
+                        longitude: pokemon.position.lng
+                    }}
+                    onSelect={ () => {
+                        pokemonSounds[pokemon.number].setVolume(0.7);
+                        pokemonSounds[pokemon.number].play();
+                    } }
+                    />
+                ) : '';
+            })}
             </MapView.Animated>
 
             {
@@ -346,7 +374,9 @@ export class Pikapika extends Component {
                     disabled={this.state.disableSearch}
                     onPress={ ()=>{ this.getPokemons() }}>
                     {this.state.timeToSearch >= 0 ? this.state.timeToSearch : (
-                        <Icon name={this.state.disableSearch ? 'ios-timer-outline' : 'ios-search'}/>
+                        <Icon
+                        name={this.state.disableSearch ? this.state.waitIcon : 'ios-search'}
+                        />
                     )}
                     </Button>
                 )

@@ -16,6 +16,8 @@ export default new LocalizedStrings({
         googleSigIn: 'Sign in',
         timeleft: 'Timeleft: {0}m',
         seen: 'Seen at {0}',
+        whosThatPokemon: 'Who\'s That Pokémon? 🤔',
+        its: 'It\'s {0}!',
         errors:{
             default: 'Error',
             login: 'Please verify your access',
@@ -42,6 +44,8 @@ export default new LocalizedStrings({
         timeleft: 'Tiempo restante: {0}m',
         seen: 'Visto a las {0}',
         error: 'Error',
+        whosThatPokemon: '¿Quién es este Pokemón? 🤔',
+        its: 'Es {0}!',
         errors:{
             default: 'Error',
             login: 'Por favor verifica tus accesos',
