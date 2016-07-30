@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS, WebView } from 'react-native';
-import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
+import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content, Spinner as NBSpinner } from 'native-base';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import Sound from 'react-native-sound';
@@ -33,7 +33,8 @@ export class Pikapika extends Component {
             password: null,
             provider: 'google',
             user: null,
-            disableSearch: false
+            disableSearch: false,
+            timeToSearch: '-1'
         };
     }
 
@@ -81,10 +82,9 @@ export class Pikapika extends Component {
     }
 
     logInWithGoogle(code) {
-        if(this.position){
             this.loading(true);
 
-            TrainerService.logInWithGoogleOAuth2(code, this.position)
+            TrainerService.logInWithGoogleOAuth2(code)
             .then((response) => {
                 this.onLogIn(response);
                 this.getPokemons();
@@ -93,10 +93,7 @@ export class Pikapika extends Component {
                 this.onLogInFailure(error);
                 this.showError(strings.errors.login);
             });
-        }
-        else {
-            this.showError(strings.errors.position);
-        }
+
     }
 
     logOut() {
@@ -134,62 +131,68 @@ export class Pikapika extends Component {
     }
 
     getPokemons() {
-        this.verifyToken(this.state.user)
-        .then(()=> {
-            this.loading(true);
-
-            let disableSearch = true;
-            this.setState({disableSearch});
-
-            this.searchTimer();
-
-            return PokemonService.find(this.position.coords, this.state.user['access_token']);
-
-        })
-        .then((data) => {
-            this.loading(false);
-
-            if(data){
-                let pokemonList = [];
-                this.setState({pokemonList});
-
-                pokemonList = data;
-                this.setState({pokemonList});
-            }
-            else{
-                this.showError(strings.errors.service);
-            }
-        })
-        .catch((error) => {
-            this.loading(false);
-
-            console.log(error);
-
-            if(error && (error.status === 408 || error.status === 504)){
+        if(this.position){
+            this.verifyToken(this.state.user)
+            .then(()=> {
                 this.loading(true);
 
-                TrainerService.refreshTokenGoogle(this.state.user.refreshToken, this.position)
-                .then((response)=> {
-                    this.loading(false);
+                let disableSearch = true;
+                this.setState({disableSearch});
 
-                    this.onLogIn(response);
-                    this.getPokemons();
-                })
-                .catch((error)=> {
-                    this.loading(false);
+                return PokemonService.find(this.position.coords, this.state.user.accessToken);
+            })
+            .then((data) => {
+                this.loading(false);
 
+                if(data){
+                    let pokemonList = [];
+                    this.setState({pokemonList});
+
+                    pokemonList = data;
+                    this.setState({pokemonList});
+                }
+                else{
                     this.showError(strings.errors.service);
-                    this.logOut();
-                });
-            }
-            else{
-                this.showError(strings.errors.service);
-            }
-        });
+                }
+
+                this.searchTimer();
+            })
+            .catch((error) => {
+                this.loading(false);
+
+                if(error && (error.status === 408 || error.status === 504)){
+                    this.loading(true);
+
+                    TrainerService.refreshTokenGoogle(this.state.user.refreshToken)
+                    .then((response)=> {
+                        this.loading(false);
+
+                        this.onLogIn(response);
+                        this.getPokemons();
+                    })
+                    .catch((error)=> {
+                        this.loading(false);
+
+                        this.showError(strings.errors.service);
+                        this.logOut();
+                    });
+                }
+                else if(error && error.status === 429) {
+                    this.showError(strings.errors.tooManyRequests);
+                }
+                else{
+                    this.showError(strings.errors.service);
+                }
+
+                this.searchTimer();
+            });
+        }
+        else {
+            this.showError(strings.errors.position);
+        }
     }
 
     verifyToken(user) {
-        console.log(user);
         return new Promise((resolve, reject) => {
             if(!this.expired(user)) {
                 resolve(user);
@@ -227,10 +230,25 @@ export class Pikapika extends Component {
     }
 
     searchTimer() {
-        TimerMixin.setTimeout( () => {
+        if (this.state.timeToSearch === '-1'){
+            let timeToSearch = '30';
+            this.setState({timeToSearch});
+
+            this.searchTimer();
+        }
+        else if(this.state.timeToSearch === '0') {
+            let timeToSearch = '-1';
             let disableSearch = false;
-            this.setState({disableSearch});
-        }, 30000);
+            this.setState({disableSearch, timeToSearch});
+        }
+        else {
+            TimerMixin.setTimeout( () => {
+                let timeToSearch = String(Number(this.state.timeToSearch) - 1);
+                this.setState({timeToSearch});
+
+                this.searchTimer();
+            }, 1000);
+        }
     }
 
     loading(loading) {
@@ -327,7 +345,9 @@ export class Pikapika extends Component {
                     block
                     disabled={this.state.disableSearch}
                     onPress={ ()=>{ this.getPokemons() }}>
-                    <Icon name="ios-search"/>
+                    {this.state.timeToSearch >= 0 ? this.state.timeToSearch : (
+                        <Icon name={this.state.disableSearch ? 'ios-timer-outline' : 'ios-search'}/>
+                    )}
                     </Button>
                 )
             }

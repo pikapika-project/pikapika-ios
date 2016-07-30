@@ -6,22 +6,18 @@ let google = new GoogleAuth();
 let pokemonClub = new PokemonClubAuth();
 
 let host = 'https://api.pikapika.io';
-host = 'http://0.0.0.0:3000';
 
 export let PokemonService = {
     find: function(coords, accessToken){
-        console.log(`${host}/v2/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`);
-        return fetch(`${host}/v2/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
+        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
             method: 'GET',
-            timeout: 15000,
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
             }
         })
         .then(manageResponse('json'))
         .then((response) => response.data)
-        .catch((error ) => {
+        .catch((error) => {
             console.log(error);
             return Promise.reject(error);
         });
@@ -34,12 +30,7 @@ export let TrainerService = {
         .then(manageResponse('json'))
         .catch((error) => console.log(error));
     },
-    logIn: function(username, token, expireTime, location, provider, refreshToken){
-        delete location.coords.speed;
-        delete location.coords.accuracy;
-        delete location.coords.heading;
-        delete location.coords.altitudeAccuracy;
-
+    logIn: function(accessToken, refreshToken, expireTime, provider){
         return fetch(`${host}/trainers/login`, {
             method: 'POST',
             timeout: 15000,
@@ -48,17 +39,13 @@ export let TrainerService = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: username,
-                provider: {
-                    name: provider,
-                    token: token,
-                    expireTime: expireTime
-                },
-                location: location.coords
+                'device_unique_id': DeviceInfo.getUniqueID(),
+                provider: provider
             })
         })
         .then(manageResponse('json'))
         .then((response) => {
+            response.data.accessToken = accessToken;
             response.data.refreshToken = refreshToken;
             response.data.expireTime = expireTime;
             response.data.createdAt = new Date().getTime();
@@ -69,33 +56,32 @@ export let TrainerService = {
         .catch(error => console.log(error));
     },
 
-    refreshTokenGoogle: function(token, location){
-        return google.refresh(token)
+    refreshTokenGoogle: function(refreshToken){
+        return google.refresh(refreshToken)
         .then(
-            (response) => this.logIn(
-                DeviceInfo.getUniqueID(), response['id_token'], response['expires_in'], location, 'google',
-                response['refresh_token'] || token
-            )
+            (response) => {
+                return {
+                    data: {
+                        accessToken: response['id_token'],
+                        refreshToken: response['refresh_token'] || refreshToken,
+                        expireTime: response['expires_in'],
+                        createdAt: new Date().getTime(),
+                        expireAt: new Date().getTime() + (response['expires_in'] * 1000)
+                    }
+                };
+            }
         ).catch(
             (error) => { console.log(error); }
         );
     },
 
-    logInWithGoogleOAuth2: function(code, location){
+    logInWithGoogleOAuth2: function(code){
         return google.oAuth2(code)
         .then(
             (response) => this.logIn(
-                DeviceInfo.getUniqueID(), response['id_token'], response['expires_in'], location, 'google', response['refresh_token']
+                response['id_token'], response['refresh_token'], response['expires_in'], 'google'
             )
         );
-    },
-
-    logInWithGoogle: function(mail, password, location){
-        return google.login(mail, password)
-        .then((response) => {
-            return this.logIn(mail, response.Auth, response.Expiry, location, 'google');
-        })
-        .catch(error => console.log(error));
     },
 
     logInWithPokemonClub: function(username, password, location){
