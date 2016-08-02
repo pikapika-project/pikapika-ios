@@ -61,13 +61,11 @@ export let TrainerService = {
         .then(
             (response) => {
                 return {
-                    data: {
-                        accessToken: response['id_token'],
-                        refreshToken: response['refresh_token'] || refreshToken,
-                        expireTime: response['expires_in'],
-                        createdAt: new Date().getTime(),
-                        expireAt: new Date().getTime() + (response['expires_in'] * 1000)
-                    }
+                    accessToken: response['id_token'],
+                    refreshToken: response['refresh_token'] || refreshToken,
+                    expireTime: response['expires_in'],
+                    createdAt: new Date().getTime(),
+                    expireAt: new Date().getTime() + (response['expires_in'] * 1000)
                 };
             }
         ).catch(

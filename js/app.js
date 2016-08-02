@@ -18,11 +18,13 @@ import { pokemonSounds } from './sounds';
 
 let { width, height } = Dimensions.get('window');
 
+let TIMER = 30;
+
 export class Pikapika extends Component {
     watchID = (null: ?number);
     googleAuthSource = 'https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&redirect_uri=http://127.0.0.1:9004&response_type=code&client_id=848232511240-73ri3t7plvk96pj4f85uj8otdat2alem.apps.googleusercontent.com';
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -46,7 +48,7 @@ export class Pikapika extends Component {
 
                 AsyncStorage.getItem('user')
                 .then((user) => {
-                    if(user){
+                    if(user) {
                         user = JSON.parse(user);
 
                         this.verifyToken(user)
@@ -55,8 +57,6 @@ export class Pikapika extends Component {
                             this.getPokemons();
                         })
                         .catch((error)=>{
-                            console.log(error);
-
                             this.logOut();
                             this.showInfo(strings.messages.onInit);
                         });
@@ -132,7 +132,7 @@ export class Pikapika extends Component {
     }
 
     getPokemons() {
-        if(this.position){
+        if(this.position) {
             this.verifyToken(this.state.user)
             .then(()=> {
                 this.loading(true);
@@ -145,7 +145,7 @@ export class Pikapika extends Component {
             .then((data) => {
                 this.loading(false);
 
-                if(data){
+                if(data) {
                     let pokemonList = [];
                     this.setState({pokemonList});
 
@@ -161,7 +161,7 @@ export class Pikapika extends Component {
             .catch((error) => {
                 this.loading(false);
 
-                // if(false && error && (error.status === 408 || error.status === 504)){
+                // if(false && error && (error.status === 408 || error.status === 504)) {
                 if(false) {
                     this.loading(true);
 
@@ -182,18 +182,20 @@ export class Pikapika extends Component {
                 else if(error && error.status === 429) {
                     this.showError(strings.errors.tooManyRequests);
                 }
-                else{
+                else {
                     this.showError(strings.errors.service);
                 }
 
                 this.searchTimer();
             });
-
-            this.updateWaitIcon();
         }
         else {
             this.showError(strings.errors.position);
         }
+    }
+
+    getBackgroundPokemons(){
+        
     }
 
     verifyToken(user) {
@@ -202,7 +204,7 @@ export class Pikapika extends Component {
                 resolve(user);
             }
             else {
-                if(user.refreshToken){
+                if(user.refreshToken) {
                     this.loading(true);
 
                     TrainerService.refreshTokenGoogle(user.refreshToken, this.position)
@@ -227,15 +229,15 @@ export class Pikapika extends Component {
     }
 
     expired(user) {
-        if(user && user.expireAt){
+        if(user && user.expireAt) {
             return new Date().getTime() > user.expireAt;
         }
         return true;
     }
 
     searchTimer() {
-        if (this.state.timeToSearch === '-1'){
-            let timeToSearch = '30';
+        if (this.state.timeToSearch === '-1') {
+            let timeToSearch = String(TIMER);
             this.setState({timeToSearch});
 
             this.searchTimer();
@@ -270,7 +272,7 @@ export class Pikapika extends Component {
         });
     }
 
-    showInfo(message, duration){
+    showInfo(message, duration) {
         let toast = Toast.show(message, {
             duration: duration || Toast.durations.LONG,
             position: Toast.positions.CENTER,
@@ -282,7 +284,7 @@ export class Pikapika extends Component {
     }
 
     watchGoogleAuth(route) {
-        if(route.url.startsWith('http://127.0.0.1') && !getParameter('error', route.url)){
+        if(route.url.startsWith('http://127.0.0.1') && !getParameter('error', route.url)) {
             this.refs.googleAuth.close();
 
             this.logInWithGoogle(
@@ -291,7 +293,7 @@ export class Pikapika extends Component {
 
             return false;
         }
-        else if(route.url.startsWith('http://127.0.0.1') && getParameter('error', route.url)){
+        else if(route.url.startsWith('http://127.0.0.1') && getParameter('error', route.url)) {
             this.refs.googleAuth.close();
         }
         return true;
@@ -304,7 +306,7 @@ export class Pikapika extends Component {
         );
     }
 
-    updateWaitIcon(){
+    updateWaitIcon() {
         TimerMixin.setTimeout(() => {
             let waitIcon = 'ios-clock-outline';
             let poke = pokeTest[Math.floor(Math.random() * pokeTest.length)];

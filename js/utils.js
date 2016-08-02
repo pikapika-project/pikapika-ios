@@ -1,6 +1,5 @@
 export function manageResponse(responseType, firm){
     return function(response) {
-        console.log(response);
         if(response.ok){
             return response[responseType]();
         }
