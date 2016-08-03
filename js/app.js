@@ -137,7 +137,6 @@ export class Pikapika extends Component {
         if(this.position) {
             this.verifyToken(this.state.user)
             .then(()=> {
-                this.loading(true);
 
                 let disableSearch = true;
                 this.setState({disableSearch});
@@ -145,7 +144,6 @@ export class Pikapika extends Component {
                 return PokemonService.find(this.position.coords, this.state.user.accessToken);
             })
             .then((data) => {
-                this.loading(false);
 
                 if(data) {
                     this.mergePokemons(data);
@@ -158,7 +156,6 @@ export class Pikapika extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                this.loading(false);
 
                 // if(false && error && (error.status === 408 || error.status === 504)) {
                 if(false) {
@@ -195,21 +192,27 @@ export class Pikapika extends Component {
     }
 
     getSharedPokemons(){
+        console.log('si');
         if(this.position){
             PokemonService.get(this.position.coords)
             .then((data) => {
                 console.log(data);
                 this.mergePokemons(data, true);
+            })
+            .catch((data) => {
+                console.log(data);
             });
         }
 
-        TimerMixin.setTimeout(() => {
+        this.sharedTimer = TimerMixin.setTimeout(() => {
             this.getSharedPokemons();
         }, 10000);
     }
 
     mergePokemons(data, isShared) {
         let pokemonList = this.state.pokemonList;
+
+        console.log(data, isShared);
 
         data.forEach((pokemon, key) => {
             if(!_.findWhere(pokemonList, {id: pokemon.id})) {
@@ -382,9 +385,9 @@ export class Pikapika extends Component {
                             moment('2000-01-01 00:00:00').add(
                                 moment.duration(Math.abs(pokemon.timeleft))
                             ).format('mm:ss')
-                        )
+                        ) + pokemon.isShared ? 'Seen' : ''
                     }
-                    image={pokemon.isShared ? pokemonFilterImages[pokemon.number] : pokemonImages[pokemon.number]}
+                    image={pokemonImages[pokemon.number]}
                     coordinate={{
                         latitude: pokemon.position.lat,
                         longitude: pokemon.position.lng

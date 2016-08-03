@@ -9,7 +9,7 @@ let host = 'https://api.pikapika.io';
 
 export let PokemonService = {
     find: function(coords, accessToken){
-        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
+        return fetch(`${host}/v2/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -23,7 +23,7 @@ export let PokemonService = {
         });
     },
     get: function(coords){
-        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}`, {
+        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}?radius=30000`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
