@@ -8,17 +8,18 @@ import TimerMixin from 'react-timer-mixin';
 import Toast from 'react-native-root-toast';
 import Spinner from 'react-native-spinkit';
 import moment from 'moment';
+import _ from 'underscore';
 
 import styles from './styles';
 import strings from './localization';
 import { PokemonService, TrainerService } from './services';
 import { getParameter, pokeTest } from './utils';
-import { pokemonImages } from './images';
+import { pokemonImages, pokemonFilterImages } from './images';
 import { pokemonSounds } from './sounds';
 
 let { width, height } = Dimensions.get('window');
 
-let TIMER = 30;
+let TIMER = 10;
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
@@ -54,7 +55,7 @@ export class Pikapika extends Component {
                         this.verifyToken(user)
                         .then((user) => {
                             this.setState({user});
-                            this.getPokemons();
+                            this.getSharedPokemons();
                         })
                         .catch((error)=>{
                             this.logOut();
@@ -112,6 +113,7 @@ export class Pikapika extends Component {
 
     onLogIn(user) {
         this.loading(false);
+        this.getSharedPokemons();
 
         if(user) {
             this.setState({user});
@@ -146,11 +148,7 @@ export class Pikapika extends Component {
                 this.loading(false);
 
                 if(data) {
-                    let pokemonList = [];
-                    this.setState({pokemonList});
-
-                    pokemonList = data;
-                    this.setState({pokemonList});
+                    this.mergePokemons(data);
                 }
                 else{
                     this.showError(strings.errors.service);
@@ -159,6 +157,7 @@ export class Pikapika extends Component {
                 this.searchTimer();
             })
             .catch((error) => {
+                console.log(error);
                 this.loading(false);
 
                 // if(false && error && (error.status === 408 || error.status === 504)) {
@@ -183,6 +182,7 @@ export class Pikapika extends Component {
                     this.showError(strings.errors.tooManyRequests);
                 }
                 else {
+                    //this.showError(strings.errors.tooManyRequests);
                     this.showError(strings.errors.service);
                 }
 
@@ -194,8 +194,38 @@ export class Pikapika extends Component {
         }
     }
 
-    getBackgroundPokemons(){
-        
+    getSharedPokemons(){
+        if(this.position){
+            PokemonService.get(this.position.coords)
+            .then((data) => {
+                console.log(data);
+                this.mergePokemons(data, true);
+            });
+        }
+
+        TimerMixin.setTimeout(() => {
+            this.getSharedPokemons();
+        }, 10000);
+    }
+
+    mergePokemons(data, isShared) {
+        let pokemonList = this.state.pokemonList;
+
+        data.forEach((pokemon, key) => {
+            if(!_.findWhere(pokemonList, {id: pokemon.id})) {
+                pokemon.isShared = isShared;
+                pokemonList.push(pokemon);
+            }
+        });
+
+        pokemonList.forEach((pokemon, key) => {
+            pokemon.timeleft = new Date(pokemon.expireAt) - new Date();
+            if(pokemon.timeleft <= 0){
+                pokemonList.splice(key, 1);
+            }
+        });
+
+        this.setState({pokemonList});
     }
 
     verifyToken(user) {
@@ -354,7 +384,7 @@ export class Pikapika extends Component {
                             ).format('mm:ss')
                         )
                     }
-                    image={pokemonImages[pokemon.number]}
+                    image={pokemon.isShared ? pokemonFilterImages[pokemon.number] : pokemonImages[pokemon.number]}
                     coordinate={{
                         latitude: pokemon.position.lat,
                         longitude: pokemon.position.lng

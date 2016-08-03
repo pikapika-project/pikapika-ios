@@ -21,6 +21,20 @@ export let PokemonService = {
             console.log(error);
             return Promise.reject(error);
         });
+    },
+    get: function(coords){
+        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
+        })
+        .then(manageResponse('json'))
+        .then((response) => response.data)
+        .catch((error) => {
+            console.log(error);
+            return Promise.reject(error);
+        });
     }
 };
 
