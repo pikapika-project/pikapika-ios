@@ -22,8 +22,8 @@ export let PokemonService = {
             return Promise.reject(error);
         });
     },
-    get: function(coords){
-        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}?radius=30000`, {
+    get: function(coords, radious){
+        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}?radius=${radious || 1000}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

@@ -17,13 +17,14 @@ import { getParameter, pokeTest } from './utils';
 import { pokemonImages, pokemonFilterImages } from './images';
 import { pokemonSounds } from './sounds';
 
-let { width, height } = Dimensions.get('window');
-
-let TIMER = 10;
+const { width, height } = Dimensions.get('window');
+const TIMER = 10;
+const METERS_PER_DEGREE = 111000;
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
     googleAuthSource = 'https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&redirect_uri=http://127.0.0.1:9004&response_type=code&client_id=848232511240-73ri3t7plvk96pj4f85uj8otdat2alem.apps.googleusercontent.com';
+    region;
 
     constructor(props) {
         super(props);
@@ -46,7 +47,6 @@ export class Pikapika extends Component {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
-                this.getSharedPokemons();
             },
             (error) => {
                 this.logOut();
@@ -196,7 +196,7 @@ export class Pikapika extends Component {
 
     getSharedPokemons(){
         if(this.position) {
-            PokemonService.get(this.position.coords)
+            PokemonService.get(this.region, this.getradius(this.region))
             .then((data) => {
                 this.mergePokemons(data, true);
             })
@@ -205,32 +205,39 @@ export class Pikapika extends Component {
             });
         }
 
+        if(this.sharedTimer){
+            TimerMixin.clearTimeout(this.sharedTimer);
+        }
+
         this.sharedTimer = TimerMixin.setTimeout(() => {
             this.getSharedPokemons();
         }, 10000);
     }
 
     mergePokemons(data, isShared) {
+        let _pokemonList;
         let pokemonList = [];
 
-        this.setState({pokemonList});
-
-        pokemonList = this.state.pokemonList;
+        _pokemonList = this.state.pokemonList;
 
         data.forEach((pokemon, key) => {
-            if(!_.findWhere(pokemonList, {id: pokemon.id})) {
+            if(!_.findWhere(_pokemonList, {id: pokemon.id})) {
                 pokemon.isShared = isShared;
-                pokemonList.push(pokemon);
+                _pokemonList.push(pokemon);
             }
         });
 
-        pokemonList.forEach((pokemon, key) => {
+        _pokemonList.forEach((pokemon, key) => {
             pokemon.timeleft = new Date(pokemon.expireAt) - new Date();
             if(pokemon.timeleft <= 0){
-                pokemonList.splice(key, 1);
+                _pokemonList.splice(key, 1);
             }
         });
 
+        this.setState({pokemonList});
+        pokemonList = _pokemonList;
+
+        console.log(pokemonList);
         this.setState({pokemonList});
     }
 
@@ -368,6 +375,18 @@ export class Pikapika extends Component {
         this.refs.map.animateToCoordinate(this.position.coords, 500)
     }
 
+    onChangeRegion(region) {
+        this.region = region;
+        this.getSharedPokemons();
+    }
+
+    getradius(region) {
+        const xDistance = Math.round((region.latitudeDelta * METERS_PER_DEGREE)/2);
+        const yDistance = Math.round((region.longitudeDelta * (METERS_PER_DEGREE * Math.cos(region.latitude * Math.PI / 180)))/2);
+
+        return xDistance > yDistance ? xDistance : yDistance;
+    }
+
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
@@ -380,6 +399,7 @@ export class Pikapika extends Component {
             showsUserLocation={true}
             followsUserLocation={true}
             style={styles.map}
+            onRegionChangeComplete={(region) => this.onChangeRegion(region)}
             >
             {this.state.pokemonList.map(pokemon => {
                 return pokemon && pokemon.position ? (
@@ -393,7 +413,7 @@ export class Pikapika extends Component {
                             moment('2000-01-01 00:00:00').add(
                                 moment.duration(Math.abs(pokemon.timeleft))
                             ).format('mm:ss')
-                        ) + pokemon.isShared ? 'Seen' : ''
+                        )
                     }
                     image={pokemonImages[pokemon.number]}
                     coordinate={{
