@@ -74,15 +74,27 @@ export default StyleSheet.create({
         color: 'blue'
     },
     logout: {
+        opacity: 0.7,
         position: 'absolute',
         top: 20,
         left: 7,
         width: 35,
         height: 35,
-        opacity: 0.5,
+        borderRadius: 50
+    },
+    center: {
+        opacity: 0.7,
+        position: 'absolute',
+        top: 60,
+        left: 7,
+        width: 35,
+        height: 35,
         borderRadius: 50
     },
     logoutIcon: {
+        backgroundColor: 'rgba(0,0,0,0)'
+    },
+    actionIcon: {
         backgroundColor: 'rgba(0,0,0,0)'
     },
     searchButton: {

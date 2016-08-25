@@ -46,28 +46,7 @@ export class Pikapika extends Component {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
-
-                AsyncStorage.getItem('user')
-                .then((user) => {
-                    if(user) {
-                        user = JSON.parse(user);
-
-                        this.verifyToken(user)
-                        .then((user) => {
-                            this.setState({user});
-                            this.getSharedPokemons();
-                        })
-                        .catch((error)=>{
-                            this.logOut();
-                            this.showInfo(strings.messages.onInit);
-                        });
-                    }
-                    else{
-                        this.logOut();
-                        this.showInfo(strings.messages.onInit);
-                    }
-                })
-                .done();
+                this.getSharedPokemons();
             },
             (error) => {
                 this.logOut();
@@ -83,18 +62,42 @@ export class Pikapika extends Component {
         });
     }
 
-    logInWithGoogle(code) {
-            this.loading(true);
+    checkLogin() {
+        AsyncStorage.getItem('user')
+        .then((user) => {
+            if(user) {
+                user = JSON.parse(user);
 
-            TrainerService.logInWithGoogleOAuth2(code)
-            .then((response) => {
-                this.onLogIn(response);
-                this.getPokemons();
-            })
-            .catch((error) => {
-                this.onLogInFailure(error);
-                this.showError(strings.errors.login);
-            });
+                this.verifyToken(user)
+                .then((user) => {
+                    this.setState({user});
+                    this.getSharedPokemons();
+                })
+                .catch((error)=>{
+                    this.logOut();
+                    this.showInfo(strings.messages.onInit);
+                });
+            }
+            else{
+                this.logOut();
+                this.showInfo(strings.messages.onInit);
+            }
+        })
+        .done();
+    }
+
+    logInWithGoogle(code) {
+        this.loading(true);
+
+        TrainerService.logInWithGoogleOAuth2(code)
+        .then((response) => {
+            this.onLogIn(response);
+            this.getPokemons();
+        })
+        .catch((error) => {
+            this.onLogInFailure(error);
+            this.showError(strings.errors.login);
+        });
 
     }
 
@@ -192,11 +195,9 @@ export class Pikapika extends Component {
     }
 
     getSharedPokemons(){
-        console.log('si');
-        if(this.position){
+        if(this.position) {
             PokemonService.get(this.position.coords)
             .then((data) => {
-                console.log(data);
                 this.mergePokemons(data, true);
             })
             .catch((data) => {
@@ -210,9 +211,11 @@ export class Pikapika extends Component {
     }
 
     mergePokemons(data, isShared) {
-        let pokemonList = this.state.pokemonList;
+        let pokemonList = [];
 
-        console.log(data, isShared);
+        this.setState({pokemonList});
+
+        pokemonList = this.state.pokemonList;
 
         data.forEach((pokemon, key) => {
             if(!_.findWhere(pokemonList, {id: pokemon.id})) {
@@ -361,6 +364,10 @@ export class Pikapika extends Component {
         }, 13000);
     }
 
+    center() {
+        this.refs.map.animateToCoordinate(this.position.coords, 500)
+    }
+
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
@@ -368,7 +375,8 @@ export class Pikapika extends Component {
     render() {
         return (
             <View style={styles.page}>
-            <MapView.Animated
+            <MapView
+            ref='map'
             showsUserLocation={true}
             followsUserLocation={true}
             style={styles.map}
@@ -399,7 +407,7 @@ export class Pikapika extends Component {
                     />
                 ) : '';
             })}
-            </MapView.Animated>
+            </MapView>
 
             {
                 this.state.user && (
@@ -417,7 +425,7 @@ export class Pikapika extends Component {
                 )
             }
 
-            <Modal style={styles.logIn} ref={"logIn"} swipeToClose={false} backdropPressToClose={false} position={'center'}>
+            <Modal style={styles.logIn} ref={"logIn"} swipeToClose={true} backdropPressToClose={true} position={'center'}>
             <Text style={styles.logInTitle}>
             {strings.logIn}
             </Text>
@@ -473,12 +481,23 @@ export class Pikapika extends Component {
             </Modal>
 
             {
-                this.state.user && (
+                this.state.user ? (
                     <Button danger style={styles.logout} onPress={() => this.logOut() }>
-                    <Icon name="ios-close" style={styles.logoutIcon} />
+                    <Icon name="ios-log-out" style={styles.logoutIcon} />
                     </Button>
-                )
+                ) : false
+                // (
+                //     <Button danger style={styles.logout} onPress={() => this.logOut() }>
+                //     <Icon name="ios-log-in" style={styles.logoutIcon} />
+                //     </Button>
+                // )
             }
+
+
+
+            {/* <Button danger style={styles.center} onPress={() => this.center() }>
+            <Icon name="ios-locate-outline" style={styles.actionIcon} />
+            </Button> */}
 
             <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#424242'} size={75}/>
             </View>

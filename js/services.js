@@ -35,7 +35,7 @@ export let PokemonService = {
             console.log(error);
             return Promise.reject(error);
         });
-    }
+    },
 };
 
 export let TrainerService = {
