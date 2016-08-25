@@ -158,8 +158,6 @@ export class Pikapika extends Component {
                 this.searchTimer();
             })
             .catch((error) => {
-                console.log(error);
-
                 // if(false && error && (error.status === 408 || error.status === 504)) {
                 if(false) {
                     this.loading(true);
@@ -201,7 +199,7 @@ export class Pikapika extends Component {
                 this.mergePokemons(data, true);
             })
             .catch((data) => {
-                console.log(data);
+
             });
         }
 

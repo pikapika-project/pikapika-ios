@@ -18,7 +18,6 @@ export let PokemonService = {
         .then(manageResponse('json'))
         .then((response) => response.data)
         .catch((error) => {
-            console.log(error);
             return Promise.reject(error);
         });
     },
@@ -32,7 +31,6 @@ export let PokemonService = {
         .then(manageResponse('json'))
         .then((response) => response.data)
         .catch((error) => {
-            console.log(error);
             return Promise.reject(error);
         });
     },
