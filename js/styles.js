@@ -83,10 +83,9 @@ export default StyleSheet.create({
         borderRadius: 50
     },
     center: {
-        opacity: 0.7,
         position: 'absolute',
-        top: 60,
-        left: 7,
+        bottom: 5,
+        right: 7,
         width: 35,
         height: 35,
         borderRadius: 50

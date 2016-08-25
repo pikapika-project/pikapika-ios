@@ -495,9 +495,9 @@ export class Pikapika extends Component {
 
 
 
-            {/* <Button danger style={styles.center} onPress={() => this.center() }>
+            <Button transparent style={styles.center} onPress={() => this.center() }>
             <Icon name="ios-locate-outline" style={styles.actionIcon} />
-            </Button> */}
+            </Button>
 
             <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#424242'} size={75}/>
             </View>
