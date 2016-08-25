@@ -237,7 +237,6 @@ export class Pikapika extends Component {
         this.setState({pokemonList});
         pokemonList = _pokemonList;
 
-        console.log(pokemonList);
         this.setState({pokemonList});
     }
 
