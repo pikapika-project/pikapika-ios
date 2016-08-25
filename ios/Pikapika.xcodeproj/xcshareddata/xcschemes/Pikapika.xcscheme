@@ -88,7 +88,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "../../Sidney.gpx"
+         identifier = "../../Epicnest.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>
