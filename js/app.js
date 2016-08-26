@@ -411,7 +411,6 @@ export class Pikapika extends Component {
 
     onClick() {
         this.clicks++;
-        console.log(this.clicks);
         if(this.clicks >= reloadNumber){
              MoPubInterstitial.showWhenReady();
             this.clicks = 0;
@@ -485,7 +484,6 @@ export class Pikapika extends Component {
             autoRefresh={true}
             onLoaded={() => this.setState({ad: true}) }
             onFailed={() => {
-                console.log('Failed');
                 this.setState({ad: false})
             } }
             />
