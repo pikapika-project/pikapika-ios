@@ -210,7 +210,7 @@ export class Pikapika extends Component {
 
         this.pause = TimerMixin.setTimeout(() => {
             this._getSharedPokemons();
-        }, 2000);
+        }, 1000);
     }
 
     _getSharedPokemons() {
