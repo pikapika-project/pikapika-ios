@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS, WebView } from 'react-native';
 import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content, Spinner as NBSpinner } from 'native-base';
+import { MoPubBanner, MoPubInterstitial } from 'react-native-mopub';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import Sound from 'react-native-sound';
@@ -12,19 +13,24 @@ import _ from 'underscore';
 
 import styles from './styles';
 import strings from './localization';
-import { PokemonService, TrainerService } from './services';
+import { PokemonService, TrainerService, SystemService } from './services';
 import { getParameter, pokeTest } from './utils';
 import { pokemonImages, pokemonFilterImages } from './images';
 import { pokemonSounds } from './sounds';
 
-const { width, height } = Dimensions.get('window');
-const TIMER = 10;
-const METERS_PER_DEGREE = 111000;
+const { width, height }     = Dimensions.get('window');
+const TIMER                 = 10;
+const METERS_PER_DEGREE     = 111000;
+const BANNERL_UNIT_ID       = 'b9fb697840c240ee90aa5cefb00e1c9c';
+const INTERSTITIAL_UNIT_ID  = '2e28f9a166a444f4b028123ed0486696';
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
     googleAuthSource = 'https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&redirect_uri=http://127.0.0.1:9004&response_type=code&client_id=848232511240-73ri3t7plvk96pj4f85uj8otdat2alem.apps.googleusercontent.com';
+    reloadNumber = 4;
+    clicks = 0;
     region;
+    pause;
 
     constructor(props) {
         super(props);
@@ -39,7 +45,8 @@ export class Pikapika extends Component {
             user: null,
             disableSearch: false,
             timeToSearch: '-1',
-            waitIcon: 'ios-time-outline'
+            waitIcon: 'ios-time-outline',
+            ad: false
         };
     }
 
@@ -47,11 +54,11 @@ export class Pikapika extends Component {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
+                SystemService.config().then(function(data){
+                    this.reloadNumber = Number(data.ads['reload_number']);
+                });
             },
             (error) => {
-                this.logOut();
-                this.showInfo(strings.messages.onInit);
-
                 this.showError(strings.errors.position);
             },
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -60,6 +67,10 @@ export class Pikapika extends Component {
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
         });
+    }
+
+    componentWillMount() {
+        MoPubInterstitial.initialize(INTERSTITIAL_UNIT_ID);
     }
 
     checkLogin() {
@@ -193,15 +204,20 @@ export class Pikapika extends Component {
     }
 
     getSharedPokemons(){
-        if(this.position) {
-            PokemonService.get(this.region, this.getradius(this.region))
-            .then((data) => {
-                this.mergePokemons(data, true);
-            })
-            .catch((data) => {
-
-            });
+        if(this.pause){
+            TimerMixin.clearTimeout(this.pause);
         }
+
+        this.pause = TimerMixin.setTimeout(() => {
+            this._getSharedPokemons();
+        }, 2000);
+    }
+
+    _getSharedPokemons() {
+        PokemonService.get(this.region, this.getRadius(this.region))
+        .then((data) => {
+            this.mergePokemons(data, true);
+        });
 
         if(this.sharedTimer){
             TimerMixin.clearTimeout(this.sharedTimer);
@@ -236,6 +252,13 @@ export class Pikapika extends Component {
         pokemonList = _pokemonList;
 
         this.setState({pokemonList});
+    }
+
+    cleanPokemons() {
+        const pokemonList = [];
+        this.setState({pokemonList});
+
+        this.getSharedPokemons();
     }
 
     verifyToken(user) {
@@ -369,7 +392,9 @@ export class Pikapika extends Component {
     }
 
     center() {
-        this.refs.map.animateToCoordinate(this.position.coords, 500)
+        this.position.coords.longitudeDelta = 0.005;
+        this.position.coords.latitudeDelta = 0.005;
+        this.refs.map.animateToRegion(this.position.coords, 500)
     }
 
     onChangeRegion(region) {
@@ -377,15 +402,25 @@ export class Pikapika extends Component {
         this.getSharedPokemons();
     }
 
-    getradius(region) {
+    getRadius(region) {
         const xDistance = Math.round((region.latitudeDelta * METERS_PER_DEGREE)/2);
         const yDistance = Math.round((region.longitudeDelta * (METERS_PER_DEGREE * Math.cos(region.latitude * Math.PI / 180)))/2);
 
         return xDistance > yDistance ? xDistance : yDistance;
     }
 
+    onClick() {
+        this.clicks++;
+        console.log(this.clicks);
+        if(this.clicks >= reloadNumber){
+             MoPubInterstitial.showWhenReady();
+            this.clicks = 0;
+        }
+    }
+
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
+        MoPubInterstitial.removeAllListeners('onFailed');
     }
 
     render() {
@@ -397,6 +432,8 @@ export class Pikapika extends Component {
             followsUserLocation={true}
             style={styles.map}
             onRegionChangeComplete={(region) => this.onChangeRegion(region)}
+            onPress={() => this.onClick()}
+            onLongPress={() => this.getSharedPokemons()}
             >
             {this.state.pokemonList.map(pokemon => {
                 return pokemon && pokemon.position ? (
@@ -442,6 +479,17 @@ export class Pikapika extends Component {
                 )
             }
 
+            <View style={styles.ad}>
+            <MoPubBanner
+            adUnitId={BANNERL_UNIT_ID}
+            autoRefresh={true}
+            onLoaded={() => this.setState({ad: true}) }
+            onFailed={() => {
+                console.log('Failed');
+                this.setState({ad: false})
+            } }
+            />
+            </View>
             <Modal style={styles.logIn} ref={"logIn"} swipeToClose={true} backdropPressToClose={true} position={'center'}>
             <Text style={styles.logInTitle}>
             {strings.logIn}
@@ -510,10 +558,11 @@ export class Pikapika extends Component {
                 // )
             }
 
-
-
-            <Button transparent style={styles.center} onPress={() => this.center() }>
+            <Button transparent style={this.state.ad ? styles.centerAd : styles.center} onPress={() => this.center() }>
             <Icon name="ios-locate-outline" style={styles.actionIcon} />
+            </Button>
+            <Button transparent style={this.state.ad ? styles.cleanAd : styles.clean} onPress={() => this.cleanPokemons() }>
+            <Icon name="ios-brush" style={styles.actionIcon} />
             </Button>
 
             <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#424242'} size={75}/>

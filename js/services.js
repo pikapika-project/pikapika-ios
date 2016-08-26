@@ -7,6 +7,19 @@ let pokemonClub = new PokemonClubAuth();
 
 let host = 'https://api.pikapika.io';
 
+export let SystemService = {
+    config: function(){
+        return fetch(`${host}/configuration`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(manageResponse('json'))
+        .then((response) => response.data);
+    }
+};
+
 export let PokemonService = {
     find: function(coords, accessToken){
         return fetch(`${host}/v2/pokemons/${coords.latitude}/${coords.longitude}/heartbeat?access_token=${accessToken}`, {

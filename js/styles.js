@@ -82,10 +82,34 @@ export default StyleSheet.create({
         height: 35,
         borderRadius: 50
     },
+    centerAd: {
+        position: 'absolute',
+        bottom: 55,
+        right: 5,
+        width: 35,
+        height: 35,
+        borderRadius: 50
+    },
     center: {
         position: 'absolute',
-        bottom: 5,
-        right: 7,
+        bottom: 4,
+        right: 5,
+        width: 35,
+        height: 35,
+        borderRadius: 50
+    },
+    cleanAd: {
+        position: 'absolute',
+        bottom: 96,
+        right: 5,
+        width: 35,
+        height: 35,
+        borderRadius: 50
+    },
+    clean: {
+        position: 'absolute',
+        bottom: 45,
+        right: 5,
         width: 35,
         height: 35,
         borderRadius: 50
@@ -102,6 +126,14 @@ export default StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0
+    },
+    ad: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     spinner: {
     }
