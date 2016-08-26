@@ -391,6 +391,9 @@
 		E4368D8E1D70B2FE00A7F42B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4368D8D1D70B2FE00A7F42B /* MobileCoreServices.framework */; };
 		E4368D901D70B30500A7F42B /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4368D8F1D70B30500A7F42B /* PassKit.framework */; };
 		E4368D921D70B30A00A7F42B /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4368D911D70B30A00A7F42B /* Social.framework */; };
+		E4368DAB1D70B3F700A7F42B /* RNMoPubBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368DA61D70B3F700A7F42B /* RNMoPubBanner.m */; };
+		E4368DAC1D70B3F700A7F42B /* RNMoPubBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368DA81D70B3F700A7F42B /* RNMoPubBannerManager.m */; };
+		E4368DAD1D70B3F700A7F42B /* RNMoPubInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368DAA1D70B3F700A7F42B /* RNMoPubInterstitial.m */; };
 		E438BF8F1D46DBAE001AEB8F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E438BF8E1D46DBAE001AEB8F /* Images.xcassets */; };
 		E49466331D4C12C30008D4FF /* Epicnest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E49466321D4C12C30008D4FF /* Epicnest.gpx */; };
 		E49466461D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E49466451D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx */; };
@@ -1118,6 +1121,12 @@
 		E4368D8D1D70B2FE00A7F42B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		E4368D8F1D70B30500A7F42B /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		E4368D911D70B30A00A7F42B /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		E4368DA51D70B3F700A7F42B /* RNMoPubBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMoPubBanner.h; sourceTree = "<group>"; };
+		E4368DA61D70B3F700A7F42B /* RNMoPubBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMoPubBanner.m; sourceTree = "<group>"; };
+		E4368DA71D70B3F700A7F42B /* RNMoPubBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMoPubBannerManager.h; sourceTree = "<group>"; };
+		E4368DA81D70B3F700A7F42B /* RNMoPubBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMoPubBannerManager.m; sourceTree = "<group>"; };
+		E4368DA91D70B3F700A7F42B /* RNMoPubInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMoPubInterstitial.h; sourceTree = "<group>"; };
+		E4368DAA1D70B3F700A7F42B /* RNMoPubInterstitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMoPubInterstitial.m; sourceTree = "<group>"; };
 		E438BF8E1D46DBAE001AEB8F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Pikapika/Images.xcassets; sourceTree = "<group>"; };
 		E49466321D4C12C30008D4FF /* Epicnest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Epicnest.gpx; sourceTree = "<group>"; };
 		E49466451D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CasaCoyote.gpx.gpx; sourceTree = "<group>"; };
@@ -1334,6 +1343,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E4368DA41D70B3F700A7F42B /* MoPubReact */,
 				E4368D911D70B30A00A7F42B /* Social.framework */,
 				E4368D8F1D70B30500A7F42B /* PassKit.framework */,
 				E4368D8D1D70B2FE00A7F42B /* MobileCoreServices.framework */,
@@ -2024,6 +2034,19 @@
 				E4368C8E1D70B24F00A7F42B /* MPRewardedVideoConnection.m */,
 			);
 			path = Internal;
+			sourceTree = "<group>";
+		};
+		E4368DA41D70B3F700A7F42B /* MoPubReact */ = {
+			isa = PBXGroup;
+			children = (
+				E4368DA51D70B3F700A7F42B /* RNMoPubBanner.h */,
+				E4368DA61D70B3F700A7F42B /* RNMoPubBanner.m */,
+				E4368DA71D70B3F700A7F42B /* RNMoPubBannerManager.h */,
+				E4368DA81D70B3F700A7F42B /* RNMoPubBannerManager.m */,
+				E4368DA91D70B3F700A7F42B /* RNMoPubInterstitial.h */,
+				E4368DAA1D70B3F700A7F42B /* RNMoPubInterstitial.m */,
+			);
+			path = MoPubReact;
 			sourceTree = "<group>";
 		};
 		E4A68E761D6E51EE0087B534 /* Fonts */ = {
@@ -2737,6 +2760,7 @@
 				E4368D0E1D70B24F00A7F42B /* MPMoPubNativeCustomEvent.m in Sources */,
 				E4368CEB1D70B24F00A7F42B /* MPLogging.m in Sources */,
 				E4368C9C1D70B24F00A7F42B /* MPiAdBannerCustomEvent.m in Sources */,
+				E4368DAC1D70B3F700A7F42B /* RNMoPubBannerManager.m in Sources */,
 				E4368D551D70B24F00A7F42B /* MPRewardedVideoReward.m in Sources */,
 				E4368D371D70B24F00A7F42B /* MOPUBPlayerViewController.m in Sources */,
 				E4368CA11D70B24F00A7F42B /* README.md in Sources */,
@@ -2779,6 +2803,7 @@
 				E4368C9B1D70B24F00A7F42B /* README.md in Sources */,
 				E4368D1C1D70B24F00A7F42B /* MPCollectionViewAdPlacer.m in Sources */,
 				E4368CF41D70B24F00A7F42B /* MPVASTCreative.m in Sources */,
+				E4368DAB1D70B3F700A7F42B /* RNMoPubBanner.m in Sources */,
 				E4368CFA1D70B24F00A7F42B /* MPVASTManager.m in Sources */,
 				E4368CDC1D70B24F00A7F42B /* MRProperty.m in Sources */,
 				E4368D3A1D70B24F00A7F42B /* MOPUBNativeVideoAdRendererSettings.m in Sources */,
@@ -2877,6 +2902,7 @@
 				E4368CBD1D70B24F00A7F42B /* MPLogEventRecorder.m in Sources */,
 				E4368CF01D70B24F00A7F42B /* MPTimer.m in Sources */,
 				E4368CD61D70B24F00A7F42B /* MRController.m in Sources */,
+				E4368DAD1D70B3F700A7F42B /* RNMoPubInterstitial.m in Sources */,
 				E4368CEA1D70B24F00A7F42B /* MPInternalUtils.m in Sources */,
 				E4368D071D70B24F00A7F42B /* MPInterstitialAdController.m in Sources */,
 				E4368D061D70B24F00A7F42B /* MPConstants.m in Sources */,
