@@ -35,7 +35,8 @@ export let PokemonService = {
         });
     },
     get: function(coords, radious){
-        return fetch(`${host}/pokemons/${coords.latitude}/${coords.longitude}?radius=${radious || 1000}`, {
+        return fetch(
+            `${host}/pokemons/${coords.latitude}/${coords.longitude}?neLat=${coords.neLat}&neLng=${coords.neLng}&swLat=${coords.swLat}&swLng=${coords.swLng}&radius=${radious || 1000}`,            {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

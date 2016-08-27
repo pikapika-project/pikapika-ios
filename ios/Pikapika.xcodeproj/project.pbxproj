@@ -394,9 +394,10 @@
 		E4368DAB1D70B3F700A7F42B /* RNMoPubBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368DA61D70B3F700A7F42B /* RNMoPubBanner.m */; };
 		E4368DAC1D70B3F700A7F42B /* RNMoPubBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368DA81D70B3F700A7F42B /* RNMoPubBannerManager.m */; };
 		E4368DAD1D70B3F700A7F42B /* RNMoPubInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368DAA1D70B3F700A7F42B /* RNMoPubInterstitial.m */; };
+		E4368E041D71152700A7F42B /* Magic.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E4368E031D71152700A7F42B /* Magic.gpx */; };
 		E438BF8F1D46DBAE001AEB8F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E438BF8E1D46DBAE001AEB8F /* Images.xcassets */; };
 		E49466331D4C12C30008D4FF /* Epicnest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E49466321D4C12C30008D4FF /* Epicnest.gpx */; };
-		E49466461D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E49466451D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx */; };
+		E49466461D4C4FAD0008D4FF /* Var.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E49466451D4C4FAD0008D4FF /* Var.gpx */; };
 		E499CBE51D529929009DB055 /* Sidney.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E499CBE41D529929009DB055 /* Sidney.gpx */; };
 		E4A68E7F1D6E51EE0087B534 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4A68E771D6E51EE0087B534 /* Entypo.ttf */; };
 		E4A68E801D6E51EE0087B534 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4A68E781D6E51EE0087B534 /* EvilIcons.ttf */; };
@@ -1127,9 +1128,10 @@
 		E4368DA81D70B3F700A7F42B /* RNMoPubBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMoPubBannerManager.m; sourceTree = "<group>"; };
 		E4368DA91D70B3F700A7F42B /* RNMoPubInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMoPubInterstitial.h; sourceTree = "<group>"; };
 		E4368DAA1D70B3F700A7F42B /* RNMoPubInterstitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMoPubInterstitial.m; sourceTree = "<group>"; };
+		E4368E031D71152700A7F42B /* Magic.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Magic.gpx; sourceTree = "<group>"; };
 		E438BF8E1D46DBAE001AEB8F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Pikapika/Images.xcassets; sourceTree = "<group>"; };
 		E49466321D4C12C30008D4FF /* Epicnest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Epicnest.gpx; sourceTree = "<group>"; };
-		E49466451D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CasaCoyote.gpx.gpx; sourceTree = "<group>"; };
+		E49466451D4C4FAD0008D4FF /* Var.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Var.gpx; sourceTree = "<group>"; };
 		E499CBE41D529929009DB055 /* Sidney.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Sidney.gpx; sourceTree = "<group>"; };
 		E4A68E771D6E51EE0087B534 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		E4A68E781D6E51EE0087B534 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
@@ -1368,7 +1370,8 @@
 				E4368D731D70B2D200A7F42B /* UIKit.framework */,
 				E4368AFF1D70B24F00A7F42B /* MoPubSDK */,
 				E499CBE41D529929009DB055 /* Sidney.gpx */,
-				E49466451D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx */,
+				E49466451D4C4FAD0008D4FF /* Var.gpx */,
+				E4368E031D71152700A7F42B /* Magic.gpx */,
 				E49466321D4C12C30008D4FF /* Epicnest.gpx */,
 				E4BF5DDB1D48048800EC1A49 /* splashscreen_big_720.png */,
 				E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */,
@@ -2607,7 +2610,7 @@
 				E4A68E841D6E51EE0087B534 /* MaterialIcons.ttf in Resources */,
 				E4368D481D70B24F00A7F42B /* MPPlayBtn@2x.png in Resources */,
 				E499CBE51D529929009DB055 /* Sidney.gpx in Resources */,
-				E49466461D4C4FAD0008D4FF /* CasaCoyote.gpx.gpx in Resources */,
+				E49466461D4C4FAD0008D4FF /* Var.gpx in Resources */,
 				E4156CC91D43043C00F87E24 /* 144.wav in Resources */,
 				E4156C661D43043C00F87E24 /* 45.wav in Resources */,
 				E4156CCA1D43043C00F87E24 /* 145.wav in Resources */,
@@ -2650,6 +2653,7 @@
 				E4156C3E1D43043C00F87E24 /* 5.wav in Resources */,
 				E4156C521D43043C00F87E24 /* 25.wav in Resources */,
 				E4156C6C1D43043C00F87E24 /* 51.wav in Resources */,
+				E4368E041D71152700A7F42B /* Magic.gpx in Resources */,
 				E4156C6F1D43043C00F87E24 /* 54.wav in Resources */,
 				E4156CA81D43043C00F87E24 /* 111.wav in Resources */,
 				E4A68E7F1D6E51EE0087B534 /* Entypo.ttf in Resources */,

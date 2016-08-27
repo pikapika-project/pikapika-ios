@@ -92,7 +92,7 @@ export default StyleSheet.create({
     },
     center: {
         position: 'absolute',
-        bottom: 4,
+        bottom: 8,
         right: 5,
         width: 35,
         height: 35,
@@ -108,7 +108,7 @@ export default StyleSheet.create({
     },
     clean: {
         position: 'absolute',
-        bottom: 45,
+        bottom: 49,
         right: 5,
         width: 35,
         height: 35,

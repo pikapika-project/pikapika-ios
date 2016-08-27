@@ -399,6 +399,13 @@ export class Pikapika extends Component {
 
     onChangeRegion(region) {
         this.region = region;
+        region.neLat = region.latitude + (region.latitudeDelta/2);
+        region.neLng = region.longitude + (region.longitudeDelta/2);
+        region.swLat = region.latitude - (region.latitudeDelta/2);
+        region.swLng = region.longitude - (region.longitudeDelta/2);
+
+        console.log(region);
+
         this.getSharedPokemons();
     }
 
@@ -483,9 +490,6 @@ export class Pikapika extends Component {
             adUnitId={BANNERL_UNIT_ID}
             autoRefresh={true}
             onLoaded={() => this.setState({ad: true}) }
-            onFailed={() => {
-                this.setState({ad: false})
-            } }
             />
             </View>
             <Modal style={styles.logIn} ref={"logIn"} swipeToClose={true} backdropPressToClose={true} position={'center'}>
