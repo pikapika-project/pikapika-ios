@@ -27,7 +27,7 @@ const INTERSTITIAL_UNIT_ID  = '2e28f9a166a444f4b028123ed0486696';
 export class Pikapika extends Component {
     watchID = (null: ?number);
     googleAuthSource = 'https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&redirect_uri=http://127.0.0.1:9004&response_type=code&client_id=848232511240-73ri3t7plvk96pj4f85uj8otdat2alem.apps.googleusercontent.com';
-    reloadNumber = 4;
+    clickNumber = 4;
     clicks = 0;
     region;
     pause;
@@ -55,7 +55,7 @@ export class Pikapika extends Component {
             (position) => {
                 this.position = position;
                 SystemService.config().then(function(data){
-                    this.reloadNumber = Number(data.ads['reload_number']);
+                    this.clickNumber = Number(data.ads['click_number'] || 4);
                 });
             },
             (error) => {
@@ -255,10 +255,11 @@ export class Pikapika extends Component {
     }
 
     cleanPokemons() {
-        const pokemonList = [];
-        this.setState({pokemonList});
-
-        this.getSharedPokemons();
+        if(this.state.pokemonList && this.state.pokemonList.length > 0) {
+            const pokemonList = [];
+            this.setState({pokemonList});
+            this.getSharedPokemons();
+        }
     }
 
     verifyToken(user) {
@@ -392,9 +393,11 @@ export class Pikapika extends Component {
     }
 
     center() {
-        this.position.coords.longitudeDelta = 0.005;
-        this.position.coords.latitudeDelta = 0.005;
-        this.refs.map.animateToRegion(this.position.coords, 500)
+        if (this.position) {
+            this.position.coords.longitudeDelta = 0.005;
+            this.position.coords.latitudeDelta = 0.005;
+            this.refs.map.animateToRegion(this.position.coords, 500)
+        }
     }
 
     onChangeRegion(region) {
@@ -418,7 +421,7 @@ export class Pikapika extends Component {
 
     onClick() {
         this.clicks++;
-        if(this.clicks >= reloadNumber){
+        if(this.clicks >= clickNumber){
              MoPubInterstitial.showWhenReady();
             this.clicks = 0;
         }
