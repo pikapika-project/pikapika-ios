@@ -1,27 +1,37 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS } from 'react-native';
-import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content } from 'native-base';
+import { AppRegistry, StyleSheet, Text, Dimensions, View, AsyncStorage, AlertIOS, WebView } from 'react-native';
+import { Container, Button, List, ListItem, InputGroup, Input, Icon, Content, Spinner as NBSpinner } from 'native-base';
+import { MoPubBanner, MoPubInterstitial } from 'react-native-mopub';
 import MapView from 'react-native-maps';
 import Modal from 'react-native-modalbox';
-import RadioButton from 'react-native-radio-button';
 import Sound from 'react-native-sound';
 import TimerMixin from 'react-timer-mixin';
 import Toast from 'react-native-root-toast';
 import Spinner from 'react-native-spinkit';
 import moment from 'moment';
+import _ from 'underscore';
 
 import styles from './styles';
 import strings from './localization';
-import { PokemonService, TrainerService } from './services';
-import { pokemonImages } from './images';
+import { PokemonService, TrainerService, SystemService } from './services';
+import { getParameter, pokeTest } from './utils';
+import { pokemonImages, pokemonFilterImages } from './images';
 import { pokemonSounds } from './sounds';
 
-let { width, height } = Dimensions.get('window');
+const { width, height }     = Dimensions.get('window');
+const TIMER                 = 10;
+const METERS_PER_DEGREE     = 111000;
+const BANNERL_UNIT_ID       = 'b9fb697840c240ee90aa5cefb00e1c9c';
+const INTERSTITIAL_UNIT_ID  = '2e28f9a166a444f4b028123ed0486696';
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
+    clickNumber = 4;
+    clicks = 0;
+    region;
+    pause;
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -32,7 +42,10 @@ export class Pikapika extends Component {
             password: null,
             provider: 'google',
             user: null,
-            disableSearch: false
+            disableSearch: false,
+            timeToSearch: '-1',
+            waitIcon: 'ios-time-outline',
+            ad: false
         };
     }
 
@@ -40,9 +53,12 @@ export class Pikapika extends Component {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.position = position;
+                SystemService.config().then(function(data){
+                    this.clickNumber = Number(data.ads['click_number'] || 4);
+                });
             },
             (error) => {
-                this.showError(error.message);
+                this.showError(strings.errors.position);
             },
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
@@ -50,147 +66,69 @@ export class Pikapika extends Component {
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
         });
-
-        AsyncStorage.getItem('firstTime')
-        .then((firstTime) => {
-            firstTime = Boolean(Number(firstTime));
-            if(!firstTime){
-                this.showInfo(strings.messages.onInit);
-                AsyncStorage.setItem('firstTime', '1');
-            }
-
-        })
-        .done();
-
-        AsyncStorage.getItem('user')
-        .then((user) => {
-            if(user){
-                user = JSON.parse(user);
-                this.setState({user});
-            }
-            else{
-                this.refs.logIn.open();
-            }
-        })
-        .done();
-
-        AsyncStorage.getItem('sesion')
-        .then((sesion) => {
-            if(sesion){
-                const _sesion = JSON.parse(sesion);
-
-                const username = _sesion.username;
-                const password = _sesion.password;
-                const provider = _sesion.provider;
-
-                this.setState({username});
-                this.setState({password});
-                this.setState({provider});
-            }
-        })
-        .done();
     }
 
-    logIn(){
-        if(this.state.username && this.state.password && this.position){
-            this.loading(true);
+    componentWillMount() {
+        MoPubInterstitial.initialize(INTERSTITIAL_UNIT_ID);
+    }
 
-            this.logInSwitch()
-            .then((response) => this.onLogIn(response))
-            .catch((error) => this.onLogInFailure(error));
+    getSharedPokemons(){
+        if(this.pause){
+            TimerMixin.clearTimeout(this.pause);
         }
+
+        this.pause = TimerMixin.setTimeout(() => {
+            this._getSharedPokemons();
+        }, 1000);
     }
 
-    logInSwitch(){
-        if(this.state.provider === 'google'){
-            return TrainerService.logInWithGoogle(this.state.username, this.state.password, this.position);
-
-        }
-        else if (this.state.provider === 'ptc') {
-            return TrainerService.logInWithPokemonClub(this.state.username, this.state.password, this.position);
-        }
-    }
-
-    logOut(){
-        AsyncStorage.removeItem('user')
-        .then(() => {
-            let user = null;
-
-            this.setState({user});
-            this.refs.logIn.open();
-        })
-        .done();
-    }
-
-    onLogIn(user) {
-        this.loading(false);
-
-        if(user) {
-            this.setState({user});
-
-            this.refs.logIn.close();
-
-            AsyncStorage.setItem('user', JSON.stringify(user));
-
-            AsyncStorage.setItem('sesion', JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-                provider: this.state.provider
-            }));
-
-
-            this.getPokemons();
-        }
-        else {
-            this.showError(strings.errors.login);
-            this.refs.logIn.open();
-        }
-    }
-
-    onLogInFailure(error){
-        this.loading(false);
-
-        this.showError(strings.errors.server);
-
-        this.refs.logIn.open();
-    }
-
-    getPokemons() {
-        this.loading(true);
-
-        let disableSearch = true;
-        this.setState({disableSearch});
-
-        this.searchTimer();
-
-        PokemonService
-        .find(this.position.coords, this.state.user['access_token'])
-        .then((pokemonList) => {
-            this.loading(false);
-
-            if(pokemonList){
-                this.setState({pokemonList});
-            }
-            else{
-                alert('errors');
-                //this.showError(strings.errors.unauth);
-                this.logIn();
-            }
-        })
-        .catch((error) => {
-            this.loading(false);
-
-            console.log(error);
-
-            this.showError(strings.errors.server);
+    _getSharedPokemons() {
+        PokemonService.get(this.region, this.getRadius(this.region))
+        .then((data) => {
+            this.mergePokemons(data, true);
         });
+
+        if(this.sharedTimer){
+            TimerMixin.clearTimeout(this.sharedTimer);
+        }
+
+        this.sharedTimer = TimerMixin.setTimeout(() => {
+            this.getSharedPokemons();
+        }, 10000);
     }
 
-    searchTimer() {
-        TimerMixin.setTimeout( () => {
-            let disableSearch = false;
-            this.setState({disableSearch});
-        }, 15000);
+    mergePokemons(data, isShared) {
+        let _pokemonList;
+        let pokemonList = [];
+
+        _pokemonList = this.state.pokemonList;
+
+        data.forEach((pokemon, key) => {
+            if(!_.findWhere(_pokemonList, {id: pokemon.id})) {
+                pokemon.isShared = isShared;
+                _pokemonList.push(pokemon);
+            }
+        });
+
+        _pokemonList.forEach((pokemon, key) => {
+            pokemon.timeleft = new Date(pokemon.expireAt) - new Date();
+            if(pokemon.timeleft <= 0){
+                _pokemonList.splice(key, 1);
+            }
+        });
+
+        this.setState({pokemonList});
+        pokemonList = _pokemonList;
+
+        this.setState({pokemonList});
+    }
+
+    cleanPokemons() {
+        if(this.state.pokemonList && this.state.pokemonList.length > 0) {
+            const pokemonList = [];
+            this.setState({pokemonList});
+            this.getSharedPokemons();
+        }
     }
 
     loading(loading) {
@@ -208,9 +146,9 @@ export class Pikapika extends Component {
         });
     }
 
-    showInfo(message){
+    showInfo(message, duration) {
         let toast = Toast.show(message, {
-            duration: Toast.durations.LONG,
+            duration: duration || Toast.durations.LONG,
             position: Toast.positions.CENTER,
             shadow: true,
             animation: true,
@@ -219,132 +157,99 @@ export class Pikapika extends Component {
         });
     }
 
+    center() {
+        if (this.position) {
+            this.position.coords.longitudeDelta = 0.005;
+            this.position.coords.latitudeDelta = 0.005;
+            this.refs.map.animateToRegion(this.position.coords, 500)
+        }
+    }
+
+    onChangeRegion(region) {
+        this.region = region;
+        region.neLat = region.latitude + (region.latitudeDelta/2);
+        region.neLng = region.longitude + (region.longitudeDelta/2);
+        region.swLat = region.latitude - (region.latitudeDelta/2);
+        region.swLng = region.longitude - (region.longitudeDelta/2);
+
+        this.getSharedPokemons();
+    }
+
+    getRadius(region) {
+        const xDistance = Math.round((region.latitudeDelta * METERS_PER_DEGREE)/2);
+        const yDistance = Math.round((region.longitudeDelta * (METERS_PER_DEGREE * Math.cos(region.latitude * Math.PI / 180)))/2);
+
+        return xDistance > yDistance ? xDistance : yDistance;
+    }
+
+    onClick() {
+        this.clicks++;
+        if(this.clicks >= clickNumber){
+             MoPubInterstitial.showWhenReady();
+            this.clicks = 0;
+        }
+    }
+
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
+        MoPubInterstitial.removeAllListeners('onFailed');
     }
 
     render() {
         return (
             <View style={styles.page}>
-            <MapView.Animated
+            <MapView
+            ref='map'
             showsUserLocation={true}
             followsUserLocation={true}
             style={styles.map}
+            onRegionChangeComplete={(region) => this.onChangeRegion(region)}
+            onPress={() => this.onClick()}
+            onLongPress={() => this.getSharedPokemons()}
             >
-            {this.state.pokemonList.map(pokemon => (
-                <MapView.Marker
-                key={pokemon.id}
-                identifier={pokemon.id}
-                title={pokemon.name}
-                description={
-                    strings.formatString(
-                        strings.timeleft,
-                        moment('2000-01-01 00:00:00').add(
-                            moment.duration(pokemon.timeleft)
-                        ).format('mm:ss')
-                    )
-                }
-                image={pokemonImages[pokemon.number]}
-                coordinate={{
-                    latitude: pokemon.position.lat,
-                    longitude: pokemon.position.lng
-                }}
-                onPress={ () => {
-                    pokemonSounds[pokemon.number].setVolume(0.01);
-                    pokemonSounds[pokemon.number].play();
-                } }
-                />
-            ))}
-            </MapView.Animated>
+            {this.state.pokemonList.map(pokemon => {
+                return pokemon && pokemon.position ? (
+                    <MapView.Marker
+                    key={pokemon.id}
+                    identifier={pokemon.id}
+                    title={pokemon.name}
+                    description={
+                        strings.formatString(
+                            strings.timeleft,
+                            moment('2000-01-01 00:00:00').add(
+                                moment.duration(Math.abs(pokemon.timeleft))
+                            ).format('mm:ss')
+                        )
+                    }
+                    image={pokemonImages[pokemon.number]}
+                    coordinate={{
+                        latitude: pokemon.position.lat,
+                        longitude: pokemon.position.lng
+                    }}
+                    onSelect={ () => {
+                        pokemonSounds[pokemon.number].setVolume(0.7);
+                        pokemonSounds[pokemon.number].play();
+                    } }
+                    />
+                ) : '';
+            })}
+            </MapView>
 
-            {
-                this.state.user && (
-                    <Button
-                    style={styles.searchButton}
-                    block
-                    disabled={this.state.disableSearch}
-                    onPress={ ()=>{ this.getPokemons() }}>
-                    <Icon name="ios-search"/>
-                    </Button>
-                )
-            }
-
-            <Modal style={styles.logIn} ref={"logIn"} swipeToClose={false} backdropPressToClose={false} position={'center'}>
-            <Text style={styles.logInTitle}>
-            {strings.logIn}
-            </Text>
-            <Text style={styles.logInSubTitle}>
-            {strings.logInSubTitle}
-            </Text>
-            <InputGroup>
-            <Icon name="ios-person-outline"/>
-            <Input
-            keyboardType='email-address'
-            autoCapitalize='none'
-            returnKeyType='default'
-            placeholder={strings.email}
-            autoFocus={true}
-            defaultValue={this.state.username}
-            onChangeText={(username) => this.setState({username})} />
-            </InputGroup>
-            <InputGroup>
-            <Icon name="ios-unlock-outline" style={styles.loginIcon} />
-            <Input
-            placeholder={strings.password}
-            secureTextEntry={true}
-            defaultValue={this.state.password}
-            onChangeText={(password) => this.setState({password})}/>
-            </InputGroup>
-
-            <View>
-            <View style={styles.radioContainer}>
-            <RadioButton
-            innerColor='#dd4b39'
-            outerColor='#dd4b39'
-            animation={'bounceIn'}
-            isSelected={this.state.provider === 'google'}
-            onPress={() => {
-                let provider = 'google';
-                this.setState({provider});
-            }}
+            <View style={styles.ad}>
+            <MoPubBanner
+            adUnitId={BANNERL_UNIT_ID}
+            autoRefresh={true}
+            onLoaded={() => this.setState({ad: true}) }
             />
-            <Text style={styles.radioText}>
-            Google
-            </Text>
-            </View>
-            <View style={styles.radioContainer}>
-            <RadioButton
-            innerColor='#424242'
-            outerColor='#424242'
-            animation={'bounceIn'}
-            isSelected={ this.state.provider === 'ptc'}
-            onPress={() => {
-                // let provider = 'ptc';
-                // this.setState({provider});
-                this.showError(strings.messages.pokemonTrainer);
-            }}
-            />
-            <Text style={styles.radioText}>
-            Pokemon Trainer
-            </Text>
-            </View>
             </View>
 
-            <Button
-            style={styles.logInButton}
-            block
-            onPress={() => { this.logIn() }}> Go! </Button>
-            </Modal>
+            <Button transparent style={this.state.ad ? styles.centerAd : styles.center} onPress={() => this.center() }>
+            <Icon name="ios-locate-outline" style={styles.actionIcon} />
+            </Button>
+            <Button transparent style={this.state.ad ? styles.cleanAd : styles.clean} onPress={() => this.cleanPokemons() }>
+            <Icon name="ios-brush" style={styles.actionIcon} />
+            </Button>
 
-            {
-                this.state.user && (
-                    <Button danger style={styles.logout} onPress={() => this.logOut() }>
-                    <Icon name="ios-close" style={styles.logoutIcon} />
-                    </Button>
-                )
-            }
-
-            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#424242'} size={75}/>
             </View>
         );
     }

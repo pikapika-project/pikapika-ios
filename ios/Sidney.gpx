@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+    <metadata>
+        <link href="http://www.mapstogpx.com">
+            <text>Sverrir Sigmundarson</text>
+        </link>
+        <desc>Just a pokeride</desc>
+        <copyright author="Lojals">
+            <year>2016</year>
+        </copyright>
+        <time>2016-08-22T23:51:53Z</time>
+    </metadata>
+    <wpt lat="-33.870570" lon="151.211350">
+        <name>Sidney Nueva Gales del Sur</name>
+        <desc>Sydney NSW, Australia</desc>
+        <time>2016-08-01T02:10:53Z</time>
+    </wpt>
+    <wpt lat="-33.870570" lon="151.211350">
+        <name>Sidney Nueva Gales del Sur</name>
+        <desc>Sydney NSW, Australia</desc>
+        <time>2016-08-03T23:51:53Z</time>
+    </wpt>
+    <!--    <wpt lat="-33.8689969" lon="151.2092618">-->
+    <!--        <name>WP001</name>-->
+    <!--        <time>2016-07-11T23:52:35Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8688046" lon="151.2036184">-->
+    <!--        <name>WP002</name>-->
+    <!--        <time>2016-07-24T23:53:18Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8688982" lon="151.2033626">-->
+    <!--        <name>WP003</name>-->
+    <!--        <time>2016-07-11T23:54:01Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.870926" lon="151.2024078">-->
+    <!--        <name>WP004</name>-->
+    <!--        <time>2016-07-24T23:54:44Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.869922" lon="151.1978713">-->
+    <!--        <name>Dos lugares</name>-->
+    <!--        <time>2016-08-01T23:55:27Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8700164" lon="151.1978439">-->
+    <!--        <name>Dos lugares</name>-->
+    <!--        <time>2016-08-11T23:56:10Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8699613" lon="151.1972389">-->
+    <!--        <name>WP007</name>-->
+    <!--        <time>2016-07-11T23:56:53Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.87197" lon="151.1942664">-->
+    <!--        <name>WP008</name>-->
+    <!--        <time>2016-07-11T23:57:35Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8739574" lon="151.1923948">-->
+    <!--        <name>WP009</name>-->
+    <!--        <time>2016-07-11T23:58:18Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8837495" lon="151.1797149">-->
+    <!--        <name>WP010</name>-->
+    <!--        <time>2016-07-11T23:59:01Z</time>-->
+    <!--    </wpt>-->
+    
+    
+    
+    <!--    <wpt lat="-33.8874118" lon="151.1735658">-->
+    <!--        <name>WP011</name>-->
+    <!--        <time>2016-07-28T23:59:44Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8875741" lon="151.1416917">-->
+    <!--        <name>WP012</name>-->
+    <!--        <time>2016-07-12T00:00:27Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8896712" lon="151.1394376">-->
+    <!--        <name>WP013</name>-->
+    <!--        <time>2016-07-12T00:01:10Z</time>-->
+    <!--    </wpt>-->
+    <!--    <wpt lat="-33.8889069" lon="151.1374499">-->
+    <!--        <name>18 Gower St</name>-->
+    <!--        <desc>18 Gower St, Summer Hill NSW 2130, Australia</desc>-->
+    <!--        <time>2016-07-12T00:01:53Z</time>-->
+    <!--    </wpt>-->
+</gpx>

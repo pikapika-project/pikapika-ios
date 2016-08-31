@@ -29,16 +29,17 @@ export default StyleSheet.create({
         right: 0,
         bottom: 0,
     },
+    googleModal: {
+        position: 'absolute',
+        top: 30,
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
     logIn: {
         justifyContent: 'space-around',
         alignItems: 'center',
         height: 300,
-    },
-    radioContainer: {
-        flex: 1,
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop: 10
     },
     radioText: {
         marginLeft: 10
@@ -51,9 +52,20 @@ export default StyleSheet.create({
         fontSize: 10,
         marginTop: -5
     },
-    logInButton: {
-        marginBottom: -5,
-        borderRadius: 0
+    googleLogInButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 0,
+        backgroundColor: 'white',
+        borderColor: '#d34836',
+        borderWidth: 1
+    },
+    googleLogInButtonText: {
+        color: '#d34836'
+    },
+    ptcLogInButton: {
+        borderRadius: 0,
+        backgroundColor: '#313131'
     },
     loginInput: {
         color: 'gray'
@@ -62,15 +74,50 @@ export default StyleSheet.create({
         color: 'blue'
     },
     logout: {
+        opacity: 0.7,
         position: 'absolute',
         top: 20,
         left: 7,
         width: 35,
         height: 35,
-        opacity: 0.5,
+        borderRadius: 50
+    },
+    centerAd: {
+        position: 'absolute',
+        bottom: 55,
+        right: 5,
+        width: 35,
+        height: 35,
+        borderRadius: 50
+    },
+    center: {
+        position: 'absolute',
+        bottom: 8,
+        right: 5,
+        width: 35,
+        height: 35,
+        borderRadius: 50
+    },
+    cleanAd: {
+        position: 'absolute',
+        bottom: 96,
+        right: 5,
+        width: 35,
+        height: 35,
+        borderRadius: 50
+    },
+    clean: {
+        position: 'absolute',
+        bottom: 49,
+        right: 5,
+        width: 35,
+        height: 35,
         borderRadius: 50
     },
     logoutIcon: {
+        backgroundColor: 'rgba(0,0,0,0)'
+    },
+    actionIcon: {
         backgroundColor: 'rgba(0,0,0,0)'
     },
     searchButton: {
@@ -79,6 +126,14 @@ export default StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0
+    },
+    ad: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     spinner: {
     }
