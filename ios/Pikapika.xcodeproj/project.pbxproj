@@ -24,6 +24,7 @@
 		16C1F35CA95E491F97AD2F24 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E08356FEE07046CDBA9EA8F5 /* libRNDeviceInfo.a */; };
 		3D191D669D1245AEBBBA1538 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB53F551117E47A39AE70E6B /* libRNSpinkit.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8706D999E24D4453AB797EEB /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F49D13505E70430BA25B2C47 /* libRNFIRMessaging.a */; };
 		E402EACE1D414AA500E67FB4 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E402EAC31D414A9900E67FB4 /* libAirMaps.a */; };
 		E4156C3A1D43043C00F87E24 /* 1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156BA21D43043B00F87E24 /* 1.wav */; };
 		E4156C3B1D43043C00F87E24 /* 2.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156BA31D43043B00F87E24 /* 2.wav */; };
@@ -179,6 +180,13 @@
 		E4156CD11D43043C00F87E24 /* 152.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156C391D43043C00F87E24 /* 152.wav */; };
 		E41EB6D01D419BD400D39AAB /* libReactNativeLocalization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41EB59A1D416B5D00D39AAB /* libReactNativeLocalization.a */; };
 		E41EB6D11D419BD400D39AAB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41EB6CF1D419BB900D39AAB /* libRNSound.a */; };
+		E4253BEE1D7754BF00EAB93B /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4253BE91D7754BF00EAB93B /* FirebaseAnalytics.framework */; };
+		E4253BEF1D7754BF00EAB93B /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4253BEA1D7754BF00EAB93B /* FirebaseInstanceID.framework */; };
+		E4253BF01D7754BF00EAB93B /* GoogleInterchangeUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4253BEB1D7754BF00EAB93B /* GoogleInterchangeUtilities.framework */; };
+		E4253BF11D7754BF00EAB93B /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4253BEC1D7754BF00EAB93B /* GoogleSymbolUtilities.framework */; };
+		E4253BF21D7754BF00EAB93B /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4253BED1D7754BF00EAB93B /* GoogleUtilities.framework */; };
+		E4253BF61D77550000EAB93B /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4253BF41D77550000EAB93B /* FirebaseMessaging.framework */; };
+		E4253BF71D77550000EAB93B /* GoogleIPhoneUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4253BF51D77550000EAB93B /* GoogleIPhoneUtilities.framework */; };
 		E4368C981D70B24F00A7F42B /* MPGoogleAdMobBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368B031D70B24F00A7F42B /* MPGoogleAdMobBannerCustomEvent.m */; };
 		E4368C991D70B24F00A7F42B /* MPGoogleAdMobInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E4368B051D70B24F00A7F42B /* MPGoogleAdMobInterstitialCustomEvent.m */; };
 		E4368C9A1D70B24F00A7F42B /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4368B071D70B24F00A7F42B /* GoogleMobileAds.framework */; };
@@ -518,6 +526,13 @@
 			remoteGlobalIDString = D42CB3511B2538DE00FD0AE2;
 			remoteInfo = RNSpinkit;
 		};
+		E4253BE41D7753F300EAB93B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1261EF91F894831971832E8 /* RNFIRMessaging.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNFIRMessaging;
+		};
 		E4EC3C7C1D46930200DBD912 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6517777743734142B101031A /* RNDeviceInfo.xcodeproj */;
@@ -720,6 +735,15 @@
 		E4156C391D43043C00F87E24 /* 152.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 152.wav; sourceTree = "<group>"; };
 		E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
 		E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		E4253BE91D7754BF00EAB93B /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		E4253BEA1D7754BF00EAB93B /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		E4253BEB1D7754BF00EAB93B /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
+		E4253BEC1D7754BF00EAB93B /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		E4253BED1D7754BF00EAB93B /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
+		E4253BF31D7754EB00EAB93B /* Firebase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Firebase.h; sourceTree = "<group>"; };
+		E4253BF41D77550000EAB93B /* FirebaseMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseMessaging.framework; sourceTree = "<group>"; };
+		E4253BF51D77550000EAB93B /* GoogleIPhoneUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleIPhoneUtilities.framework; sourceTree = "<group>"; };
+		E4253BF81D77552700EAB93B /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		E4368B021D70B24F00A7F42B /* MPGoogleAdMobBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGoogleAdMobBannerCustomEvent.h; sourceTree = "<group>"; };
 		E4368B031D70B24F00A7F42B /* MPGoogleAdMobBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGoogleAdMobBannerCustomEvent.m; sourceTree = "<group>"; };
 		E4368B041D70B24F00A7F42B /* MPGoogleAdMobInterstitialCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGoogleAdMobInterstitialCustomEvent.h; sourceTree = "<group>"; };
@@ -1146,6 +1170,8 @@
 		E4F1BA0B1D43296800C9F518 /* Default-568.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568.png"; sourceTree = "<group>"; };
 		E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
 		E4F3C97D1D42F47000A103F6 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		F1261EF91F894831971832E8 /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
+		F49D13505E70430BA25B2C47 /* libRNFIRMessaging.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFIRMessaging.a; sourceTree = "<group>"; };
 		FB53F551117E47A39AE70E6B /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1180,6 +1206,7 @@
 				E4368D7A1D70B2D300A7F42B /* EventKitUI.framework in Frameworks */,
 				E4368D7B1D70B2D300A7F42B /* Foundation.framework in Frameworks */,
 				E4368D7C1D70B2D300A7F42B /* MediaPlayer.framework in Frameworks */,
+				E4253BF21D7754BF00EAB93B /* GoogleUtilities.framework in Frameworks */,
 				E4368D7D1D70B2D300A7F42B /* QuartzCore.framework in Frameworks */,
 				E4368D7E1D70B2D300A7F42B /* StoreKit.framework in Frameworks */,
 				E4368D7F1D70B2D300A7F42B /* SystemConfiguration.framework in Frameworks */,
@@ -1187,7 +1214,11 @@
 				E41EB6D01D419BD400D39AAB /* libReactNativeLocalization.a in Frameworks */,
 				E41EB6D11D419BD400D39AAB /* libRNSound.a in Frameworks */,
 				E4368C9A1D70B24F00A7F42B /* GoogleMobileAds.framework in Frameworks */,
+				E4253BEF1D7754BF00EAB93B /* FirebaseInstanceID.framework in Frameworks */,
+				E4253BF71D77550000EAB93B /* GoogleIPhoneUtilities.framework in Frameworks */,
+				E4253BF11D7754BF00EAB93B /* GoogleSymbolUtilities.framework in Frameworks */,
 				E402EACE1D414AA500E67FB4 /* libAirMaps.a in Frameworks */,
+				E4253BF01D7754BF00EAB93B /* GoogleInterchangeUtilities.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				E4368CA01D70B24F00A7F42B /* MMAdSDK.framework in Frameworks */,
@@ -1195,12 +1226,15 @@
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
+				E4253BEE1D7754BF00EAB93B /* FirebaseAnalytics.framework in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				E4253BF61D77550000EAB93B /* FirebaseMessaging.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				3D191D669D1245AEBBBA1538 /* libRNSpinkit.a in Frameworks */,
 				16C1F35CA95E491F97AD2F24 /* libRNDeviceInfo.a in Frameworks */,
+				8706D999E24D4453AB797EEB /* libRNFIRMessaging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1330,6 +1364,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				AB61B2925CED4C8EAD316556 /* RNSpinkit.xcodeproj */,
 				6517777743734142B101031A /* RNDeviceInfo.xcodeproj */,
+				F1261EF91F894831971832E8 /* RNFIRMessaging.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1345,6 +1380,15 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E4253BF81D77552700EAB93B /* module.modulemap */,
+				E4253BF41D77550000EAB93B /* FirebaseMessaging.framework */,
+				E4253BF51D77550000EAB93B /* GoogleIPhoneUtilities.framework */,
+				E4253BF31D7754EB00EAB93B /* Firebase.h */,
+				E4253BE91D7754BF00EAB93B /* FirebaseAnalytics.framework */,
+				E4253BEA1D7754BF00EAB93B /* FirebaseInstanceID.framework */,
+				E4253BEB1D7754BF00EAB93B /* GoogleInterchangeUtilities.framework */,
+				E4253BEC1D7754BF00EAB93B /* GoogleSymbolUtilities.framework */,
+				E4253BED1D7754BF00EAB93B /* GoogleUtilities.framework */,
 				E4368DA41D70B3F700A7F42B /* MoPubReact */,
 				E4368D911D70B30A00A7F42B /* Social.framework */,
 				E4368D8F1D70B30500A7F42B /* PassKit.framework */,
@@ -1424,6 +1468,14 @@
 			isa = PBXGroup;
 			children = (
 				E41F1B891D432D36005DAC95 /* libRNSpinkit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4253BD31D7753F300EAB93B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4253BE51D7753F300EAB93B /* libRNFIRMessaging.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2376,6 +2428,10 @@
 					ProjectRef = 6517777743734142B101031A /* RNDeviceInfo.xcodeproj */;
 				},
 				{
+					ProductGroup = E4253BD31D7753F300EAB93B /* Products */;
+					ProjectRef = F1261EF91F894831971832E8 /* RNFIRMessaging.xcodeproj */;
+				},
+				{
 					ProductGroup = E41EB6CB1D419BB900D39AAB /* Products */;
 					ProjectRef = E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */;
 				},
@@ -2493,6 +2549,13 @@
 			fileType = archive.ar;
 			path = libRNSpinkit.a;
 			remoteRef = E41F1B881D432D36005DAC95 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E4253BE51D7753F300EAB93B /* libRNFIRMessaging.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFIRMessaging.a;
+			remoteRef = E4253BE41D7753F300EAB93B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E4EC3C7D1D46930200DBD912 /* libRNDeviceInfo.a */ = {
@@ -2968,6 +3031,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pikapika.app/Pikapika";
@@ -2984,6 +3048,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -3004,6 +3069,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/Millennial/SDK",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3011,6 +3077,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 				);
 				INFOPLIST_FILE = Pikapika/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -3037,6 +3104,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/Millennial/SDK",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3044,6 +3112,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 				);
 				INFOPLIST_FILE = Pikapika/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -3099,6 +3168,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -3141,6 +3211,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
