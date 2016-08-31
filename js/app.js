@@ -26,7 +26,6 @@ const INTERSTITIAL_UNIT_ID  = '2e28f9a166a444f4b028123ed0486696';
 
 export class Pikapika extends Component {
     watchID = (null: ?number);
-    googleAuthSource = 'https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&redirect_uri=http://127.0.0.1:9004&response_type=code&client_id=848232511240-73ri3t7plvk96pj4f85uj8otdat2alem.apps.googleusercontent.com';
     clickNumber = 4;
     clicks = 0;
     region;
@@ -71,136 +70,6 @@ export class Pikapika extends Component {
 
     componentWillMount() {
         MoPubInterstitial.initialize(INTERSTITIAL_UNIT_ID);
-    }
-
-    checkLogin() {
-        AsyncStorage.getItem('user')
-        .then((user) => {
-            if(user) {
-                user = JSON.parse(user);
-
-                this.verifyToken(user)
-                .then((user) => {
-                    this.setState({user});
-                    this.getSharedPokemons();
-                })
-                .catch((error)=>{
-                    this.logOut();
-                    this.showInfo(strings.messages.onInit);
-                });
-            }
-            else{
-                this.logOut();
-                this.showInfo(strings.messages.onInit);
-            }
-        })
-        .done();
-    }
-
-    logInWithGoogle(code) {
-        this.loading(true);
-
-        TrainerService.logInWithGoogleOAuth2(code)
-        .then((response) => {
-            this.onLogIn(response);
-            this.getPokemons();
-        })
-        .catch((error) => {
-            this.onLogInFailure(error);
-            this.showError(strings.errors.login);
-        });
-
-    }
-
-    logOut() {
-        this.loading(false);
-
-        AsyncStorage.removeItem('user')
-        .then(() => {
-            let user = null;
-
-            this.setState({user});
-            this.refs.logIn.open();
-        })
-        .done();
-    }
-
-    onLogIn(user) {
-        this.loading(false);
-        this.getSharedPokemons();
-
-        if(user) {
-            this.setState({user});
-
-            this.refs.logIn.close();
-
-            AsyncStorage.setItem('user', JSON.stringify(user));
-        }
-        else {
-            this.showError(strings.errors.login);
-            this.refs.logIn.open();
-        }
-    }
-
-    onLogInFailure(error) {
-        this.loading(false);
-        this.refs.logIn.open();
-    }
-
-    getPokemons() {
-        if(this.position) {
-            this.verifyToken(this.state.user)
-            .then(()=> {
-
-                let disableSearch = true;
-                this.setState({disableSearch});
-
-                return PokemonService.find(this.position.coords, this.state.user.accessToken);
-            })
-            .then((data) => {
-
-                if(data) {
-                    this.mergePokemons(data);
-                }
-                else{
-                    this.showError(strings.errors.service);
-                }
-
-                this.searchTimer();
-            })
-            .catch((error) => {
-                // if(false && error && (error.status === 408 || error.status === 504)) {
-                if(false) {
-                    this.loading(true);
-
-                    TrainerService.refreshTokenGoogle(this.state.user.refreshToken)
-                    .then((response)=> {
-                        this.loading(false);
-
-                        this.onLogIn(response);
-                        this.getPokemons();
-                    })
-                    .catch((error)=> {
-                        this.loading(false);
-
-                        this.showError(strings.errors.login);
-                        this.logOut();
-                    });
-                }
-                else if(error && error.status === 429) {
-                    this.showError(strings.errors.tooManyRequests);
-                }
-                else {
-                    //this.showError(strings.errors.tooManyRequests);
-                    this.showError(strings.errors.service);
-                }
-
-                this.searchTimer();
-            });
-        }
-        else {
-            this.showError(strings.errors.position);
-        }
     }
 
     getSharedPokemons(){
@@ -262,65 +131,6 @@ export class Pikapika extends Component {
         }
     }
 
-    verifyToken(user) {
-        return new Promise((resolve, reject) => {
-            if(!this.expired(user)) {
-                resolve(user);
-            }
-            else {
-                if(user.refreshToken) {
-                    this.loading(true);
-
-                    TrainerService.refreshTokenGoogle(user.refreshToken, this.position)
-                    .then((response) => {
-                        this.loading(false);
-
-                        this.onLogIn(response);
-
-                        resolve(response);
-                    })
-                    .catch((error) => {
-                        this.onLogInFailure();
-                        this.logOut();
-                        reject('Cannot update the token');
-                    });
-                }
-                else{
-                    this.logOut();
-                }
-            }
-        });
-    }
-
-    expired(user) {
-        if(user && user.expireAt) {
-            return new Date().getTime() > user.expireAt;
-        }
-        return true;
-    }
-
-    searchTimer() {
-        if (this.state.timeToSearch === '-1') {
-            let timeToSearch = String(TIMER);
-            this.setState({timeToSearch});
-
-            this.searchTimer();
-        }
-        else if(this.state.timeToSearch === '0') {
-            let timeToSearch = '-1';
-            let disableSearch = false;
-            this.setState({disableSearch, timeToSearch});
-        }
-        else {
-            TimerMixin.setTimeout( () => {
-                let timeToSearch = String(Number(this.state.timeToSearch) - 1);
-                this.setState({timeToSearch});
-
-                this.searchTimer();
-            }, 1000);
-        }
-    }
-
     loading(loading) {
         this.setState({loading});
     }
@@ -347,51 +157,6 @@ export class Pikapika extends Component {
         });
     }
 
-    watchGoogleAuth(route) {
-        if(route.url.startsWith('http://127.0.0.1') && !getParameter('error', route.url)) {
-            this.refs.googleAuth.close();
-
-            this.logInWithGoogle(
-                getParameter('code', route.url)
-            );
-
-            return false;
-        }
-        else if(route.url.startsWith('http://127.0.0.1') && getParameter('error', route.url)) {
-            this.refs.googleAuth.close();
-        }
-        return true;
-    }
-
-    onGoogleViewError() {
-        this.refs.googleAuth.close();
-        return (
-            <Text></Text>
-        );
-    }
-
-    updateWaitIcon() {
-        TimerMixin.setTimeout(() => {
-            let waitIcon = 'ios-clock-outline';
-            let poke = pokeTest[Math.floor(Math.random() * pokeTest.length)];
-
-            this.setState({waitIcon});
-
-            this.showInfo([
-                strings.whosThatPokemon,
-                '\n\n',
-                poke.question
-            ].join(''));
-
-            TimerMixin.setTimeout(() => {
-                this.showInfo(strings.formatString(
-                    strings.its, poke.answer
-                ));
-            }, 5000)
-
-        }, 13000);
-    }
-
     center() {
         if (this.position) {
             this.position.coords.longitudeDelta = 0.005;
@@ -406,8 +171,6 @@ export class Pikapika extends Component {
         region.neLng = region.longitude + (region.longitudeDelta/2);
         region.swLat = region.latitude - (region.latitudeDelta/2);
         region.swLng = region.longitude - (region.longitudeDelta/2);
-
-        console.log(region);
 
         this.getSharedPokemons();
     }
@@ -472,22 +235,6 @@ export class Pikapika extends Component {
             })}
             </MapView>
 
-            {
-                this.state.user && (
-                    <Button
-                    style={styles.searchButton}
-                    block
-                    disabled={this.state.disableSearch}
-                    onPress={ ()=>{ this.getPokemons() }}>
-                    {this.state.timeToSearch >= 0 ? this.state.timeToSearch : (
-                        <Icon
-                        name={this.state.disableSearch ? this.state.waitIcon : 'ios-search'}
-                        />
-                    )}
-                    </Button>
-                )
-            }
-
             <View style={styles.ad}>
             <MoPubBanner
             adUnitId={BANNERL_UNIT_ID}
@@ -495,73 +242,6 @@ export class Pikapika extends Component {
             onLoaded={() => this.setState({ad: true}) }
             />
             </View>
-            <Modal style={styles.logIn} ref={"logIn"} swipeToClose={true} backdropPressToClose={true} position={'center'}>
-            <Text style={styles.logInTitle}>
-            {strings.logIn}
-            </Text>
-            <Text style={styles.logInSubTitle}>
-            {strings.logInSubTitle}
-            </Text>
-            <InputGroup>
-            <Icon name="ios-person-outline"/>
-            <Input
-            editable={false}
-            keyboardType='email-address'
-            autoCapitalize='none'
-            returnKeyType='default'
-            placeholder={strings.email}
-            defaultValue={this.state.username}
-            onChangeText={(username) => this.setState({username})} />
-            </InputGroup>
-            <InputGroup>
-            <Icon name="ios-unlock-outline" style={styles.loginIcon} />
-            <Input
-            editable={false}
-            placeholder={strings.password}
-            secureTextEntry={true}
-            defaultValue={this.state.password}
-            onChangeText={(password) => this.setState({password})}/>
-            </InputGroup>
-
-            <Button
-            style={styles.ptcLogInButton}
-            block
-            onPress={() => { this.showError(strings.messages.pokemonTrainer); }}> Pokemon Trainer Club
-            </Button>
-
-            <Button
-            style={styles.googleLogInButton}
-            textStyle={{color: '#d34836'}}
-            block
-            danger
-            onPress={() => { this.refs.googleAuth.open(); }}>
-            <Icon style={{color: '#d34836'}} name="logo-google"/> Sign In
-            </Button>
-
-            </Modal>
-
-            <Modal style={styles.googleModal} ref={"googleAuth"} swipeToClose={true} backdropPressToClose={true} position={'center'}>
-            <WebView
-            ref={'googleAuthWebView'}
-            source={{uri: this.googleAuthSource}}
-            onShouldStartLoadWithRequest={(route) => this.watchGoogleAuth(route)}
-            renderError={(data) => this.onGoogleViewError(data)}
-            >
-            </WebView>
-            </Modal>
-
-            {
-                this.state.user ? (
-                    <Button danger style={styles.logout} onPress={() => this.logOut() }>
-                    <Icon name="ios-log-out" style={styles.logoutIcon} />
-                    </Button>
-                ) : false
-                // (
-                //     <Button danger style={styles.logout} onPress={() => this.logOut() }>
-                //     <Icon name="ios-log-in" style={styles.logoutIcon} />
-                //     </Button>
-                // )
-            }
 
             <Button transparent style={this.state.ad ? styles.centerAd : styles.center} onPress={() => this.center() }>
             <Icon name="ios-locate-outline" style={styles.actionIcon} />
@@ -570,7 +250,6 @@ export class Pikapika extends Component {
             <Icon name="ios-brush" style={styles.actionIcon} />
             </Button>
 
-            <Spinner style={styles.spinner} isVisible={this.state.loading} type={'Pulse'} color={'#424242'} size={75}/>
             </View>
         );
     }
