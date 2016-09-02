@@ -23,9 +23,9 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		16C1F35CA95E491F97AD2F24 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E08356FEE07046CDBA9EA8F5 /* libRNDeviceInfo.a */; };
 		3D191D669D1245AEBBBA1538 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB53F551117E47A39AE70E6B /* libRNSpinkit.a */; };
+		4B93358BD2494E16A46109B5 /* libRNFIRAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E27101F92EBA4E8B90A02DFA /* libRNFIRAnalytics.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8706D999E24D4453AB797EEB /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F49D13505E70430BA25B2C47 /* libRNFIRMessaging.a */; };
-		E402EACE1D414AA500E67FB4 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E402EAC31D414A9900E67FB4 /* libAirMaps.a */; };
 		E4156C3A1D43043C00F87E24 /* 1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156BA21D43043B00F87E24 /* 1.wav */; };
 		E4156C3B1D43043C00F87E24 /* 2.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156BA31D43043B00F87E24 /* 2.wav */; };
 		E4156C3C1D43043C00F87E24 /* 3.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4156BA41D43043B00F87E24 /* 3.wav */; };
@@ -416,8 +416,10 @@
 		E4A68E851D6E51EE0087B534 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4A68E7D1D6E51EE0087B534 /* Octicons.ttf */; };
 		E4A68E861D6E51EE0087B534 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4A68E7E1D6E51EE0087B534 /* Zocial.ttf */; };
 		E4BF5DDC1D48048800EC1A49 /* splashscreen_big_720.png in Resources */ = {isa = PBXBuildFile; fileRef = E4BF5DDB1D48048800EC1A49 /* splashscreen_big_720.png */; };
+		E4EF19871D79E59400E18996 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4EF19861D79E59400E18996 /* GoogleService-Info.plist */; };
 		E4F1BA0C1D43296800C9F518 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */; };
 		E4F1BA0D1D43296800C9F518 /* Default-568.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1BA0B1D43296800C9F518 /* Default-568.png */; };
+		F1BC550DC4E749C982326076 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD306E89FBAD487891BFB3D3 /* libAirMaps.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -498,13 +500,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		E402EAC21D414A9900E67FB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E402EABE1D414A9900E67FB4 /* AirMaps.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
-			remoteInfo = AirMaps;
-		};
 		E41EB5991D416B5D00D39AAB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */;
@@ -533,12 +528,26 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFIRMessaging;
 		};
+		E483122B1D7A182E00173E78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A368A9E2A4A94D84BFDBE289 /* AirMaps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
+			remoteInfo = AirMaps;
+		};
 		E4EC3C7C1D46930200DBD912 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6517777743734142B101031A /* RNDeviceInfo.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
 			remoteInfo = RNDeviceInfo;
+		};
+		E4EF19BD1D79EF8600E18996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B074C850B0C43C587BE87B7 /* RNFIRAnalytics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNFIRAnalytics;
 		};
 		E4F3C9551D42BE0E00A103F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -575,12 +584,15 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Pikapika/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Pikapika/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		2B074C850B0C43C587BE87B7 /* RNFIRAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFIRAnalytics.xcodeproj; path = "../node_modules/react-native-firebase-analytics/ios/RNFIRAnalytics.xcodeproj"; sourceTree = "<group>"; };
 		6517777743734142B101031A /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A368A9E2A4A94D84BFDBE289 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		AB61B2925CED4C8EAD316556 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
+		AD306E89FBAD487891BFB3D3 /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		E08356FEE07046CDBA9EA8F5 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
-		E402EABE1D414A9900E67FB4 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		E27101F92EBA4E8B90A02DFA /* libRNFIRAnalytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFIRAnalytics.a; sourceTree = "<group>"; };
 		E4156BA21D43043B00F87E24 /* 1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1.wav; sourceTree = "<group>"; };
 		E4156BA31D43043B00F87E24 /* 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 2.wav; sourceTree = "<group>"; };
 		E4156BA41D43043B00F87E24 /* 3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 3.wav; sourceTree = "<group>"; };
@@ -1166,6 +1178,7 @@
 		E4A68E7D1D6E51EE0087B534 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		E4A68E7E1D6E51EE0087B534 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		E4BF5DDB1D48048800EC1A49 /* splashscreen_big_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen_big_720.png; sourceTree = "<group>"; };
+		E4EF19861D79E59400E18996 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E4F1BA0A1D43296800C9F518 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568@2x.png"; sourceTree = "<group>"; };
 		E4F1BA0B1D43296800C9F518 /* Default-568.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568.png"; sourceTree = "<group>"; };
 		E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
@@ -1217,7 +1230,6 @@
 				E4253BEF1D7754BF00EAB93B /* FirebaseInstanceID.framework in Frameworks */,
 				E4253BF71D77550000EAB93B /* GoogleIPhoneUtilities.framework in Frameworks */,
 				E4253BF11D7754BF00EAB93B /* GoogleSymbolUtilities.framework in Frameworks */,
-				E402EACE1D414AA500E67FB4 /* libAirMaps.a in Frameworks */,
 				E4253BF01D7754BF00EAB93B /* GoogleInterchangeUtilities.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -1235,6 +1247,8 @@
 				3D191D669D1245AEBBBA1538 /* libRNSpinkit.a in Frameworks */,
 				16C1F35CA95E491F97AD2F24 /* libRNDeviceInfo.a in Frameworks */,
 				8706D999E24D4453AB797EEB /* libRNFIRMessaging.a in Frameworks */,
+				4B93358BD2494E16A46109B5 /* libRNFIRAnalytics.a in Frameworks */,
+				F1BC550DC4E749C982326076 /* libAirMaps.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1317,6 +1331,7 @@
 		13B07FAE1A68108700A75B9A /* Pikapika */ = {
 			isa = PBXGroup;
 			children = (
+				E4EF19861D79E59400E18996 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -1351,7 +1366,6 @@
 				E4F3C9511D42BE0E00A103F6 /* ReactNativeLocalization.xcodeproj */,
 				E41EB6CA1D419BB900D39AAB /* RNSound.xcodeproj */,
 				E41EB5951D416B5C00D39AAB /* ReactNativeLocalization.xcodeproj */,
-				E402EABE1D414A9900E67FB4 /* AirMaps.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -1365,6 +1379,8 @@
 				AB61B2925CED4C8EAD316556 /* RNSpinkit.xcodeproj */,
 				6517777743734142B101031A /* RNDeviceInfo.xcodeproj */,
 				F1261EF91F894831971832E8 /* RNFIRMessaging.xcodeproj */,
+				2B074C850B0C43C587BE87B7 /* RNFIRAnalytics.xcodeproj */,
+				A368A9E2A4A94D84BFDBE289 /* AirMaps.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1436,14 +1452,6 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* Pikapika.app */,
 				00E356EE1AD99517003FC87E /* PikapikaTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		E402EABF1D414A9900E67FB4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E402EAC31D414A9900E67FB4 /* libAirMaps.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2104,6 +2112,14 @@
 			path = MoPubReact;
 			sourceTree = "<group>";
 		};
+		E48312281D7A182E00173E78 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E483122C1D7A182E00173E78 /* libAirMaps.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E4A68E761D6E51EE0087B534 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2123,6 +2139,14 @@
 			isa = PBXGroup;
 			children = (
 				E4EC3C7D1D46930200DBD912 /* libRNDeviceInfo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4EF19AC1D79EF8500E18996 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4EF19BE1D79EF8600E18996 /* libRNFIRAnalytics.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2356,6 +2380,14 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 6NMF5BRJX3;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -2372,8 +2404,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E402EABF1D414A9900E67FB4 /* Products */;
-					ProjectRef = E402EABE1D414A9900E67FB4 /* AirMaps.xcodeproj */;
+					ProductGroup = E48312281D7A182E00173E78 /* Products */;
+					ProjectRef = A368A9E2A4A94D84BFDBE289 /* AirMaps.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -2426,6 +2458,10 @@
 				{
 					ProductGroup = E4EC3C6C1D46930200DBD912 /* Products */;
 					ProjectRef = 6517777743734142B101031A /* RNDeviceInfo.xcodeproj */;
+				},
+				{
+					ProductGroup = E4EF19AC1D79EF8500E18996 /* Products */;
+					ProjectRef = 2B074C850B0C43C587BE87B7 /* RNFIRAnalytics.xcodeproj */;
 				},
 				{
 					ProductGroup = E4253BD31D7753F300EAB93B /* Products */;
@@ -2523,13 +2559,6 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E402EAC31D414A9900E67FB4 /* libAirMaps.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAirMaps.a;
-			remoteRef = E402EAC21D414A9900E67FB4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		E41EB59A1D416B5D00D39AAB /* libReactNativeLocalization.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2558,11 +2587,25 @@
 			remoteRef = E4253BE41D7753F300EAB93B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E483122C1D7A182E00173E78 /* libAirMaps.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAirMaps.a;
+			remoteRef = E483122B1D7A182E00173E78 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E4EC3C7D1D46930200DBD912 /* libRNDeviceInfo.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNDeviceInfo.a;
 			remoteRef = E4EC3C7C1D46930200DBD912 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E4EF19BE1D79EF8600E18996 /* libRNFIRAnalytics.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFIRAnalytics.a;
+			remoteRef = E4EF19BD1D79EF8600E18996 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E4F3C9561D42BE0E00A103F6 /* libReactNativeLocalization.a */ = {
@@ -2659,6 +2702,7 @@
 				E4156C4E1D43043C00F87E24 /* 21.wav in Resources */,
 				E4156C5B1D43043C00F87E24 /* 34.wav in Resources */,
 				E4156C531D43043C00F87E24 /* 26.wav in Resources */,
+				E4EF19871D79E59400E18996 /* GoogleService-Info.plist in Resources */,
 				E4156C5C1D43043C00F87E24 /* 35.wav in Resources */,
 				E4156C7F1D43043C00F87E24 /* 70.wav in Resources */,
 				E4156C691D43043C00F87E24 /* 48.wav in Resources */,
@@ -3030,8 +3074,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pikapika.app/Pikapika";
@@ -3048,8 +3090,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3078,6 +3118,8 @@
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-analytics/ios",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				INFOPLIST_FILE = Pikapika/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -3113,6 +3155,8 @@
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-analytics/ios",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				INFOPLIST_FILE = Pikapika/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -3169,6 +3213,8 @@
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-analytics/ios",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -3212,6 +3258,8 @@
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-analytics/ios",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

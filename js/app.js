@@ -9,6 +9,8 @@ import TimerMixin from 'react-timer-mixin';
 import Toast from 'react-native-root-toast';
 import Spinner from 'react-native-spinkit';
 import moment from 'moment';
+import FCM from 'react-native-fcm';
+import Analytics from 'react-native-firebase-analytics';
 import _ from 'underscore';
 
 import styles from './styles';
@@ -66,6 +68,23 @@ export class Pikapika extends Component {
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.position = position;
         });
+
+        FCM.requestPermissions();
+
+        FCM.getFCMToken().then(token => {
+            this.token = token;
+        });
+
+        this.notificationUnsubscribe = FCM.on('notification', (notif) => {
+            if(notif.aps.alert.title){
+                this.showInfo(`${notif.aps.alert.title}\n\n${notif.aps.alert.body}`);
+            }
+            else {
+                this.showInfo(`${notif.aps.alert.body || notif.aps.alert}`);
+            }
+        });
+
+        Analytics.setEnabled(true);
     }
 
     componentWillMount() {
@@ -193,6 +212,8 @@ export class Pikapika extends Component {
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
         MoPubInterstitial.removeAllListeners('onFailed');
+        this.refreshUnsubscribe();
+        this.notificationUnsubscribe();
     }
 
     render() {
